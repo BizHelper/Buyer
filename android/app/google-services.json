@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "283166565055",
+    "project_id": "buyer-app-a8f0e",
+    "storage_bucket": "buyer-app-a8f0e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283166565055:android:79e45abf975ac89557dc0a",
+        "android_client_info": {
+          "package_name": "com.bizhelper.buyer_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283166565055-abdc6tl81gd16eemh57v2o9u4fi4qvbr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHFzwUOX2dlVFOIZF05Copi3WK4hDuSgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283166565055-abdc6tl81gd16eemh57v2o9u4fi4qvbr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
