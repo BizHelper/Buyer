@@ -1,13 +1,13 @@
 import 'package:buyer_app/src/products.dart';
 import 'package:buyer_app/src/screens/account.dart';
 import 'package:buyer_app/src/screens/explore.dart';
+import 'package:buyer_app/src/screens/home.dart';
 import 'package:buyer_app/src/screens/location.dart';
-import 'package:buyer_app/src/screens/request.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 
-class HomeScreen extends StatelessWidget {
+class RequestScreen extends StatelessWidget {
   final auth = FirebaseAuth.instance;
 
   @override
@@ -37,6 +37,7 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /*
           const Padding(
             padding: EdgeInsets.only(left: 12, top: 11),
             child: Text(
@@ -169,6 +170,8 @@ class HomeScreen extends StatelessWidget {
           const Flexible(
             child: Products(),
           ),
+
+           */
           Column(
             children: [
               Divider(height: 1, color: Colors.black),
@@ -195,8 +198,7 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(
                       width: 55,
                       child: InkWell(
-                        onTap: () { Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => RequestScreen()));},
+                        onTap: () {},
                         child: Column(
                           children: const [
                             const Icon(Icons.sticky_note_2),
@@ -208,7 +210,8 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(
                       width: 55,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => HomeScreen()));},
                         child: Column(
                           children: const [
                             Icon(Icons.home),
