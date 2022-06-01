@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:buyer_app/src/screens/home.dart';
+import 'package:buyer_app/src/screens/updateName.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
     await user.reload();
     if (user.emailVerified) {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen()));
+          MaterialPageRoute(builder: (context) => UpdateNameScreen()));
     }
   }
 }

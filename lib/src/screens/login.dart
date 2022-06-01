@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/database.dart';
 import 'package:buyer_app/src/screens/home.dart';
 import 'package:buyer_app/src/screens/reset.dart';
 import 'package:buyer_app/src/screens/verify.dart';
@@ -14,6 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var _email;
   var _password;
   final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
               size: 120,
               color: Colors.black,
             ),
-             Text(
+            Text(
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 'Buyer Login'),
             Padding(
@@ -44,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(hintText: 'Email'),
                 onChanged: (value) {
                   setState(
-                    () {
+                        () {
                       _email = value.trim();
                     },
                   );
@@ -58,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(hintText: 'Password'),
                 onChanged: (value) {
                   setState(
-                    () {
+                        () {
                       _password = value.trim();
                     },
                   );
@@ -71,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.orange.shade600)),
+                        MaterialStateProperty.all(Colors.orange.shade600)),
                     child: const Text(
                       'Sign in',
                       style: TextStyle(color: Colors.black),
@@ -87,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.orange.shade600)),
+                        MaterialStateProperty.all(Colors.orange.shade600)),
                     onPressed: () => _signup(_email, _password)),
               ],
             ),
@@ -96,8 +98,10 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 TextButton(
                   child: Text('Forgot Password?'),
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ResetScreen())),
+                  onPressed: () =>
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => ResetScreen())),
                 ),
               ],
             ),
@@ -117,10 +121,16 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+
+
   _signup(String _email, String _password) async {
     try {
-      await auth.createUserWithEmailAndPassword(
+      UserCredential result = await auth
+          .createUserWithEmailAndPassword(
           email: _email, password: _password);
+      User? user = result.user;
+
+      await DatabaseService(uid: user?.uid ?? '').updateUserData('buyername');
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => VerifyScreen()));
     } on FirebaseAuthException catch (error) {
