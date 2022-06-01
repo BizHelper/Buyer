@@ -49,7 +49,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
     await user.reload();
     if (user.emailVerified) {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => UpdateNameScreen()));
+          MaterialPageRoute(builder: (context) => HomeScreen()));
     }
   }
 }

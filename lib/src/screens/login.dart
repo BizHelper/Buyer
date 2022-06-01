@@ -1,6 +1,7 @@
 import 'package:buyer_app/src/database.dart';
 import 'package:buyer_app/src/screens/home.dart';
 import 'package:buyer_app/src/screens/reset.dart';
+import 'package:buyer_app/src/screens/signup.dart';
 import 'package:buyer_app/src/screens/verify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -78,9 +79,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       'Sign in',
                       style: TextStyle(color: Colors.black),
                     ),
-
-                    // color: Theme.of(contxt).colorScheme.secondary,
-                    //color: Colors.grey.shade400,
                     onPressed: () => _signin(_email, _password)),
                 ElevatedButton(
                     child: Text(
@@ -90,7 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: ButtonStyle(
                         backgroundColor:
                         MaterialStateProperty.all(Colors.orange.shade600)),
-                    onPressed: () => _signup(_email, _password)),
+                    onPressed: () =>
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> SignupScreen()))
+                ),
               ],
             ),
             Row(
@@ -121,20 +121,4 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
-
-  _signup(String _email, String _password) async {
-    try {
-      UserCredential result = await auth
-          .createUserWithEmailAndPassword(
-          email: _email, password: _password);
-      User? user = result.user;
-
-      await DatabaseService(uid: user?.uid ?? '').updateUserData('buyername');
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => VerifyScreen()));
-    } on FirebaseAuthException catch (error) {
-      Fluttertoast.showToast(msg: error.message!, gravity: ToastGravity.TOP);
-    }
-  }
 }
