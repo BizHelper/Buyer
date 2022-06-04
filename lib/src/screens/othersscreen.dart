@@ -1,8 +1,3 @@
-
-//import 'dart:html';
-
-//import 'dart:html';
-
 import 'package:buyer_app/src/authservice.dart';
 import 'package:buyer_app/src/products.dart';
 import 'package:buyer_app/src/screens/Popular.screen.dart';
@@ -26,9 +21,8 @@ import 'accessories.dart';
 import 'bagsandwalletscreen.dart';
 import 'foodandBeverageScreen.dart';
 import 'menclothingscreen.dart';
-import 'othersscreen.dart';
 
-class HomeScreen extends StatelessWidget {
+class OthersScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
   late var prod_name = '';
@@ -46,14 +40,6 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
           IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              _auth.signOut();
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
-            },
-          ),
         ],
         title: const Text(
           'Home',
@@ -61,14 +47,10 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: StreamBuilder(
-
         // stream: listings.snapshots(),
-        stream: FirebaseFirestore.instance.collection('listings').snapshots(),
-        //.where('product name', isEqualTo: 'tryout').snapshots(),
+        stream: FirebaseFirestore.instance.collection('listings')
+        .where('Category', isEqualTo: 'Others').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if(!snapshot.hasData){
-            return Container();
-          }
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +204,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisCount: 2,
                     children: snapshot.data!.docs.map(
                           (listings) {
-                          /*  prod_name = Text(listings['Name']);
+                        /*  prod_name = Text(listings['Name']);
                             prod_shopname = Text(listings['Seller Name']);
                             prod_price = Text(listings['Price']);
 
@@ -233,7 +215,7 @@ class HomeScreen extends StatelessWidget {
                           child: Card(
                             child: Hero(
                               tag: Text(listings['Name']),
-                            //  tag: (prod_name),
+                              //  tag: (prod_name),
                               child: Material(
                                 child: InkWell(
                                   onTap: (){
@@ -243,15 +225,15 @@ class HomeScreen extends StatelessWidget {
                                     prod_category = (listings['Category']);
                                     prod_description = listings['Description'];
                                     prod_image = listings['Image URL'];
-                                     Navigator.of(context).pushReplacement(
-                                       MaterialPageRoute(builder: (context) => new ProductDescriptionScreen(
-                                        product_detail_name: prod_name,
-                                         product_detail_shopname: prod_shopname,
-                                         product_detail_price:  prod_price,
-                                         product_detail_category: prod_category,
-                                         product_detail_description: prod_description,
-                                         product_detail_images: prod_image,
-                                       )));
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(builder: (context) => new ProductDescriptionScreen(
+                                          product_detail_name: prod_name,
+                                          product_detail_shopname: prod_shopname,
+                                          product_detail_price:  prod_price,
+                                          product_detail_category: prod_category,
+                                          product_detail_description: prod_description,
+                                          product_detail_images: prod_image,
+                                        )));
                                   },
                                   child: GridTile(
                                       footer: Container(
@@ -271,18 +253,18 @@ class HomeScreen extends StatelessWidget {
                                                       top: 4,
                                                       bottom: 4),
                                                   child: Text(listings['Name'],
-                                                  //Text('$prod_name'),
-                                                //  Text(
-                                                  //  prod_name,
-                                                   style: TextStyle(fontWeight: FontWeight.bold),
+                                                    //Text('$prod_name'),
+                                                    //  Text(
+                                                    //  prod_name,
+                                                    style: TextStyle(fontWeight: FontWeight.bold),
                                                   ),
                                                   //Text(
-                                                    //listings['Name'],
+                                                  //listings['Name'],
 
 
-                                        //style: TextStyle(
-                                                    //    fontWeight:
-                                                      //  FontWeight.bold),
+                                                  //style: TextStyle(
+                                                  //    fontWeight:
+                                                  //  FontWeight.bold),
 
                                                 ),
                                                 Padding(
@@ -302,7 +284,7 @@ class HomeScreen extends StatelessWidget {
                                                   ),
 
                                                    */
-                                                //  prod_price,
+                                                  //  prod_price,
                                                   Text(
                                                     listings['Price'],
                                                     //"\$prod_price",
@@ -323,13 +305,13 @@ class HomeScreen extends StatelessWidget {
                                                   bottom: 4),
                                               child:
                                               //Text(
-                                                //(listings['Seller Name']),
-                                                //style: const TextStyle(
-                                                  //color: Colors.black54,
-                                                  //fontWeight: FontWeight.w800,
-                                                //),
+                                              //(listings['Seller Name']),
+                                              //style: const TextStyle(
+                                              //color: Colors.black54,
+                                              //fontWeight: FontWeight.w800,
                                               //),
-                                             // prod_shopname,
+                                              //),
+                                              // prod_shopname,
                                               Text(
                                                 listings['Seller Name'],
                                                 //'prod_shopname',
@@ -339,7 +321,7 @@ class HomeScreen extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
-                                          //  ),
+                                            //  ),
 
                                           ],
                                         ),
@@ -462,3 +444,5 @@ class HomeScreen extends StatelessWidget {
 //    );
   }
 }
+
+

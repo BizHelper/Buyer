@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:buyer_app/src/screens/home.dart';
-import 'package:buyer_app/src/screens/updateName.dart';
+//import 'package:buyer_app/src/screens/updateName.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +44,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   }
 
   Future<void> checkEmailVerified() async {
+
     user = auth.currentUser;
     await auth.currentUser;
     await user.reload();

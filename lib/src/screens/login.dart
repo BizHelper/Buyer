@@ -1,5 +1,6 @@
 import 'package:buyer_app/src/database.dart';
 import 'package:buyer_app/src/screens/home.dart';
+//import 'package:buyer_app/src/screens/homepractice.dart';
 import 'package:buyer_app/src/screens/reset.dart';
 import 'package:buyer_app/src/screens/signup.dart';
 import 'package:buyer_app/src/screens/verify.dart';
@@ -16,6 +17,18 @@ class _LoginScreenState extends State<LoginScreen> {
   var _email;
   var _password;
   final auth = FirebaseAuth.instance;
+
+
+  //Future<String> getCurrentUID() async {
+    //return (await auth.currentUser!).uid;
+ // }
+
+ // User? get currentUser => auth.currentUser;
+  //Future<User?> getUser() async {
+    //return currentUser;
+  //}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,5 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Fluttertoast.showToast(msg: error.message!, gravity: ToastGravity.TOP);
     }
   }
+
+
 
 }

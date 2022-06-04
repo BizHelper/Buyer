@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:buyer_app/src/screens/home.dart';
@@ -19,6 +20,7 @@ class _SignupScreenState extends State<SignupScreen> {
   var _password;
   var _name;
   var userID;
+  var _testword = 'testword';
   final auth = FirebaseAuth.instance;
   FirebaseFirestore fstore = FirebaseFirestore.instance;
 
@@ -119,6 +121,10 @@ class _SignupScreenState extends State<SignupScreen> {
 
       userID = auth.currentUser!.uid;
       DocumentReference documentReference = fstore.collection("buyers").doc(userID);
+
+    //  fstore.collection("test");
+      Map<String, dynamic> test = new HashMap();
+      //test.putIfAbsent('testPhotos', () => _testword);
       Map<String, Object> user = new HashMap();
       user.putIfAbsent('Name', () => _name);
       documentReference.set(user);
@@ -127,4 +133,8 @@ class _SignupScreenState extends State<SignupScreen> {
       Fluttertoast.showToast(msg: error.message!, gravity: ToastGravity.TOP);
     }
   }
+  //DatabaseReference reference = FirebaseDatabase.instance.ref("Name");
+  //ref
+
+
 }
