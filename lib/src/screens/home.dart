@@ -29,6 +29,17 @@ class HomeScreen extends StatelessWidget {
   late var prod_description = '';
   late var prod_category = '';
   late var prod_image = '';
+
+
+/*
+  var productDetailName = '';
+  var productDetailShopName = '';
+  var productDetailPrice = '';
+  var productDetailCategory = '';
+  var productDetailDescription = '';
+  var productDetailImages ='';
+
+ */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -210,7 +221,10 @@ class HomeScreen extends StatelessWidget {
               //  Container(width: 1000, height: 10,child: Text('hi')),
               Flexible(
                 child: Container(
-                  child: GridView.count(
+
+                  child:
+                  GridView.count(
+                 // PageView(
                     crossAxisCount: 2,
                     children: snapshot.data!.docs.map(
                           (listings) {
