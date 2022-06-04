@@ -1,4 +1,3 @@
-import 'package:buyer_app/src/database.dart';
 import 'package:buyer_app/src/screens/home.dart';
 //import 'package:buyer_app/src/screens/homepractice.dart';
 import 'package:buyer_app/src/screens/reset.dart';

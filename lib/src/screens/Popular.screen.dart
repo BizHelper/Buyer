@@ -9,21 +9,19 @@ import 'package:buyer_app/src/screens/productdescriptionscreen.dart';
 import 'package:buyer_app/src/screens/request.dart';
 import 'package:buyer_app/src/screens/toysandgamesscreen.dart';
 import 'package:buyer_app/src/screens/womenclothingscreen.dart';
-//import 'package:buyer_app/src/testnotifier.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import 'package:provider/provider.dart';
-
-//import '../data.dart';
+import 'accessories.dart';
 import 'bagsandwalletscreen.dart';
 import 'foodandBeverageScreen.dart';
 import 'menclothingscreen.dart';
 import 'othersscreen.dart';
 
-class AccessoriesScreen extends StatelessWidget {
+class PopularScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
   late var prod_name = '';
@@ -49,8 +47,8 @@ class AccessoriesScreen extends StatelessWidget {
       ),
       body: StreamBuilder(
         // stream: listings.snapshots(),
-        stream: FirebaseFirestore.instance.collection('listings')
-            .where('Category', isEqualTo: 'Accessories').snapshots(),
+        stream: FirebaseFirestore.instance.collection('listings').snapshots(),
+        //.where('product name', isEqualTo: 'tryout').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,6 +1,5 @@
 import 'package:buyer_app/src/app.dart';
 import 'package:buyer_app/src/screens/login.dart';
-import 'package:buyer_app/src/testnotifier.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
