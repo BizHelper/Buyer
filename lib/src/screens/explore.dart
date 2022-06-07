@@ -646,7 +646,7 @@ class ExploreScreen extends StatelessWidget {
 
          */
         title: const Text(
-          'Explore',
+          'Explore Page',
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
         ),
       ),
@@ -700,8 +700,8 @@ class ExploreScreen extends StatelessWidget {
                                                       //  right: 16,
                                                       top: 4,
                                                       bottom: 4),
-                                                  child: Text(
-                                                    postings['Seller Name'],
+                                                  child: Text("Description: " +
+                                                    postings['Description'],
                                                     //Text('$prod_name'),
                                                     //  Text(
                                                     //  prod_name,
@@ -718,7 +718,7 @@ class ExploreScreen extends StatelessWidget {
                                                   //  FontWeight.bold),
 
                                                 ),
-                                                Padding(
+                                               /* Padding(
                                                   padding: const EdgeInsets
                                                       .only(
                                                     //    left: 16,
@@ -747,7 +747,7 @@ class ExploreScreen extends StatelessWidget {
                                                       fontSize: 16,
                                                     ),
                                                   ),
-                                                ),
+                                                ),*/
                                               ],
                                             ),
                                             Padding(
@@ -765,7 +765,7 @@ class ExploreScreen extends StatelessWidget {
                                               //),
                                               //),
                                               // prod_shopname,
-                                              Text(
+                                              Text("by " +
                                                 postings['Seller Name'],
                                                 //'prod_shopname',
                                                 style: const TextStyle(
@@ -776,7 +776,7 @@ class ExploreScreen extends StatelessWidget {
                                             ),
                                             //  ),
                                             TextButton(
-                                              child: Text("add comment"),
+                                              child: Text("  Add comment"),
                                               onPressed:()=>
                                                   Navigator.push(context, MaterialPageRoute(builder: (context){
                                                     return Comments(
