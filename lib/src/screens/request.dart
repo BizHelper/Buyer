@@ -1,4 +1,4 @@
-import 'package:buyer_app/src/products.dart';
+//import 'package:buyer_app/src/products.dart';
 import 'package:buyer_app/src/screens/account.dart';
 import 'package:buyer_app/src/screens/explore.dart';
 import 'package:buyer_app/src/screens/home.dart';

@@ -82,12 +82,13 @@ class _AccountScreenState extends State<AccountScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              getName(),
+              "Name: "+ getName(),
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Text("Profile Pic: ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
             !(Uri.tryParse(getImage())?.hasAbsolutePath ?? false)
                 ? Image.asset('images/noProfilePic.png')
                 : Image.network(_image),
