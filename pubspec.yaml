@@ -45,6 +45,8 @@ dependencies:
   file_picker: ^4.6.1
   image_picker: ^0.8.5+3
   file: ^6.1.2
+  flutter_chat_bubble: ^2.0.0
+  date_time_format: ^2.0.1
 
 
 

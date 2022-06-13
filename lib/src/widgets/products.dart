@@ -8,6 +8,9 @@ class Product extends StatelessWidget {
   var prodCategory;
   var prodDescription;
   var prodImage;
+  var prodId;
+  var sellerId;
+  var listingId;
 
   Product({
     this.prodName,
@@ -15,7 +18,10 @@ class Product extends StatelessWidget {
     this.prodPrice,
     this.prodCategory,
     this.prodDescription,
-    this.prodImage
+    this.prodImage,
+    this.prodId,
+    this.sellerId,
+    this.listingId,
   });
 
   @override
@@ -34,6 +40,9 @@ class Product extends StatelessWidget {
                   productDetailCategory: prodCategory,
                   productDetailDescription: prodDescription,
                   productDetailImages: prodImage,
+                  productDetailId: prodId,
+                  sellerId: sellerId,
+                  listingId: listingId,
                 )));
               },
               child: GridTile(
