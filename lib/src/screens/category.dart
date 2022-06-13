@@ -104,6 +104,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         prodCategory: listings['Category'],
                         prodDescription: listings['Description'],
                         prodImage: listings['Image URL'],
+                          sellerId: listings['Seller Id'],
+                          listingId: listings['Listing ID']
                       );
                     },
                   ).toList(),

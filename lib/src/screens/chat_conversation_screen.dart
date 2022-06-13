@@ -238,30 +238,30 @@ class ChatConversations extends StatefulWidget {
   State<ChatConversations> createState() => _ChatConversationsState();
 }
 
-
 class _ChatConversationsState extends State<ChatConversations> {
   FirebaseService _service = FirebaseService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   var chatMessageController = TextEditingController();
   bool _send = false;
   sendMessage() {
-    if(chatMessageController.text.isNotEmpty) {
+    if (chatMessageController.text.isNotEmpty) {
       Map<String, dynamic> message = {
         'message': chatMessageController.text,
-        'sentBy':  _auth.currentUser!.uid,
+        'sentBy': _auth.currentUser!.uid,
         'time': DateTime.now().microsecondsSinceEpoch,
       };
       _service.createChat(widget.chatRoomId, message);
       chatMessageController.clear();
     }
   }
-  Stream<QuerySnapshot> chatMessageStream =  FirebaseFirestore.instance.collection('messages').snapshots();
+
+  Stream<QuerySnapshot> chatMessageStream =
+      FirebaseFirestore.instance.collection('messages').snapshots();
   @override
   void initState() {
-    _service.getChat(widget.chatRoomId).then((value){
-      setState((){
+    _service.getChat(widget.chatRoomId).then((value) {
+      setState(() {
         chatMessageStream = value;
-
       });
     });
     super.initState();
@@ -269,7 +269,6 @@ class _ChatConversationsState extends State<ChatConversations> {
 
   @override
   Widget build(BuildContext context) {
-
     /*class _ChatConversationsState extends State<ChatConversations> {
     FirebaseService _service = FirebaseService();
     final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -292,23 +291,24 @@ class _ChatConversationsState extends State<ChatConversations> {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
-        child: Stack(
-            children: [
-                 Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: StreamBuilder (
-               //   stream: FirebaseFirestore.instance.collection('messages').snapshots(),
-                stream: chatMessageStream,
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    return snapshot.hasData?
-                        ListView.builder(itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context,  index) {
+        child: Stack(children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: StreamBuilder(
+              //   stream: FirebaseFirestore.instance.collection('messages').snapshots(),
+              stream: chatMessageStream,
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                return snapshot.hasData
+                    ? ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
                           //not sure for sent bY check again.
                           String sentBy = snapshot.data!.docs[index]['sentBy'];
-                          String lastChatDate;
+                         // String lastChatDate;
                           String me = _auth.currentUser!.uid;
                           // need do the date later
-                   /*       var _date = DateTimeFormat.format(DateTime.fromMicrosecondsSinceEpoch(snapshot.data!.docs[index]['time']));
+                          /*       var _date = DateTimeFormat.format(DateTime.fromMicrosecondsSinceEpoch(snapshot.data!.docs[index]['time']));
                   var _today = DateTimeFormat.format(DateTime.fromMicrosecondsSinceEpoch(DateTime.now().microsecondsSinceEpoch));
                       //  return Text(snapshot.data!.docs[index]['messages'],);});
                           if(_date == _today) {
@@ -318,39 +318,44 @@ class _ChatConversationsState extends State<ChatConversations> {
                           }
 
                     */
-                      //  print(Text(snapshot.data!.docs[index]['messages'],));
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            ChatBubble(
+                          //  print(Text(snapshot.data!.docs[index]['messages'],));
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                ChatBubble(
+                                  child: Text(
+                                      snapshot.data!.docs[index]['message']),
+                                  backGroundColor:
+                                      sentBy == me ? Colors.green : Colors.blue,
+                                  alignment: sentBy == me
+                                      ? Alignment.centerRight
+                                      : Alignment.centerLeft,
+                                  clipper: ChatBubbleClipper2(
+                                      type: sentBy == me
+                                          ? BubbleType.sendBubble
+                                          : BubbleType.receiverBubble),
+                                ),
+                                //    Text(lastChatDate),
+                              ],
+                            ),
+                          );
+                        })
+                    //  Text(snapshot.data!.docs[index]['message'],);})
+                    : Container();
+                //return Text('messages',);}
+                //);
 
-                              child: Text(snapshot.data!.docs[index]['message']),
-                              backGroundColor: sentBy==me? Colors.green: Colors.blue,
-                          alignment: sentBy == me? Alignment.centerRight: Alignment.centerLeft,
-                          clipper: ChatBubbleClipper2(
-                                  type: BubbleType.sendBubble),),
-                  //    Text(lastChatDate),
-                      ],
-                        ),
-
-                      );
-                    })
-                      //  Text(snapshot.data!.docs[index]['message'],);})
-                        : Container();
-                      //return Text('messages',);}
-                        //);
-
-
-            //Text('test');
-           // Text('lastChat');
-                        //),
-                    //return Text(snapshot.data!.docs[index]['lastChat'],);});
-                    //Container();
-                    }, ),
+                //Text('test');
+                // Text('lastChat');
+                //),
+                //return Text(snapshot.data!.docs[index]['lastChat'],);});
+                //Container();
+              },
             ),
+          ),
 
-                    /*new ListView(
+          /*new ListView(
                     children: snapshot.data!.docs.map((DocumentSnapshot document)){
                       Map<String, dynamic> data =
                   document.data() as Map<String,dynamic>;
@@ -359,63 +364,55 @@ class _ChatConversationsState extends State<ChatConversations> {
 
                      */
 
+          // ChatStream(chatRoomId: widget.chatRoomId),
 
-
-
-             // ChatStream(chatRoomId: widget.chatRoomId),
-
-              Container(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.grey.shade800)
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-
-                            Expanded(child: TextField(
-                              controller: chatMessageController,
-                              style: TextStyle(color: Colors.blue),
-                              decoration: InputDecoration(
-                                  hintText: 'Type Message',
-                                  hintStyle: TextStyle(color: Colors.black),
-                                  border: InputBorder.none
-                              ),
-                              onChanged: (value) {
-                                if(value.isNotEmpty) {
-                                  setState((){
-                                    _send = true;
-                                  });
-                                } else {
-                                  setState((){
-                                    _send = false;
-                                  });
-                                }
-
-                              },
-                                onSubmitted: (value){
-                                  if(value.length>0){
+          Container(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                  decoration: BoxDecoration(
+                    border:
+                        Border(top: BorderSide(color: Colors.grey.shade800)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: TextField(
+                                controller: chatMessageController,
+                                style: TextStyle(color: Colors.blue),
+                                decoration: InputDecoration(
+                                    hintText: 'Type Message',
+                                    hintStyle: TextStyle(color: Colors.black),
+                                    border: InputBorder.none),
+                                onChanged: (value) {
+                                  if (value.isNotEmpty) {
+                                    setState(() {
+                                      _send = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _send = false;
+                                    });
+                                  }
+                                },
+                                onSubmitted: (value) {
+                                  if (value.length > 0) {
                                     sendMessage();
                                   }
-                                }
-                            )),
-                            Visibility(
-                              visible: _send,
-                              child: IconButton(
-                                icon: Icon(Icons.send),
-                                onPressed: sendMessage,
-                              ),
-                            ),
-                          ],
+                                })),
+                        Visibility(
+                          visible: _send,
+                          child: IconButton(
+                            icon: Icon(Icons.send),
+                            onPressed: sendMessage,
+                          ),
                         ),
-                      )
-                  )
-              )
-            ]), ), );
-
-  }}
-
+                      ],
+                    ),
+                  )))
+        ]),
+      ),
+    );
+  }
+}

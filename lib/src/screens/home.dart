@@ -1,4 +1,5 @@
 
+import 'package:buyer_app/src/screens/chatscreen.dart';
 import 'package:buyer_app/src/widgets/categories.dart';
 import 'package:buyer_app/src/widgets/navigateBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +23,10 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+          IconButton(onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => ChatScreen()));
+          }, icon: Icon(Icons.search)),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {

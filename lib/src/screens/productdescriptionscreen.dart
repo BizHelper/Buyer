@@ -301,7 +301,8 @@ Widget build(BuildContext context) {
         sellerId,
         _auth.currentUser!.uid
       ];
-      String chatRoomId = '${sellerId}.${' _auth.currentUser!.uid'}.${listingId}';
+
+      String chatRoomId = '${sellerId}.${_auth.currentUser!.uid}.${listingId}';
       Map<String, dynamic> chatData = {
         'users': users,
         'chatRoomId': chatRoomId,
