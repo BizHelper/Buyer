@@ -79,51 +79,82 @@ class _AccountScreenState extends State<AccountScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Name: "+ getName(),
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text("Profile Pic: ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-            !(Uri.tryParse(getImage())?.hasAbsolutePath ?? false)
-                ? Image.asset('images/noProfilePic.png')
-                : Image.network(_image),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            Column(
               children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.orange[600])),
-                  onPressed: () async {
-                    final uid = AuthService().currentUser?.uid;
-                    String buyerName = getName();
-                    DocumentReference dr = FirebaseFirestore.instance.collection('buyers').doc(uid);
-                    final XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-                    if (pickedFile == null) {
-                      print('null');
-                      return;
-                    }
-                    final File image = (File(pickedFile.path));
+                const SizedBox(
+                  height: 20.0,
+                ),
 
-                    FirebaseStorage storage = FirebaseStorage.instance;
-                    Reference ref = storage.ref().child(pickedFile.path + DateTime.now().toString());
-                    await ref.putFile(image);
-                    String imageURL = await ref.getDownloadURL();
-                    dr.set({
-                      'Name' : buyerName,
-                      'Profile Pic' : imageURL
-                    });
-                    setState(() => _image = imageURL);
-                  },
-                  child: const Text(
-                    'Change Profile Picture',
-                    style: TextStyle(color: Colors.black),
+               /* Text("Profile Pic: ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                !(Uri.tryParse(getImage())?.hasAbsolutePath ?? false)
+                    ? CircleAvatar(radius: 60,
+                    backgroundImage: Image.asset('images/noProfilePic.png').image)
+                    : CircleAvatar(
+                    radius: 60,
+                    backgroundImage: Image.network(_image).image),
+
+                */
+                Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: !(Uri.tryParse(getImage())?.hasAbsolutePath ?? false)
+                          ? Image.asset('images/noProfilePic.png').image
+                          : Image.network(_image).image,
+                    ),
                   ),
                 ),
+                Text(
+                  getName(),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.orange[600])),
+                      onPressed: () async {
+                        final uid = AuthService().currentUser?.uid;
+                        String buyerName = getName();
+                        DocumentReference dr = FirebaseFirestore.instance.collection('buyers').doc(uid);
+                        final XFile? pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                        if (pickedFile == null) {
+                          print('null');
+                          return;
+                        }
+                        final File image = (File(pickedFile.path));
+
+                        FirebaseStorage storage = FirebaseStorage.instance;
+                        Reference ref = storage.ref().child(pickedFile.path + DateTime.now().toString());
+                        await ref.putFile(image);
+                        String imageURL = await ref.getDownloadURL();
+                        dr.set({
+                          'Name' : buyerName,
+                          'Profile Pic' : imageURL
+                        });
+                        setState(() => _image = imageURL);
+                      },
+                      child: const Text(
+                        'Change Profile Picture',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              //  NavigateBar(),
               ],
             ),
             NavigateBar(),
