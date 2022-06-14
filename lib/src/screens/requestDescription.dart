@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/screens/acceptedrequest.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class RequestDescriptionScreen extends StatefulWidget {
   var price;
   var title;
   var requestID;
+  var buyerID;
 
   RequestDescriptionScreen({
     this.buyerName,
@@ -23,6 +25,7 @@ class RequestDescriptionScreen extends StatefulWidget {
     this.price,
     this.title,
     this.requestID,
+    this.buyerID,
   });
 
   @override
@@ -45,13 +48,17 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
-        leading: IconButton(
+      /*  leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => RequestScreen()));
+                MaterialPageRoute(builder: (context) => AcceptedRequestScreen()));
           },
         ),
+
+       */
+
+
         title: const Text(
           'Request Description',
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
@@ -68,13 +75,16 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        widget.title,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
+                    SizedBox(width:30),
                     Text(
                       '\$' + widget.price,
                       style: const TextStyle(
@@ -114,10 +124,12 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: const [
-                    Text(
-                      'Description:',
-                      style: TextStyle(
-                        fontSize: 16,
+                    Expanded(
+                      child: Text(
+                        'Description:',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],

@@ -46,7 +46,7 @@ class SingleRequest extends StatelessWidget {
         ),
         trailing: InkWell(
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RequestDescriptionScreen(
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RequestDescriptionScreen(
               buyerName: buyerName,
               sellerName: sellerName,
               category: category,

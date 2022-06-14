@@ -33,7 +33,7 @@ class Product extends StatelessWidget {
           child: Material(
             child: InkWell(
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ProductDescriptionScreen(
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductDescriptionScreen(
                   productDetailName: prodName,
                   productDetailShopName: prodShopName,
                   productDetailPrice:  prodPrice,

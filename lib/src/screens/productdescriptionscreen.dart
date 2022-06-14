@@ -188,121 +188,45 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/products.dart';
+
 class ProductDescriptionScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseService _service = FirebaseService();
 
+  var productDetailName;
+  var productDetailShopName;
+  var productDetailPrice;
+  var productDetailCategory;
+  var productDetailDescription;
+  var productDetailImages;
+  var productDetailId;
+  var sellerId;
+  var listingId;
 
-var productDetailName;
-var productDetailShopName;
-var productDetailPrice;
-var productDetailCategory;
-var productDetailDescription;
-var productDetailImages;
-var productDetailId;
-var sellerId;
-var listingId;
-
-ProductDescriptionScreen(
-    {this.productDetailName,
+  ProductDescriptionScreen(
+      {this.productDetailName,
       this.productDetailShopName,
       this.productDetailPrice,
       this.productDetailCategory,
       this.productDetailDescription,
       this.productDetailImages,
-    this.productDetailId, this.sellerId,
-      this.listingId
-  });
-
-
-/*
-createChatRoom(Product provider) async {
-  Map <String, dynamic> product = {
-    'productDetailId': provider.prodId,
-    'productDetailImages': provider.prodDescription,
-    'productDetailPrice': provider.prodPrice,
-    'productDetailName': provider.prodName,
-  };
-
-  List<String> users = [
-    provider.sellerId,
-  _auth.currentUser!.uid
-  ];
-  String chatRoomId = '${provider.sellerId}.${' _auth.currentUser!.uid'}.${provider.prodId}';
-      Map<String, dynamic> chatData = {
-        'users': users,
-        'chatRoomId': chatRoomId,
-        'product': product,
-        'lastChat': null,
-        'lastChatTime': DateTime.now().microsecondsSinceEpoch,
-      };
-
-      _service.createChatRoom(
-        chatData: chatData,
-      );
-  //Navigator.push (
-    // context,
-    //MaterialPageRoute (
-      //builder: (BuildContext context) => const ChatConversations(),
-    //),
- // );
-
-}
-
-
- */
-/*
-  createChatRoom() async {
-    Map <String, dynamic> product = {
-      'productDetailId': listingId,
-      'productDetailImages': productDetailImages,
-      'productDetailPrice': productDetailPrice,
-      'productDetailName': productDetailName,
-    };
-
-    List<String> users = [
-      //provider.sellerId,
-      sellerId,
-      _auth.currentUser!.uid
-    ];
-    String chatRoomId = '${sellerId}.${' _auth.currentUser!.uid'}.${listingId}';
-    Map<String, dynamic> chatData = {
-      'users': users,
-      'chatRoomId': chatRoomId,
-      'product': product,
-      'lastChat': null,
-      'lastChatTime': DateTime.now().microsecondsSinceEpoch,
-    };
-
-    _service.createChatRoom(
-      chatData: chatData,
-    );
-    Navigator.push (
-     context,
-    MaterialPageRoute (
-    builder: (BuildContext context) => const ChatConversations(),
-    ),
-     );
-
-  }
-
- */
-
+      this.productDetailId,
+      this.sellerId,
+      this.listingId});
 
   @override
-Widget build(BuildContext context) {
- //var product = Provider.of<Product> (context);
+  Widget build(BuildContext context) {
     createChatRoom() async {
-      Map <String, dynamic> product = {
+      Map<String, dynamic> product = {
         'productDetailId': listingId,
         'productDetailImages': productDetailImages,
         'productDetailPrice': productDetailPrice,
         'productDetailName': productDetailName,
-          'productDetailShopName': productDetailShopName,
-      'productDetailCategory': productDetailCategory,
-     'productDetailDescription': productDetailDescription,
-          'sellerId': sellerId,
-          'listingId': listingId,
+        'productDetailShopName': productDetailShopName,
+        'productDetailCategory': productDetailCategory,
+        'productDetailDescription': productDetailDescription,
+        'sellerId': sellerId,
+        'listingId': listingId,
       };
 
       List<String> users = [
@@ -323,155 +247,137 @@ Widget build(BuildContext context) {
       _service.createChatRoom(
         chatData: chatData,
       );
-      Navigator.push (
+      Navigator.push(
         context,
-        MaterialPageRoute (
-          builder: (BuildContext context) =>  ChatConversations(
-            chatRoomId: chatRoomId,
+        MaterialPageRoute(
+          builder: (BuildContext context) => ChatConversations(
+            chatRoomId: chatRoomId,type: 'listings'
           ),
         ),
       );
-
-
-      //Navigator.of(context).pushReplacement(
-        //  MaterialPageRoute(
-          //    builder: (context) => ChatConversations(chatRoomId: chatRoomId)));
     }
-   return   Scaffold(
-     backgroundColor: Colors.blueGrey[50],
-     appBar: AppBar(
-       centerTitle: true,
-       backgroundColor: Colors.cyan.shade900,
-       leading: IconButton(
-         icon: Icon(Icons.arrow_back_rounded),
-         onPressed: () {
-           Navigator.of(context).pushReplacement(
-               MaterialPageRoute(builder: (context) => HomeScreen()));
-         },
-       ),
-       title: const Text(
-         'Product Description',
-         style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
-       ),
-     ),
-     body: SingleChildScrollView(
-       child: Padding(
-         padding: const EdgeInsets.all(8.0),
-         child: Column(
-          // 28.59 need change where seller cant press chat or sth
-           children: [
-             SizedBox(
-               height: 300,
-               child: Image.network(this.productDetailImages),
-             ),
-             Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   Text(
-                     '$productDetailName',
-                     style: const TextStyle(
-                       fontSize: 20,
-                       fontWeight: FontWeight.bold,
-                     ),
-                   ),
-                   Text(
-                     '\$$productDetailPrice',
-                     style: const TextStyle(
-                       color: Colors.red,
-                       fontSize: 20,
-                       fontWeight: FontWeight.bold,
-                     ),
-                   ),
-                 ],
-               ),
-             ),
-             Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.start,
-                 children: [
-                   Text(
-                     'by: $productDetailShopName',
-                     style: const TextStyle(
-                       fontSize: 15,
-                     ),
-                   ),
-                 ],
-               ),
-             ),
-             const SizedBox(
-               height: 20,
-             ),
-             Padding(
-               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.start,
-                 children: const [
-                   Text(
-                     'Description:',
-                     style: TextStyle(
-                       fontSize: 16,
-                     ),
-                   ),
-                 ],
-               ),
-             ),
-             Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: Row(
-                 children: [
-                   Flexible(
-                     child: Text(
-                       '$productDetailDescription',
-                       style: const TextStyle(
-                         fontSize: 16,
-                       ),
-                     ),
-                   ),
-                 ],
-               ),
-             ),
 
-           // TextButton(child: (Text('Chat', style: TextStyle(fontSize:20, fontWeight:FontWeight.bold))),
-             //  onPressed: createChatRoom,),
-             Padding(
-               padding: const EdgeInsets.only(right: 16),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.end,
-                 children: [
-                   InkWell(
-                   //  borderRadius:,
-                     onTap:
-                     createChatRoom,
-                     child: Column(
-                       children: [
-                         Icon(
-                           Icons.chat,
-                           size: 28.0,
-                           color: Colors.blue,
-                         ),
-                         Text(
-                           'Chat',
-                           style: TextStyle(
-                          //   fontSize: 20,
-                             fontWeight: FontWeight.bold,
-                             color: Colors.blue,
-                           ),
-                         ),
-                       ],
-                     ),
-                   ),
-                 ],
-               ),
-             ),
-          ],
-         ),
-       ),
-     ),
-   );
- }
+    return Scaffold(
+      backgroundColor: Colors.blueGrey[50],
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.cyan.shade900,
+        title: const Text(
+          'Product Description',
+          style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            // 28.59 need change where seller cant press chat or sth
+            children: [
+              SizedBox(
+                height: 300,
+                child: Image.network(this.productDetailImages),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '$productDetailName',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '\$$productDetailPrice',
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'by: $productDetailShopName',
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Description:',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        '$productDetailDescription',
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      //  borderRadius:,
+                      onTap: createChatRoom,
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.chat,
+                            size: 28.0,
+                            color: Colors.blue,
+                          ),
+                          Text(
+                            'Chat',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
-
-

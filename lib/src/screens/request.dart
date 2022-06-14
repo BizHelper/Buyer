@@ -4,6 +4,7 @@ import 'package:buyer_app/src/screens/account.dart';
 import 'package:buyer_app/src/screens/explore.dart';
 import 'package:buyer_app/src/screens/home.dart';
 import 'package:buyer_app/src/screens/location.dart';
+import 'package:buyer_app/src/screens/requestchat.dart';
 import 'package:buyer_app/src/screens/requestform.dart';
 import 'package:buyer_app/src/widgets/singlerequest.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -47,7 +48,10 @@ class _RequestScreenState extends State<RequestScreen> {
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+          IconButton(onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => RequestChatScreen()));
+          }, icon: Icon(Icons.chat)),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {

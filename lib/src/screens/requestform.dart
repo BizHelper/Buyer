@@ -21,6 +21,7 @@ class AuthService {
 }
 
 class _RequestFormScreenState extends State<RequestFormScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final List<String> categories = [
     'Bags & Wallets',
@@ -231,6 +232,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                           request.putIfAbsent('Seller Name', () => 'null');
                           request.putIfAbsent('Title', () => _currentTitle);
                           request.putIfAbsent('Accepted', () => 'false');
+                          request.putIfAbsent('Buyer ID', () => _auth.currentUser!.uid);
                           dr.set(request);
                           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RequestScreen()));
                         }

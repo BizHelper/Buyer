@@ -38,7 +38,8 @@ class _ChatCardState extends State<ChatCard> {
           Navigator.push (
             context,
             MaterialPageRoute (
-              builder: (BuildContext context) =>  ChatConversations(chatRoomId: widget.chatData['chatRoomId']),
+              builder: (BuildContext context) =>  ChatConversations(chatRoomId: widget.chatData['chatRoomId'],
+              type: 'listings'),
             ),
           );
 
@@ -60,7 +61,8 @@ class _ChatCardState extends State<ChatCard> {
         ),
         trailing: InkWell(
           onTap: () {
-            Navigator.of(context).pushReplacement(
+
+            Navigator.of( context).push(
                 MaterialPageRoute(
                     builder: (context) => ProductDescriptionScreen(
                     productDetailName: widget.chatData['product']['productDetailName'],
