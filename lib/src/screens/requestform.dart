@@ -47,6 +47,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
         backgroundColor: Colors.cyan[900],
         centerTitle: true,

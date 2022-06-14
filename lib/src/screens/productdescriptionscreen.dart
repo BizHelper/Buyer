@@ -176,6 +176,8 @@ class ProductDescriptionScreen extends StatelessWidget {
         );
   }
 } */
+//import 'dart:html';
+
 import 'package:buyer_app/src/firebase_service.dart';
 import 'package:buyer_app/src/screens/chat_conversation_screen.dart';
 import 'package:buyer_app/src/screens/home.dart';
@@ -208,7 +210,9 @@ ProductDescriptionScreen(
       this.productDetailCategory,
       this.productDetailDescription,
       this.productDetailImages,
-    this.productDetailId, this.sellerId, this.listingId});
+    this.productDetailId, this.sellerId,
+      this.listingId
+  });
 
 
 /*
@@ -294,6 +298,11 @@ Widget build(BuildContext context) {
         'productDetailImages': productDetailImages,
         'productDetailPrice': productDetailPrice,
         'productDetailName': productDetailName,
+          'productDetailShopName': productDetailShopName,
+      'productDetailCategory': productDetailCategory,
+     'productDetailDescription': productDetailDescription,
+          'sellerId': sellerId,
+          'listingId': listingId,
       };
 
       List<String> users = [
@@ -329,6 +338,7 @@ Widget build(BuildContext context) {
           //    builder: (context) => ChatConversations(chatRoomId: chatRoomId)));
     }
    return   Scaffold(
+     backgroundColor: Colors.blueGrey[50],
      appBar: AppBar(
        centerTitle: true,
        backgroundColor: Colors.cyan.shade900,

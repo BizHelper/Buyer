@@ -101,10 +101,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
     @override
     Widget build(BuildContext context) {
-      return DefaultTabController(
+      return
+      /* DefaultTabController(
         length: 1,
         initialIndex: 0,
-        child: Scaffold(
+        child:
+
+       */
+        Scaffold(
+            backgroundColor: Colors.blueGrey[50],
             appBar: AppBar(
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back_rounded),
@@ -113,10 +118,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
                 ),
-                elevation: 0.0,
                 backgroundColor: Colors.cyan.shade900,
-                title: Text('Chats', style: TextStyle(color: Colors.white)),
-                bottom: TabBar(
+                centerTitle: true,
+                title: Text('All Chats', style: TextStyle(color: Colors.white)),
+               /* bottom: TabBar(
                     labelStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -124,34 +129,36 @@ class _ChatScreenState extends State<ChatScreen> {
                     labelColor: Colors.white,
                     indicatorColor: Colors.white,
                     indicatorWeight: 6,
-                    tabs: [
-                      Tab(text: 'All Chats'),
-                    ])),
-            body: TabBarView(children: [
-              Container(
-                // need to include all the something went wrong stuff 38.59
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: _service.messages
-                      .where('users', arrayContains: _auth.currentUser!.uid)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasData) {
-                      return new ListView(
-                        children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                          Map<String, dynamic> data =
-                          document.data() as Map<String, dynamic>;
-                          return new ChatCard(data);
-                        }).toList(),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  },
-                ),
-              )
-            ])),
-      );
+                    //tabs: [
+                      //Tab(text: 'All Chats'),
+                    //]
+      )
+
+                */
+            ),
+            body: Container(
+              // need to include all the something went wrong stuff 38.59
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _service.messages
+                    .where('users', arrayContains: _auth.currentUser!.uid)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return new ListView(
+                      children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                        document.data() as Map<String, dynamic>;
+                        return new ChatCard(data);
+                      }).toList(),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ));
+
     }
   }

@@ -15,7 +15,8 @@ class _ResetScreenState extends State<ResetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey.shade100,
+
+      backgroundColor: Colors.blueGrey.shade50,
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade900,
         centerTitle: true,

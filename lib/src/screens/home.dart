@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey.shade100,
+      backgroundColor: Colors.blueGrey.shade50,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
@@ -72,16 +72,16 @@ class HomeScreen extends StatelessWidget {
                  // PageView(
                     crossAxisCount: 2,
                     children: snapshot.data!.docs.map(
-                          (listings) {
-                            return
-                            Product(prodName: listings['Name'],
-                        prodShopName: listings['Seller Name'],
-                        prodPrice: listings['Price'],
-                        prodCategory: listings['Category'],
-                        prodDescription: listings['Description'],
-                        prodImage: listings['Image URL'],
-                            sellerId: listings['Seller Id'],
-                            listingId: listings['Listing ID']);
+    (listings) {
+    return
+    Product(prodName: listings['Name'],
+    prodShopName: listings['Seller Name'],
+    prodPrice: listings['Price'],
+    prodCategory: listings['Category'],
+    prodDescription: listings['Description'],
+    prodImage: listings['Image URL'],
+    sellerId: listings['Seller Id'],
+    listingId: listings['Listing ID']);
 
                       },
                     ).toList(),

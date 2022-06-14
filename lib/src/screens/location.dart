@@ -12,7 +12,7 @@ class LocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey.shade100,
+      backgroundColor: Colors.blueGrey.shade50,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
