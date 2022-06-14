@@ -323,6 +323,10 @@ Widget build(BuildContext context) {
         ),
       );
 
+
+      //Navigator.of(context).pushReplacement(
+        //  MaterialPageRoute(
+          //    builder: (context) => ChatConversations(chatRoomId: chatRoomId)));
     }
    return   Scaffold(
      appBar: AppBar(
@@ -420,9 +424,39 @@ Widget build(BuildContext context) {
                ),
              ),
 
-            TextButton(child: (Text('Chat', style: TextStyle(fontSize:16, fontWeight:FontWeight.bold))),
-               onPressed: createChatRoom,),
-           ],
+           // TextButton(child: (Text('Chat', style: TextStyle(fontSize:20, fontWeight:FontWeight.bold))),
+             //  onPressed: createChatRoom,),
+             Padding(
+               padding: const EdgeInsets.only(right: 16),
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.end,
+                 children: [
+                   InkWell(
+                   //  borderRadius:,
+                     onTap:
+                     createChatRoom,
+                     child: Column(
+                       children: [
+                         Icon(
+                           Icons.chat,
+                           size: 28.0,
+                           color: Colors.blue,
+                         ),
+                         Text(
+                           'Chat',
+                           style: TextStyle(
+                          //   fontSize: 20,
+                             fontWeight: FontWeight.bold,
+                             color: Colors.blue,
+                           ),
+                         ),
+                       ],
+                     ),
+                   ),
+                 ],
+               ),
+             ),
+          ],
          ),
        ),
      ),

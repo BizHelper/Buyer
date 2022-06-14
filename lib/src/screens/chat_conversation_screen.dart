@@ -216,8 +216,10 @@ class _ChatConversationsState extends State<ChatConversations> {
 
                 }}*/
 
+import 'package:buyer_app/src/app.dart';
 import 'package:buyer_app/src/chat_stream.dart';
 import 'package:buyer_app/src/firebase_service.dart';
+import 'package:buyer_app/src/screens/chatscreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -255,20 +257,25 @@ class _ChatConversationsState extends State<ChatConversations> {
     }
   }
 
-  Stream<QuerySnapshot> chatMessageStream =
-      FirebaseFirestore.instance.collection('messages').snapshots();
-  @override
+
+
+   Stream<QuerySnapshot> ?chatMessageStream;  //=
+     // FirebaseFirestore.instance.collection('messages').snapshots();
+ @override
   void initState() {
     _service.getChat(widget.chatRoomId).then((value) {
       setState(() {
-        chatMessageStream = value;
+       // chatMessageStream =FirebaseFirestore.instance.collection('messages').snapshots() ;
+     chatMessageStream = value;
       });
     });
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     /*class _ChatConversationsState extends State<ChatConversations> {
     FirebaseService _service = FirebaseService();
     final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -289,7 +296,11 @@ class _ChatConversationsState extends State<ChatConversations> {
      */
     // go see video at 23.54
     return Scaffold(
-      appBar: AppBar(),
+
+
+appBar: AppBar(
+  title: Text('Chat'),
+),
       body: Container(
         child: Stack(children: [
           Padding(
@@ -300,11 +311,14 @@ class _ChatConversationsState extends State<ChatConversations> {
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 return snapshot.hasData
-                    ? ListView.builder(
+                    ?
+                ListView.builder(
                         itemCount: snapshot.data!.docs.length,
+                  //itemCount: 1,
                         itemBuilder: (context, index) {
                           //not sure for sent bY check again.
                           String sentBy = snapshot.data!.docs[index]['sentBy'];
+                        //  String sentBy = snapshot.data!.docs('sentBy');
                          // String lastChatDate;
                           String me = _auth.currentUser!.uid;
                           // need do the date later
@@ -319,7 +333,8 @@ class _ChatConversationsState extends State<ChatConversations> {
 
                     */
                           //  print(Text(snapshot.data!.docs[index]['messages'],));
-                          return Padding(
+                          return
+                            Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
@@ -328,13 +343,15 @@ class _ChatConversationsState extends State<ChatConversations> {
                                       snapshot.data!.docs[index]['message']),
                                   backGroundColor:
                                       sentBy == me ? Colors.green : Colors.blue,
-                                  alignment: sentBy == me
+                                 alignment: sentBy == me
                                       ? Alignment.centerRight
                                       : Alignment.centerLeft,
                                   clipper: ChatBubbleClipper2(
                                       type: sentBy == me
                                           ? BubbleType.sendBubble
                                           : BubbleType.receiverBubble),
+
+
                                 ),
                                 //    Text(lastChatDate),
                               ],
@@ -366,7 +383,7 @@ class _ChatConversationsState extends State<ChatConversations> {
 
           // ChatStream(chatRoomId: widget.chatRoomId),
 
-          Container(
+      Container(
               alignment: Alignment.bottomCenter,
               child: Container(
                   decoration: BoxDecoration(
@@ -411,8 +428,12 @@ class _ChatConversationsState extends State<ChatConversations> {
                       ],
                     ),
                   )))
+
+
         ]),
       ),
     );
+
+
   }
 }

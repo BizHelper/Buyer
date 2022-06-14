@@ -1,9 +1,4 @@
-//import 'package:buyer_app/src/products.dart';
-import 'package:buyer_app/src/screens/acceptedrequest.dart';
-import 'package:buyer_app/src/screens/account.dart';
-import 'package:buyer_app/src/screens/explore.dart';
-import 'package:buyer_app/src/screens/home.dart';
-import 'package:buyer_app/src/screens/location.dart';
+import 'package:buyer_app/src/screens/request.dart';
 import 'package:buyer_app/src/screens/requestform.dart';
 import 'package:buyer_app/src/widgets/singlerequest.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,17 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 
 import '../widgets/navigateBar.dart';
-class RequestScreen extends StatefulWidget {
+class AcceptedRequestScreen extends StatefulWidget {
 
   @override
-  State<RequestScreen> createState() => _RequestScreenState();
+  State<AcceptedRequestScreen> createState() => _AcceptedRequestScreen();
 }
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? get currentUser => _auth.currentUser;
 }
 
-class _RequestScreenState extends State<RequestScreen> {
+class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   String _buyerName = '';
@@ -41,7 +36,9 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+  //  Container(child: Text('Text'));
+    Scaffold(
       backgroundColor: Colors.blueGrey.shade100,
       appBar: AppBar(
         centerTitle: true,
@@ -97,9 +94,11 @@ class _RequestScreenState extends State<RequestScreen> {
 
       StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('requests')
-            .where('Buyer Name', isEqualTo: getName())
-        .where('Seller Name', isEqualTo: 'null')
-            .snapshots(),
+        .where('Buyer Name', isEqualTo: getName()).where('Accepted', isEqualTo: 'true').snapshots(),
+          //  .where('Seller Name', isNotEqualTo: 'null').where('Buyer Name', isEqualTo: getName()).
+          //snapshots(),
+          //.where('Seller Name', isNotEqualTo: 'null' ).where('Buyer Name', isEqualTo: getName())
+         //   .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Container();
@@ -140,10 +139,14 @@ class _RequestScreenState extends State<RequestScreen> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => RequestScreen()));
+                        },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
-                              Colors.amber),
+                              Colors.orange),
                           shape: MaterialStateProperty.all(
                             const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
@@ -159,13 +162,11 @@ class _RequestScreenState extends State<RequestScreen> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => AcceptedRequestScreen()));
+
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
-                              Colors.orange),
+                              Colors.amber),
                           shape: MaterialStateProperty.all(
                             const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
@@ -206,5 +207,6 @@ class _RequestScreenState extends State<RequestScreen> {
 
           );
         },),);
+
   }
 }

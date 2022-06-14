@@ -14,12 +14,12 @@ ChatCard(this.chatData);
 
 class _ChatCardState extends State<ChatCard> {
   FirebaseService _service = FirebaseService();
-  late DocumentSnapshot doc;
-  @override
-  void initState() {
-    getProductDetails();
-    super.initState();
-  }
+    DocumentSnapshot? doc;
+ // @override
+ // void initState() {
+   // getProductDetails();
+    //super.initState();
+ // }
   getProductDetails() {
     _service.getProductDetails(widget.chatData['product']['productDetailId']).then((value){
       setState((){
@@ -29,6 +29,7 @@ class _ChatCardState extends State<ChatCard> {
   }
   @override
   Widget build(BuildContext context) {
+    getProductDetails();
     return doc == null?
         Container(): Container(
       child: ListTile(
@@ -39,13 +40,18 @@ class _ChatCardState extends State<ChatCard> {
               builder: (BuildContext context) =>  ChatConversations(chatRoomId: widget.chatData['chatRoomId']),
             ),
           );
+
+
+       //   Navigator.of(context).pushReplacement(
+         //    MaterialPageRoute(
+           //       builder: (context) => ChatConversations(chatRoomId: widget.chatData['chatRoomId'])));
         },
-        leading: Image.network(doc['Image URL']),
-        title: Text(doc['Name']),
+        leading: Image.network(doc!['Image URL']),
+        title: Text(doc!['Name']),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(doc['Description'], maxLines: 1),
+            Text(doc!['Description'], maxLines: 1),
             if(widget.chatData['lastChat']!= null)
               Text(widget.chatData['lastChat'], maxLines: 1, style: TextStyle(fontSize: 10))
 

@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
           IconButton(onPressed: () {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => ChatScreen()));
-          }, icon: Icon(Icons.search)),
+          }, icon: Icon(Icons.chat)),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
