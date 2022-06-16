@@ -42,12 +42,12 @@ class _RequestChatCardState extends State<RequestChatCard> {
             ),
           );
         },
-        leading: Text('leading'),
-        title: Text('title'),
+        leading: Text(widget.chatData['request']['buyerName']),
+        title: Text(widget.chatData['request']['title']),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('subtitle'),
+            Text('by: ' + widget.chatData['request']['deadline']),
           ],
         ),
         trailing: InkWell(

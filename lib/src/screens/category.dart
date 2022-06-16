@@ -6,6 +6,7 @@ import 'package:buyer_app/src/widgets/categories.dart';
 import 'package:buyer_app/src/widgets/navigateBar.dart';
 
 import '../widgets/products.dart';
+import 'chatscreen.dart';
 
 
 class CategoryScreen extends StatefulWidget {
@@ -48,6 +49,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
         backgroundColor: Colors.cyan[900],
         centerTitle: true,
         actions: <Widget>[
+          IconButton(onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => ChatScreen()));
+          }, icon: Icon(Icons.chat)),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {

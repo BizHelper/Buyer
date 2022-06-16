@@ -167,7 +167,7 @@ class _ChatConversationsState extends State<ChatConversations> {
                           if (value.length > 0) {
                             sendMessage();
                           }
-                        }),
+                        },),
                   ),
                   Visibility(
                     visible: _send,

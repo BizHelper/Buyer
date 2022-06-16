@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 final commentRef = FirebaseFirestore.instance.collection('comments');
 late CollectionReference buyersRef =
-FirebaseFirestore.instance.collection('buyers');
+    FirebaseFirestore.instance.collection('buyers');
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class CommentsScreen extends StatefulWidget {
@@ -22,38 +22,39 @@ class AuthService {
   User? get currentUser => _auth.currentUser;
 }
 
-
 class CommentsScreenState extends State<CommentsScreen> {
-
- // DateTime timestamp = new DateTime.now();
+  bool _send = false;
+  // DateTime timestamp = new DateTime.now();
   //String date = ('yyyy-MM-dd – hh:mm:a').format(timestamp);
 
   TextEditingController commentController = TextEditingController();
   buildComments() {
     return StreamBuilder(
-        stream:
-        commentRef.doc(widget.postID).collection('comments').
-        snapshots(),
-        builder: (BuildContext context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-           List<Comment> comments = [];
-
-          snapshot.data!.docs.forEach((doc) {
-
+      stream: commentRef
+          .doc(widget.postID)
+          .collection('comments')
+          .orderBy('time')
+          .snapshots(),
+      builder: (BuildContext context,
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+        if (!snapshot.hasData) {
+          return Container();
+        }
+        List<Comment> comments = [];
+        snapshot.data!.docs.forEach(
+          (doc) {
             comments.add(Comment.fromDocument(doc));
-
-          });
-
-          return ListView(children: comments);
-        });
+          },
+        );
+        return ListView(children: comments);
+      },
+    );
   }
 
   addComment() async {
     final uid = AuthService().currentUser?.uid;
-    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
+    DocumentSnapshot ds =
+        await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
     String buyerName = ds.get('Name');
     String profilePic = ds.get('Profile Pic');
 
@@ -63,7 +64,8 @@ class CommentsScreenState extends State<CommentsScreen> {
         "userId": _auth.currentUser!.uid,
         "name": buyerName,
         "profilePic": profilePic,
-      //  "timestamp": timestamp,
+        'time': DateTime.now().microsecondsSinceEpoch,
+        //  "timestamp": timestamp,
       },
     );
     commentController.clear();
@@ -93,13 +95,15 @@ class CommentsScreenState extends State<CommentsScreen> {
           Expanded(child: buildComments()),
           Divider(),
           ListTile(
-              title: TextFormField(
-                controller: commentController,
-                decoration: InputDecoration(labelText: " Write a comment..."),
-              ),
-              trailing: OutlinedButton(
-                  onPressed: () => addComment(), child: Text("Post")),
+            title: TextFormField(
+              controller: commentController,
+              decoration: InputDecoration(labelText: " Write a comment..."),
             ),
+            trailing: OutlinedButton(
+              onPressed: () => addComment(),
+              child: Text("Post"),
+            ),
+          ),
         ],
       ),
     );
@@ -111,14 +115,12 @@ class Comment extends StatelessWidget {
   final String comment;
   final String name;
   final String profilePic;
- // final String timestamp;
 
   Comment({
     required this.userId,
     required this.comment,
     required this.name,
     required this.profilePic,
- //   required this.timestamp,
   });
 
   factory Comment.fromDocument(DocumentSnapshot doc) {
@@ -127,78 +129,46 @@ class Comment extends StatelessWidget {
       comment: doc['comment'],
       name: doc['name'],
       profilePic: doc['profilePic'],
-     // timestamp: doc['timestamp'],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title:
-
-     Row(
- crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-        Container(
-        width: 35,
-        height: 35,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          image: DecorationImage(
-            fit: BoxFit.fill,
-           // image: !(Uri.tryParse(getImage())?.hasAbsolutePath ?? false)
-             //  ? Image.asset('images/noProfilePic.png').image
-               image: Image.network(profilePic).image,
-          ),
-        ),
-      ),
-
-         // Row(children:[
-          Text(
-            "  " + name,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-
-          Expanded(child:  Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Text( comment, style: TextStyle(fontSize: 15)),
-          ))
-
-        ],
-      ),
-     /* Row(
+      title: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-       children: [
-          Container(
-            width: 35,
-            height: 35,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: Image.network(profilePic).image,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Container(
+              width: 35,
+              height: 35,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: Image.network(profilePic).image,
+                ),
               ),
             ),
-            //child: Image.network(profilePic),
           ),
-         Row(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children:[
-          Text(
-            "  " + name,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                //text: 'Hi',
+                style: TextStyle(color: Colors.black),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: name + '  ',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: comment)
+                ],
+              ),
+            ),
           ),
-        //  Text("  " + comment, style: TextStyle(fontSize: 15)),
-          Expanded(child:  Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Text( comment, style: TextStyle(fontSize: 15)),
-          )),
-             ],),
         ],
-      ),*/
-
+      ),
     );
   }
 }
