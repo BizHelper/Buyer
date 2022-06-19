@@ -30,6 +30,7 @@ class RequestDescriptionScreen extends StatefulWidget {
 
   @override
   State<RequestDescriptionScreen> createState() => _RequestDescriptionScreenState();
+
 }
 
 class AuthService {
@@ -40,6 +41,8 @@ class AuthService {
 class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   String _sellerName = '';
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +153,36 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                   ],
                 ),
               ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () {
+                  DocumentReference dr = FirebaseFirestore.instance.collection('requests').doc(widget.requestID);
+                  dr.delete();
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => RequestScreen()));
+                },
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.delete,
+                      size: 28.0,
+                      color: Colors.red[900],
+                    ),
+                    Text(
+                      'Delete Listing',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red[900],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ],
               /*widget.sellerName == 'null' ?
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -190,10 +223,10 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
               Container(),
 
                */
-            ],
+           // ],
           ),
         ),
-      ),
-    );
+      ],),
+    ),),);
   }
 }

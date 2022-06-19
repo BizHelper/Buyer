@@ -102,7 +102,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                           left: 8,
                                                           right: 16,
                                                           top: 4,
-                                                          bottom: 4),
+                                                          bottom: 8),
                                                   child: Text(
                                                     'by ' +
                                                         posts['Seller Name'],
@@ -113,7 +113,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                     ),
                                                   ),
                                                 ),
-                                                TextButton(
+                                              /* TextButton(
                                                   onPressed: () {
                                                     Navigator.of(context)
                                                         .pushReplacement(
@@ -127,7 +127,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                   },
                                                   child:
                                                       const Text('Add Comment'),
-                                                ),
+                                                ),*/
                                               ],
                                             ),
                                             Padding(
@@ -141,6 +141,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                               builder:
                                                                   (context) =>
                                                                       VideoScreen(
+                                                                        postID: posts['Post ID'],
                                                                         videoURL:
                                                                             posts['URL'],
                                                                         description:

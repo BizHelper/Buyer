@@ -78,13 +78,15 @@ class CommentsScreenState extends State<CommentsScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
-        leading: IconButton(
+     /*   leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded),
           onPressed: () {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => ExploreScreen()));
           },
         ),
+
+      */
         title: const Text(
           'Comment Section',
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),

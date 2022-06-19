@@ -77,7 +77,7 @@ class ChatScreen extends StatelessWidget {
 
 
 class ChatScreen extends StatefulWidget {
-//  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({Key? key}) : super(key: key);
   //final String chatRoomId;
   //ChatScreen({required this.chatRoomId});
   @override
@@ -137,14 +137,15 @@ class _ChatScreenState extends State<ChatScreen> {
                 */
             ),
             body: Container(
-              // need to include all the something went wrong stuff 38.59
               child: StreamBuilder<QuerySnapshot>(
                 stream: _service.messages
                     .where('users', arrayContains: _auth.currentUser!.uid)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasData) {
+                  if (!snapshot.hasData) {
+                    return Container();
+                  }
                     return new ListView(
                       children:
                       snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -153,10 +154,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         return new ChatCard(data);
                       }).toList(),
                     );
-                  } else {
-                    return Container();
                   }
-                },
+            //    },
               ),
             ));
 

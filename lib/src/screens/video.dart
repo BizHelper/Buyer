@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/screens/comment.dart';
 import 'package:buyer_app/src/screens/explore.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -5,15 +6,15 @@ import 'package:video_player/video_player.dart';
 class VideoScreen extends StatefulWidget {
   var videoURL;
   var description;
+  var postID;
 
-  VideoScreen({this.videoURL, this.description});
+  VideoScreen({this.videoURL, this.description, this.postID});
 
   @override
   State<VideoScreen> createState() => _VideoScreenState();
 }
 
 class _VideoScreenState extends State<VideoScreen> {
-
   late VideoPlayerController controller;
 
   @override
@@ -112,6 +113,14 @@ class _VideoScreenState extends State<VideoScreen> {
             Divider(height:1.5, color: Colors.black,),
             const SizedBox(
               height: 20,
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CommentsScreen(
+                  postID: widget.postID,
+                )));
+              },
+              child: const Text('View Comments'),
             ),
             Expanded(
               child: SingleChildScrollView(

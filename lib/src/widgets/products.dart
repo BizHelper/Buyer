@@ -55,7 +55,7 @@ class Product extends StatelessWidget {
                         mainAxisAlignment:
                         MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
+                          Flexible(child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 16,
                                 top: 4,
@@ -66,7 +66,7 @@ class Product extends StatelessWidget {
                                   fontWeight:
                                   FontWeight.bold),
                             ),
-                          ),
+                          ),),
                           Padding(
                             padding: const EdgeInsets.only(
                                 right: 16,

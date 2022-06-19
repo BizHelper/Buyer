@@ -14,25 +14,25 @@ ChatCard(this.chatData);
 }
 
 class _ChatCardState extends State<ChatCard> {
-  FirebaseService _service = FirebaseService();
-    DocumentSnapshot? doc;
- // @override
- // void initState() {
-   // getProductDetails();
-    //super.initState();
- // }
-  getProductDetails() {
+ // FirebaseService _service = FirebaseService();
+  //  DocumentSnapshot? doc;
+  /*getProductDetails() {
     _service.getProductDetails(widget.chatData['product']['productDetailId']).then((value){
       setState((){
         doc = value;
       });
     });
   }
+
+   */
+
+
   @override
   Widget build(BuildContext context) {
-    getProductDetails();
-    return doc == null?
-        Container(): Container(
+   // getProductDetails();
+   // return doc == null?
+     //   Container():
+    return Container(
       child: ListTile(
         onTap: (){
           Navigator.push (
@@ -48,8 +48,16 @@ class _ChatCardState extends State<ChatCard> {
          //    MaterialPageRoute(
            //       builder: (context) => ChatConversations(chatRoomId: widget.chatData['chatRoomId'])));
         },
-        leading: SizedBox(child: Image.network(doc!['Image URL']),width: 50,height: 50),
-        title: Text(doc!['Name']),
+     //   leading: SizedBox(child: Image.network(doc!['Image URL']),width: 50,height: 50),
+        leading: SizedBox(child: Image.network(widget.chatData['product']['productDetailImages'], height: 50, width: 50)),
+        title: Text(widget.chatData['product']['productDetailName']),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('\$' + widget.chatData['product']['productDetailPrice'], maxLines: 1),
+          ],
+        ),
+       /* title: Text(doc!['Name']),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -59,6 +67,7 @@ class _ChatCardState extends State<ChatCard> {
             //  Text(widget.chatData['lastChat'], maxLines: 1, style: TextStyle(fontSize: 10))
           ],
         ),
+        */
         trailing: InkWell(
           onTap: () {
 
