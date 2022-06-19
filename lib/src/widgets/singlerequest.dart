@@ -55,6 +55,7 @@ class SingleRequest extends StatelessWidget {
               price: price,
               title: title,
               requestID: requestID,
+              icons: true,
             )));
           },
           child: Column(

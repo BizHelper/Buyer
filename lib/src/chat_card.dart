@@ -25,6 +25,18 @@ class _ChatCardState extends State<ChatCard> {
   }
 
    */
+  String deleted = '';
+
+  Future<String> del() async {
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('listings').doc(widget.chatData['product']['productDetailId']).get();
+    setState(() => deleted = ds.get('Deleted'));
+    return deleted;
+  }
+
+  String getDeleted() {
+    del();
+    return deleted;
+  }
 
 
   @override
@@ -55,6 +67,13 @@ class _ChatCardState extends State<ChatCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('\$' + widget.chatData['product']['productDetailPrice'], maxLines: 1),
+            getDeleted() == 'true'?
+                const Text(
+                  '[DELETED]',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                ): Container(),
           ],
         ),
        /* title: Text(doc!['Name']),
@@ -82,7 +101,10 @@ class _ChatCardState extends State<ChatCard> {
                     productDetailPrice: widget.chatData['product']['productDetailPrice'],
                     productDetailShopName:widget.chatData['product']['productDetailShopName'] ,
                     sellerId: widget.chatData['product']['sellerId'] ,
-                    listingId:widget.chatData['product']['listingId'] )));
+                    listingId:widget.chatData['product']['listingId'],
+                    iconsButtons: false,
+                    //deleted: widget.chatData['product']['deleted'])));
+                deleted: getDeleted())));
 
           },
 

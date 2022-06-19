@@ -81,7 +81,8 @@ class HomeScreen extends StatelessWidget {
     prodDescription: listings['Description'],
     prodImage: listings['Image URL'],
     sellerId: listings['Seller Id'],
-    listingId: listings['Listing ID']);
+    listingId: listings['Listing ID'],
+    deleted: listings['Deleted'],);
 
                       },
                     ).toList(),

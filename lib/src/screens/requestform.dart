@@ -221,6 +221,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                           final uid = AuthService().currentUser?.uid;
                           DocumentSnapshot ds = await FirebaseFirestore.instance.collection('buyers').doc(uid).get(); // change to buyers
                           _buyerName = ds.get('Name');
+                         // _buyerName =  FirebaseFirestore.instance.collection('buyers').doc(uid).get().get('Name');
                           DocumentReference dr = FirebaseFirestore.instance.collection('requests').doc();
                           Map<String, Object> request = new HashMap();
                           request.putIfAbsent('Buyer Name', () => _buyerName);
@@ -233,6 +234,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                           request.putIfAbsent('Title', () => _currentTitle);
                           request.putIfAbsent('Accepted', () => 'false');
                           request.putIfAbsent('Buyer ID', () => _auth.currentUser!.uid);
+                          request.putIfAbsent('deleted', () => 'false');
                           dr.set(request);
                           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RequestScreen()));
                         }

@@ -51,6 +51,9 @@ class _RequestChatCardState extends State<RequestChatCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('by: ' + widget.chatData['request']['deadline']),
+            (Text(widget.chatData['request']['deleted']))
+
+            ,
           ],
         ),
         trailing: InkWell(
@@ -65,6 +68,7 @@ class _RequestChatCardState extends State<RequestChatCard> {
               requestID: widget.chatData['request']['requestID'],
               sellerName: widget.chatData['request']['sellerName'],
               title: widget.chatData['request']['title'],
+              icons: false,
             )));
           },
           child: Padding(

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:buyer_app/src/screens/acceptedrequest.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +17,9 @@ class RequestDescriptionScreen extends StatefulWidget {
   var title;
   var requestID;
   var buyerID;
+  var deleted;
+  var icons;
+  
 
   RequestDescriptionScreen({
     this.buyerName,
@@ -26,6 +31,8 @@ class RequestDescriptionScreen extends StatefulWidget {
     this.title,
     this.requestID,
     this.buyerID,
+    this.deleted,
+    required this.icons,
   });
 
   @override
@@ -160,14 +167,21 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
             children: [
               InkWell(
                 onTap: () {
-                  DocumentReference dr = FirebaseFirestore.instance.collection('requests').doc(widget.requestID);
+                  DocumentReference dr = FirebaseFirestore.instance.collection('requestsMessages').doc(widget.requestID);
+               //   DocumentReference dr1 = FirebaseFirestore.instance.collection('requests').doc(widget.deleted);
+                 // dr1.update({'deleted':"true"});
+                  dr.update({'deleted':'true'});
+                  //Map<String, Object> deleted = new HashMap();
+                 // deleted.update(widget.deleted, ()=> "false");
                   dr.delete();
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => RequestScreen()));
                 },
-                child: Column(
+                child:
+                widget.icons?
+                Column(
                   children: [
-                    Icon(
+                     Icon(
                       Icons.delete,
                       size: 28.0,
                       color: Colors.red[900],
@@ -180,7 +194,8 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                       ),
                     ),
                   ],
-                ),
+                ):
+                    Container()
               ),
               ],
               /*widget.sellerName == 'null' ?
