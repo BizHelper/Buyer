@@ -102,7 +102,7 @@ class _RequestScreenState extends State<RequestScreen> {
       StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('requests')
             .where('Buyer Name', isEqualTo: getName())
-        .where('Seller Name', isEqualTo: 'null')
+        .where('Seller Name', isEqualTo: 'null').where('Deleted', isEqualTo: 'false')
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
@@ -128,6 +128,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.orange[600])),
                       onPressed: () {
+                      //  Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => RequestFormScreen()));
                       },
                       child: const Text(
@@ -200,6 +201,9 @@ class _RequestScreenState extends State<RequestScreen> {
                         price: requests['Price'],
                         title: requests['Title'],
                         requestID: requests['Request ID'],
+                        buyerID: requests['Buyer ID'],
+                        deleted: requests['Deleted'],
+
                       );
                     },
                   ).toList(),

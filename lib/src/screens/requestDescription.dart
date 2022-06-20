@@ -18,7 +18,7 @@ class RequestDescriptionScreen extends StatefulWidget {
   var requestID;
   var buyerID;
   var deleted;
-  var icons;
+ // var icons;
   
 
   RequestDescriptionScreen({
@@ -32,7 +32,7 @@ class RequestDescriptionScreen extends StatefulWidget {
     this.requestID,
     this.buyerID,
     this.deleted,
-    required this.icons,
+ //   this.icons,
   });
 
   @override
@@ -162,23 +162,37 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
               ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
+          child:
+          widget.deleted == 'true'?
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                  '[DELETED]',
+                  style: TextStyle(
+                    color: Colors.red,
+                  )),
+            ],
+          ):
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
                 onTap: () {
-                  DocumentReference dr = FirebaseFirestore.instance.collection('requestsMessages').doc(widget.requestID);
+                  DocumentReference dr = FirebaseFirestore.instance.collection('requests').doc(widget.requestID);
                //   DocumentReference dr1 = FirebaseFirestore.instance.collection('requests').doc(widget.deleted);
                  // dr1.update({'deleted':"true"});
-                  dr.update({'deleted':'true'});
+                  dr.update({'Deleted':'true'});
                   //Map<String, Object> deleted = new HashMap();
                  // deleted.update(widget.deleted, ()=> "false");
-                  dr.delete();
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => RequestScreen()));
+                 // dr.delete();
+                //  Navigator.of(context).pushReplacement(
+                  //    MaterialPageRoute(builder: (context) => RequestScreen()));
+                  Navigator.of(context).pop(); 
                 },
                 child:
-                widget.icons?
+                //widget.icons?
+
                 Column(
                   children: [
                      Icon(
@@ -193,9 +207,10 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                         color: Colors.red[900],
                       ),
                     ),
+
+
                   ],
-                ):
-                    Container()
+                ),
               ),
               ],
               /*widget.sellerName == 'null' ?

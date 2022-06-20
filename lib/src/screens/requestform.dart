@@ -50,6 +50,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
+//leading: ,
         backgroundColor: Colors.cyan[900],
         centerTitle: true,
         title: const Text(
@@ -234,9 +235,9 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                           request.putIfAbsent('Title', () => _currentTitle);
                           request.putIfAbsent('Accepted', () => 'false');
                           request.putIfAbsent('Buyer ID', () => _auth.currentUser!.uid);
-                          request.putIfAbsent('deleted', () => 'false');
+                          request.putIfAbsent('Deleted', () => 'false');
                           dr.set(request);
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RequestScreen()));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RequestFormScreen()));
                         }
                       },
                       child: const Text(

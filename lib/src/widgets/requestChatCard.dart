@@ -27,6 +27,19 @@ class _RequestChatCardState extends State<RequestChatCard> {
   }
 
    */
+  String deleted = '';
+
+  Future<String> del() async {
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('requests').doc(widget.chatData['request']['requestID']).get();
+    setState(() => deleted = ds.get('Deleted'));
+    return deleted;
+  }
+
+  String getDeleted() {
+    del();
+    return deleted;
+  }
+
   @override
   Widget build(BuildContext context) {
   //  getRequestDetails();
@@ -51,9 +64,14 @@ class _RequestChatCardState extends State<RequestChatCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('by: ' + widget.chatData['request']['deadline']),
-            (Text(widget.chatData['request']['deleted']))
-
-            ,
+        //    (Text(widget.chatData['request']['deleted'])),
+          getDeleted() == 'true'?
+      const Text(
+        '[DELETED]',
+        style: TextStyle(
+          color: Colors.red,
+        ),
+      ): Container(),
           ],
         ),
         trailing: InkWell(
@@ -68,7 +86,8 @@ class _RequestChatCardState extends State<RequestChatCard> {
               requestID: widget.chatData['request']['requestID'],
               sellerName: widget.chatData['request']['sellerName'],
               title: widget.chatData['request']['title'],
-              icons: false,
+            //  icons: false,
+              deleted: getDeleted(),
             )));
           },
           child: Padding(

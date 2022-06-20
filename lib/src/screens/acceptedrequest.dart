@@ -38,7 +38,6 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return
-  //  Container(child: Text('Text'));
     Scaffold(
       backgroundColor: Colors.blueGrey.shade50,
       appBar: AppBar(
@@ -96,7 +95,8 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
 
       StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('requests')
-        .where('Buyer Name', isEqualTo: getName()).where('Accepted', isEqualTo: 'true').snapshots(),
+        .where('Buyer Name', isEqualTo: getName()).where('Accepted', isEqualTo: 'true').
+        where('Deleted', isEqualTo: 'false').snapshots(),
           //  .where('Seller Name', isNotEqualTo: 'null').where('Buyer Name', isEqualTo: getName()).
           //snapshots(),
           //.where('Seller Name', isNotEqualTo: 'null' ).where('Buyer Name', isEqualTo: getName())
@@ -199,6 +199,8 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
                         price: requests['Price'],
                         title: requests['Title'],
                         requestID: requests['Request ID'],
+                        deleted: requests['Deleted'],
+                        buyerID: requests['Buyer ID'],
                       );
                     },
                   ).toList(),

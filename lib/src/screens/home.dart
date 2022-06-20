@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
       body: StreamBuilder(
 
         // stream: listings.snapshots(),
-        stream: FirebaseFirestore.instance.collection('listings').snapshots(),
+        stream: FirebaseFirestore.instance.collection('listings').where('Deleted', isEqualTo: 'false').snapshots(),
         //.where('product name', isEqualTo: 'tryout').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if(!snapshot.hasData){

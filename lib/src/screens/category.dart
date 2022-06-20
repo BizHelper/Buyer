@@ -72,7 +72,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('listings')
-            .where('Category', isEqualTo: widget.currentCategory)
+            .where('Category', isEqualTo: widget.currentCategory).
+          where('Deleted', isEqualTo: "false")
             //.where('Seller Name', isEqualTo: getName())
 
             .snapshots(),
