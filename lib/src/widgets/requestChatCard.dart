@@ -58,11 +58,13 @@ class _RequestChatCardState extends State<RequestChatCard> {
             ),
           );
         },
-        leading: Text(widget.chatData['request']['buyerName']),
-        title: Text(widget.chatData['request']['title']),
+       // leading: Text(widget.chatData['request']['sellerName']),
+        title:
+        Text(widget.chatData['request']['sellerName']),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(widget.chatData['request']['title']),
             Text('by: ' + widget.chatData['request']['deadline']),
         //    (Text(widget.chatData['request']['deleted'])),
           getDeleted() == 'true'?

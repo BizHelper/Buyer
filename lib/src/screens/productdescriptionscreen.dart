@@ -8,12 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../AuthService.dart';
 import '../widgets/products.dart';
 
-class ProductDescriptionScreen extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseService _service = FirebaseService();
-
+class ProductDescriptionScreen extends StatefulWidget {
   var productDetailName;
   var productDetailShopName;
   var productDetailPrice;
@@ -27,6 +25,8 @@ class ProductDescriptionScreen extends StatelessWidget {
   var iconsButtons;
 
 
+
+
   ProductDescriptionScreen(
       {this.productDetailName,
         this.productDetailShopName,
@@ -38,30 +38,64 @@ class ProductDescriptionScreen extends StatelessWidget {
         this.sellerId,
         this.listingId,
         required this.iconsButtons,
-        required this.deleted});
+        required this.deleted,
+
+      });
+
+  @override
+  State<ProductDescriptionScreen> createState() => _ProductDescriptionScreenState();
+}
+
+class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final FirebaseService _service = FirebaseService();
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  String _buyerName = '';
+
+  /*Future<String> getBuyerName() async {
+    final uid = auth.currentUser?.uid;
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
+    setState(() => _buyerName = ds.get('Name'));
+    return _buyerName;
+  }
+
+  String getName() {
+    getBuyerName();
+    return _buyerName;
+  }
+
+   */
 
   @override
   Widget build(BuildContext context) {
     createChatRoom() async {
+      final uid = auth.currentUser?.uid;
+      DocumentSnapshot ds = await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
+      setState(() => _buyerName = ds.get('Name'));
+
       Map<String, dynamic> product = {
-        'productDetailId': listingId,
-        'productDetailImages': productDetailImages,
-        'productDetailPrice': productDetailPrice,
-        'productDetailName': productDetailName,
-        'productDetailShopName': productDetailShopName,
-        'productDetailCategory': productDetailCategory,
-        'productDetailDescription': productDetailDescription,
-        'sellerId': sellerId,
-        'listingId': listingId,
+        'productDetailId': widget.listingId,
+        'productDetailImages': widget.productDetailImages,
+        'productDetailPrice': widget.productDetailPrice,
+        'productDetailName': widget.productDetailName,
+        'productDetailShopName': widget.productDetailShopName,
+        'productDetailCategory': widget.productDetailCategory,
+        'productDetailDescription': widget.productDetailDescription,
+        'sellerId': widget.sellerId,
+        'listingId': widget.listingId,
+        'buyerName':_buyerName
       };
 
       List<String> users = [
         //provider.sellerId,
-        sellerId,
+        widget.sellerId,
         _auth.currentUser!.uid
       ];
 
-      String chatRoomId = '${sellerId}.${_auth.currentUser!.uid}.${listingId}';
+      String chatRoomId = '${widget.sellerId}.${_auth.currentUser!.uid}.${widget.listingId}';
       Map<String, dynamic> chatData = {
         'users': users,
         'chatRoomId': chatRoomId,
@@ -101,7 +135,7 @@ class ProductDescriptionScreen extends StatelessWidget {
             children: [
               SizedBox(
                 height: 300,
-                child: Image.network(this.productDetailImages),
+                child: Image.network(this.widget.productDetailImages),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -109,14 +143,14 @@ class ProductDescriptionScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '$productDetailName',
+                      '${widget.productDetailName}',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      '\$$productDetailPrice',
+                      '\$${widget.productDetailPrice}',
                       style: const TextStyle(
                         color: Colors.red,
                         fontSize: 20,
@@ -132,7 +166,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'by: $productDetailShopName',
+                      'by: ${widget.productDetailShopName}',
                       style: const TextStyle(
                         fontSize: 15,
                       ),
@@ -164,7 +198,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        '$productDetailDescription',
+                        '${widget.productDetailDescription}',
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -178,7 +212,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                   iconsButtons?
+                   widget.iconsButtons?
                    InkWell(
                       //  borderRadius:,
                       onTap: createChatRoom,
@@ -202,7 +236,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              deleted == 'true'?
+              widget.deleted == 'true'?
                   Text(
                     '[DELETED]',
                     style: TextStyle(

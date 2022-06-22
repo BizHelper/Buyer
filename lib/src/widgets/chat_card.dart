@@ -62,10 +62,11 @@ class _ChatCardState extends State<ChatCard> {
         },
      //   leading: SizedBox(child: Image.network(doc!['Image URL']),width: 50,height: 50),
         leading: SizedBox(child: Image.network(widget.chatData['product']['productDetailImages'], height: 50, width: 50)),
-        title: Text(widget.chatData['product']['productDetailName']),
+        title: Text(widget.chatData['product']['productDetailShopName']),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(widget.chatData['product']['productDetailName']),
             Text('\$' + widget.chatData['product']['productDetailPrice'], maxLines: 1),
             getDeleted() == 'true'?
                 const Text(

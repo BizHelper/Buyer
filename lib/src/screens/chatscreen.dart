@@ -1,4 +1,4 @@
-import 'package:buyer_app/src/chat_card.dart';
+import 'package:buyer_app/src/widgets/chat_card.dart';
 import 'package:buyer_app/src/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
