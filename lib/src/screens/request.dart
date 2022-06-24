@@ -7,26 +7,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import '../widgets/navigateBar.dart';
+import 'package:buyer_app/src/services/authservice.dart';
+
 
 class RequestScreen extends StatefulWidget {
   @override
   State<RequestScreen> createState() => _RequestScreenState();
-}
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? get currentUser => _auth.currentUser;
 }
 
 class _RequestScreenState extends State<RequestScreen> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
+  final FirebaseAuth _auth = AuthService().auth;
   String _buyerName = '';
-
   Future<String> getBuyerName() async {
     final uid = AuthService().currentUser?.uid;
     DocumentSnapshot ds =
-        await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
+    await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
     setState(() => _buyerName = ds.get('Name'));
     return _buyerName;
   }
@@ -53,7 +49,7 @@ class _RequestScreenState extends State<RequestScreen> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              auth.signOut();
+              _auth.signOut();
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => LoginScreen()));
             },
@@ -64,7 +60,8 @@ class _RequestScreenState extends State<RequestScreen> {
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
         ),
       ),
-      body: StreamBuilder<QuerySnapshot>(
+
+        body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('requests')
             .where('Buyer Name', isEqualTo: getName())
@@ -156,6 +153,7 @@ class _RequestScreenState extends State<RequestScreen> {
                   ],
                 ),
               ),
+
               Flexible(
                 child: ListView(
                   children: snapshot.data!.docs.map(

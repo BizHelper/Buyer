@@ -2,12 +2,12 @@ import 'package:buyer_app/src/screens/account.dart';
 import 'package:buyer_app/src/screens/explore.dart';
 import 'package:buyer_app/src/screens/home.dart';
 import 'package:buyer_app/src/screens/request.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:buyer_app/src/services/authservice.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 
 class LocationScreen extends StatelessWidget {
-  final auth = FirebaseAuth.instance;
+  final _auth = AuthService().auth;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class LocationScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              auth.signOut();
+              _auth.signOut();
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => LoginScreen()));
             },

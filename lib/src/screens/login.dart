@@ -1,16 +1,13 @@
 import 'package:buyer_app/src/screens/home.dart';
 import 'package:buyer_app/src/screens/reset.dart';
 import 'package:buyer_app/src/screens/signup.dart';
+import 'package:buyer_app/src/services/authservice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../services/auth.dart';
 
 class LoginScreen extends StatefulWidget {
-  String method() {
-    return 't';
-  }
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -18,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   var _email;
   var _password;
-  final auth = FirebaseAuth.instance;
+  final auth = AuthService().auth;
 
   @override
   Widget build(BuildContext context) {

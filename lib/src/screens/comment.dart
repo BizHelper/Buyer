@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../services/authservice.dart';
 
 final commentRef = FirebaseFirestore.instance.collection('comments');
 late CollectionReference buyersRef =
     FirebaseFirestore.instance.collection('buyers');
-final FirebaseAuth _auth = FirebaseAuth.instance;
+final FirebaseAuth _auth = AuthService().auth;
 
 class CommentsScreen extends StatefulWidget {
   final String postID;
@@ -15,14 +16,7 @@ class CommentsScreen extends StatefulWidget {
   State<CommentsScreen> createState() => CommentsScreenState();
 }
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? get currentUser => _auth.currentUser;
-}
-
 class CommentsScreenState extends State<CommentsScreen> {
-  bool _send = false;
-
   TextEditingController commentController = TextEditingController();
   buildComments() {
     return StreamBuilder(
@@ -61,7 +55,6 @@ class CommentsScreenState extends State<CommentsScreen> {
         "name": buyerName,
         "profilePic": profilePic,
         'time': DateTime.now().microsecondsSinceEpoch,
-        //  "timestamp": timestamp,
       },
     );
     commentController.clear();

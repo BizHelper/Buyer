@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../services/authservice.dart';
 import '../services/firebase_service.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = AuthService().auth;
   FirebaseService _service = FirebaseService();
 
   @override
@@ -42,7 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
             if (!snapshot.hasData) {
               return Container();
             }
-            return new ListView(
+            return ListView(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;

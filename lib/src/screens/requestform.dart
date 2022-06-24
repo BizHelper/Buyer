@@ -6,6 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../services/authservice.dart';
+
 class RequestFormScreen extends StatefulWidget {
   const RequestFormScreen({Key? key}) : super(key: key);
 
@@ -13,13 +15,9 @@ class RequestFormScreen extends StatefulWidget {
   State<RequestFormScreen> createState() => _RequestFormScreenState();
 }
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? get currentUser => _auth.currentUser;
-}
 
 class _RequestFormScreenState extends State<RequestFormScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = AuthService().auth;
   final _formKey = GlobalKey<FormState>();
   final List<String> categories = [
     'Bags & Wallets',

@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../services/authservice.dart';
 
 class ResetScreen extends StatefulWidget {
   @override
@@ -8,7 +8,7 @@ class ResetScreen extends StatefulWidget {
 
 class _ResetScreenState extends State<ResetScreen> {
   var _email;
-  final auth = FirebaseAuth.instance;
+  final auth = AuthService().auth;
 
   @override
   Widget build(BuildContext context) {

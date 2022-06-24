@@ -31,6 +31,11 @@ class _ChatCardState extends State<ChatCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey),
+        ),
+      ),
       child: ListTile(
         onTap: () {
           Navigator.push(
@@ -109,11 +114,6 @@ class _ChatCardState extends State<ChatCard> {
               ],
             ),
           ),
-        ),
-      ),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.grey),
         ),
       ),
     );

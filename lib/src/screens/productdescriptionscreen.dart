@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/services/authservice.dart';
 import 'package:buyer_app/src/services/firebase_service.dart';
 import 'package:buyer_app/src/screens/chat_conversation_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,13 +41,13 @@ class ProductDescriptionScreen extends StatefulWidget {
 
 class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
   final FirebaseService _service = FirebaseService();
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = AuthService().auth;
   String _buyerName = '';
 
   @override
   Widget build(BuildContext context) {
     createChatRoom() async {
-      final uid = auth.currentUser?.uid;
+      final uid = _auth.currentUser?.uid;
       DocumentSnapshot ds =
       await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
       setState(() => _buyerName = ds.get('Name'));
@@ -64,10 +65,10 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
       };
       List<String> users = [
         widget.sellerId,
-        auth.currentUser!.uid
+        _auth.currentUser!.uid
       ];
       String chatRoomId =
-          '${widget.sellerId}.${auth.currentUser!.uid}.${widget.listingId}';
+          '${widget.sellerId}.${_auth.currentUser!.uid}.${widget.listingId}';
       Map<String, dynamic> chatData = {
         'users': users,
         'chatRoomId': chatRoomId,

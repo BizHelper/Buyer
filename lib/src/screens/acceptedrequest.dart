@@ -7,26 +7,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import '../widgets/navigateBar.dart';
+import 'package:buyer_app/src/services/authservice.dart';
 
 class AcceptedRequestScreen extends StatefulWidget {
   @override
   State<AcceptedRequestScreen> createState() => _AcceptedRequestScreen();
 }
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? get currentUser => _auth.currentUser;
-}
-
 class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
+  final FirebaseAuth auth = AuthService().auth;
   String _buyerName = '';
-
   Future<String> getBuyerName() async {
     final uid = AuthService().currentUser?.uid;
     DocumentSnapshot ds =
-        await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
+    await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
     setState(() => _buyerName = ds.get('Name'));
     return _buyerName;
   }
@@ -67,7 +61,7 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('requests')
-            .where('Buyer Name', isEqualTo: getName())
+            .where('Buyer Name', isEqualTo: getName() )
             .where('Accepted', isEqualTo: 'true')
             .where('Deleted', isEqualTo: 'false')
             .snapshots(),

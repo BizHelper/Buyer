@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RequestDescriptionScreen extends StatefulWidget {
@@ -32,14 +31,7 @@ class RequestDescriptionScreen extends StatefulWidget {
       _RequestDescriptionScreenState();
 }
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? get currentUser => _auth.currentUser;
-}
-
 class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

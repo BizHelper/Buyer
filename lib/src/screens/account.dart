@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:buyer_app/src/services/authservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,13 +13,8 @@ class AccountScreen extends StatefulWidget {
   State<AccountScreen> createState() => _AccountScreenState();
 }
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? get currentUser => _auth.currentUser;
-}
-
 class _AccountScreenState extends State<AccountScreen> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = AuthService().auth;
   String _buyerName = '';
   var _image = '';
 
@@ -109,6 +105,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   height: 20.0,
                 ),
                 Text(
+                 // AuthService().getName()
                   getName(),
                   style: const TextStyle(
                     fontSize: 20,
@@ -148,7 +145,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         dr.set({'Name': sellerName, 'Profile Pic': imageURL});
                         setState(() => _image = imageURL);
                       },
-                      child: const Text(
+                         child: const Text(
                         'Change Profile Picture',
                         style: TextStyle(color: Colors.black),
                       ),

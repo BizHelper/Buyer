@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/services/authservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,7 @@ class ChatConversations extends StatefulWidget {
 
 class _ChatConversationsState extends State<ChatConversations> {
   FirebaseService _service = FirebaseService();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = AuthService().auth;
   var chatMessageController = TextEditingController();
   bool _send = false;
 

@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/services/authservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,8 @@ class CategoryScreen extends StatefulWidget {
   State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? get currentUser => _auth.currentUser;
-}
-
 class _CategoryScreenState extends State<CategoryScreen> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = AuthService().auth;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,10 +51,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('listings')
             .where('Category', isEqualTo: widget.currentCategory).
-          where('Deleted', isEqualTo: "false")
-            //.where('Seller Name', isEqualTo: getName())
-
-            .snapshots(),
+          where('Deleted', isEqualTo: "false").snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Container();
@@ -81,16 +74,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ),
                   ),
                    Padding(
-                    padding: EdgeInsets.only(right: 11.0, top: 12),
+                    padding: const EdgeInsets.only(right: 11.0, top: 12),
                     child: TextButton(
-                      child: Text('Favourites',
+                      onPressed:(){},
+                      style: TextButton.styleFrom(padding: EdgeInsets.zero,minimumSize:
+                      Size.zero,tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                      child:  const Text('Favourites',
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),onPressed:(){},
-                      style: TextButton.styleFrom(padding: EdgeInsets.zero,minimumSize:
-                      Size.zero,tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                    ),
                   ),)
                 ],
               ),
@@ -109,8 +103,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         prodCategory: listings['Category'],
                         prodDescription: listings['Description'],
                         prodImage: listings['Image URL'],
-                          sellerId: listings['Seller Id'],
-                          listingId: listings['Listing ID'],
+                        sellerId: listings['Seller Id'],
+                        listingId: listings['Listing ID'],
                         deleted: listings['Deleted'],
                       );
                     },

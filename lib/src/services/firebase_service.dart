@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirebaseService {
   CollectionReference messages = FirebaseFirestore.instance.collection('messages');
   CollectionReference listings = FirebaseFirestore.instance.collection('listings');
-
   CollectionReference requestMessages = FirebaseFirestore.instance.collection('requestMessages');
   CollectionReference requests = FirebaseFirestore.instance.collection('requests');
 

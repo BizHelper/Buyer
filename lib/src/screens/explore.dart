@@ -1,5 +1,5 @@
+import 'package:buyer_app/src/services/authservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import 'package:buyer_app/src/screens/video.dart';
@@ -12,13 +12,8 @@ class ExploreScreen extends StatefulWidget {
   State<ExploreScreen> createState() => _ExploreScreenState();
 }
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? get currentUser => _auth.currentUser;
-}
-
 class _ExploreScreenState extends State<ExploreScreen> {
-  final auth = FirebaseAuth.instance;
+  final auth = AuthService().auth;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

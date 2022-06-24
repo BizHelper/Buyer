@@ -1,10 +1,10 @@
 import 'dart:collection';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:buyer_app/src/screens/verify.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/auth.dart';
+import '../services/authservice.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _SignupScreenState extends State<SignupScreen> {
   var _password;
   var _name;
   var userID;
-  final auth = FirebaseAuth.instance;
+  final auth = AuthService().auth;
   FirebaseFirestore fstore = FirebaseFirestore.instance;
 
   Future<bool> checkUsername(String username) async {

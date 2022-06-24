@@ -1,4 +1,5 @@
 import 'package:buyer_app/src/screens/chatscreen.dart';
+import 'package:buyer_app/src/services/authservice.dart';
 import 'package:buyer_app/src/widgets/categories.dart';
 import 'package:buyer_app/src/widgets/navigateBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,7 +9,7 @@ import 'package:buyer_app/src/screens/login.dart';
 import '../widgets/products.dart';
 
 class HomeScreen extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = AuthService().auth;
   final db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
