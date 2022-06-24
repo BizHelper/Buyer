@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:buyer_app/src/screens/home.dart';
-//import 'package:buyer_app/src/screens/updateName.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -38,20 +36,25 @@ class _VerifyScreenState extends State<VerifyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueGrey[50],
-        body: Center(
-      child: Text('An email has been sent to ${user.email}. Please verify'),
-    ));
+      backgroundColor: Colors.blueGrey[50],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+              'An email has been sent to ${user.email}. Please verify.(Check spam folder)'),
+        ),
+      ),
+    );
   }
 
   Future<void> checkEmailVerified() async {
-
     user = auth.currentUser;
     await auth.currentUser;
     await user.reload();
     if (user.emailVerified) {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (Route<dynamic> route) => false);
     }
   }
 }

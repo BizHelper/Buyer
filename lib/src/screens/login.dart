@@ -1,13 +1,16 @@
 import 'package:buyer_app/src/screens/home.dart';
-//import 'package:buyer_app/src/screens/homepractice.dart';
 import 'package:buyer_app/src/screens/reset.dart';
 import 'package:buyer_app/src/screens/signup.dart';
-import 'package:buyer_app/src/screens/verify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../services/auth.dart';
 
 class LoginScreen extends StatefulWidget {
+  String method() {
+    return 't';
+  }
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -16,18 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   var _email;
   var _password;
   final auth = FirebaseAuth.instance;
-
-
-  //Future<String> getCurrentUID() async {
-    //return (await auth.currentUser!).uid;
- // }
-
- // User? get currentUser => auth.currentUser;
-  //Future<User?> getUser() async {
-    //return currentUser;
-  //}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(hintText: 'Email'),
                 onChanged: (value) {
                   setState(
-                        () {
+                    () {
                       _email = value.trim();
                     },
                   );
@@ -73,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(hintText: 'Password'),
                 onChanged: (value) {
                   setState(
-                        () {
+                    () {
                       _password = value.trim();
                     },
                   );
@@ -84,14 +75,25 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all(Colors.orange.shade600)),
-                    child: const Text(
-                      'Sign in',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    onPressed: () => _signin(_email, _password)),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.orange.shade600)),
+                  child: const Text(
+                    'Sign in',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () async {
+                    String? result =
+                        await Auth(auth: auth).signin(_email, _password);
+                    if (result == 'Success') {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => HomeScreen()));
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: result ?? '', gravity: ToastGravity.TOP);
+                    }
+                  },
+                ),
                 ElevatedButton(
                     child: Text(
                       'Sign up',
@@ -99,10 +101,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     style: ButtonStyle(
                         backgroundColor:
-                        MaterialStateProperty.all(Colors.orange.shade600)),
-                    onPressed: () =>
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> SignupScreen()))
-                ),
+                            MaterialStateProperty.all(Colors.orange.shade600)),
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => SignupScreen()))),
               ],
             ),
             Row(
@@ -110,10 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 TextButton(
                   child: Text('Forgot Password?'),
-                  onPressed: () =>
-                      Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => ResetScreen())),
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => ResetScreen())),
                 ),
               ],
             ),
@@ -123,16 +123,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  _signin(String _email, String _password) async {
+  signin(String _email, String _password) async {
     try {
       await auth.signInWithEmailAndPassword(email: _email, password: _password);
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));
+      return "Success";
     } on FirebaseAuthException catch (error) {
       Fluttertoast.showToast(msg: error.message!, gravity: ToastGravity.TOP);
     }
   }
-
-
-
 }
