@@ -26,7 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
           icon: Icon(Icons.arrow_back_rounded),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen()));
+                MaterialPageRoute(builder: (context) => HomeScreen(currentCategory:'Popular')));
           },
         ),
         backgroundColor: Colors.cyan.shade900,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:buyer_app/src/screens/category.dart';
 import 'package:buyer_app/src/screens/home.dart';
 
 class Categories extends StatelessWidget {
@@ -68,16 +67,10 @@ class CategoryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        if (text == 'Popular') {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                  builder: (context) => HomeScreen()));
-        } else {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                  builder: (context) => CategoryScreen(currentCategory: text,)));
-        }
-      },
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(currentCategory: text)));
+        },
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
       ),

@@ -1,4 +1,3 @@
-import 'package:buyer_app/src/screens/acceptedrequest.dart';
 import 'package:buyer_app/src/screens/requestchat.dart';
 import 'package:buyer_app/src/screens/requestform.dart';
 import 'package:buyer_app/src/widgets/singlerequest.dart';
@@ -11,6 +10,8 @@ import 'package:buyer_app/src/services/authservice.dart';
 
 
 class RequestScreen extends StatefulWidget {
+  var type; 
+  RequestScreen({required this.type}); 
   @override
   State<RequestScreen> createState() => _RequestScreenState();
 
@@ -19,6 +20,7 @@ class RequestScreen extends StatefulWidget {
 class _RequestScreenState extends State<RequestScreen> {
   final FirebaseAuth _auth = AuthService().auth;
   String _buyerName = '';
+  
   Future<String> getBuyerName() async {
     final uid = AuthService().currentUser?.uid;
     DocumentSnapshot ds =
@@ -62,10 +64,18 @@ class _RequestScreenState extends State<RequestScreen> {
       ),
 
         body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
+        stream:
+        widget.type == 'Pending'?
+        FirebaseFirestore.instance
             .collection('requests')
             .where('Buyer Name', isEqualTo: getName())
             .where('Seller Name', isEqualTo: 'null')
+            .where('Deleted', isEqualTo: 'false')
+            .snapshots()
+        : FirebaseFirestore.instance
+            .collection('requests')
+            .where('Buyer Name', isEqualTo: getName() )
+            .where('Accepted', isEqualTo: 'true')
             .where('Deleted', isEqualTo: 'false')
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -111,10 +121,17 @@ class _RequestScreenState extends State<RequestScreen> {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (widget.type != "Pending"){
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RequestScreen(type: 'Pending')));
+                          }
+                        },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.amber),
+                              MaterialStateProperty.all(widget.type == "Pending"? Colors.amber: Colors.orange),
                           shape: MaterialStateProperty.all(
                             const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
@@ -130,14 +147,16 @@ class _RequestScreenState extends State<RequestScreen> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      AcceptedRequestScreen()));
+                          if (widget.type != "Accepted"){
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RequestScreen(type: 'Accepted')));
+                          }
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.orange),
+                              MaterialStateProperty.all(widget.type == "Accepted"? Colors.amber: Colors.orange),
                           shape: MaterialStateProperty.all(
                             const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,

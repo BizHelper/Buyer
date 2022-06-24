@@ -11,6 +11,9 @@ import '../widgets/products.dart';
 class HomeScreen extends StatelessWidget {
   final FirebaseAuth _auth = AuthService().auth;
   final db = FirebaseFirestore.instance;
+  var currentCategory;
+  HomeScreen({Key? key, required this.currentCategory}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,11 +44,18 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance
+        stream:
+        currentCategory == 'Popular'?
+        FirebaseFirestore.instance
             .collection('listings')
             .where('Deleted', isEqualTo: 'false')
+            .snapshots():
+        FirebaseFirestore.instance
+            .collection('listings')
+            .where('Deleted', isEqualTo: 'false').where('Category', isEqualTo: currentCategory)
             .snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Container();
           }
@@ -67,23 +77,23 @@ class HomeScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 11.0, top: 12),
                     child: TextButton(
-                      child: Text(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                      child: const Text(
                         'Favourites',
                         style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap),
                     ),
                   ),
                 ],
               ),
-              Categories(currentCategory: "Popular"),
+              Categories(currentCategory: currentCategory),
               Flexible(
                 child: Container(
                   child: GridView.count(

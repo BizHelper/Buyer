@@ -63,7 +63,7 @@ class LocationScreen extends StatelessWidget {
                       width: 55,
                       child: InkWell(
                         onTap: () { Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => RequestScreen()));},
+                            MaterialPageRoute(builder: (context) => RequestScreen(type: 'Pending')));},
                         child: Column(
                           children: const [
                             const Icon(Icons.sticky_note_2),
@@ -76,7 +76,7 @@ class LocationScreen extends StatelessWidget {
                       width: 55,
                       child: InkWell(
                         onTap: () {Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => HomeScreen()));},
+                            MaterialPageRoute(builder: (context) => HomeScreen(currentCategory: 'Popular')));},
                         child: Column(
                           children: const [
                             Icon(Icons.home),

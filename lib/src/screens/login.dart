@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               size: 120,
               color: Colors.black,
             ),
-            Text(
+            const Text(
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 'Buyer Login'),
             Padding(
@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         await Auth(auth: auth).signin(_email, _password);
                     if (result == 'Success') {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => HomeScreen()));
+                          builder: (context) => HomeScreen(currentCategory: "Popular")));
                     } else {
                       Fluttertoast.showToast(
                           msg: result ?? '', gravity: ToastGravity.TOP);
@@ -92,16 +92,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 ElevatedButton(
-                    child: Text(
-                      'Sign up',
-                      style: TextStyle(color: Colors.black),
-                    ),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.orange.shade600)),
                     onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                            builder: (context) => SignupScreen()))),
+                            builder: (context) => SignupScreen())),
+                    child: const Text(
+                      'Sign up',
+                      style: TextStyle(color: Colors.black),
+                    )),
               ],
             ),
             Row(
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await auth.signInWithEmailAndPassword(email: _email, password: _password);
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen()));
+          MaterialPageRoute(builder: (context) => HomeScreen(currentCategory: "Popular")));
       return "Success";
     } on FirebaseAuthException catch (error) {
       Fluttertoast.showToast(msg: error.message!, gravity: ToastGravity.TOP);

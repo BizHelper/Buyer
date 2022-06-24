@@ -11,7 +11,7 @@ import 'package:buyer_app/src/services/firebase_service.dart';
 class ChatConversations extends StatefulWidget {
   final String chatRoomId;
   final String type;
-  ChatConversations({required this.chatRoomId,required this.type});
+  ChatConversations({required this.chatRoomId, required this.type});
   @override
   State<ChatConversations> createState() => _ChatConversationsState();
 }
@@ -42,11 +42,15 @@ class _ChatConversationsState extends State<ChatConversations> {
 
   void initState() {
     if (widget.type == 'listings') {
-      _service.getChat(widget.chatRoomId).then((value) {
-        setState(() {
-          chatMessageStream = value;
-        },);
-      },);
+      _service.getChat(widget.chatRoomId).then(
+        (value) {
+          setState(
+            () {
+              chatMessageStream = value;
+            },
+          );
+        },
+      );
       super.initState();
     } else {
       _service.getRequestChat(widget.chatRoomId).then((value) {
@@ -81,11 +85,12 @@ class _ChatConversationsState extends State<ChatConversations> {
                     return Container();
                   }
                   return ListView.builder(
-                  reverse: true,
+                    reverse: true,
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
-                      int reverseIndex = snapshot.data!.docs.length -1 - index;
-                      String sentBy = snapshot.data!.docs[reverseIndex]['sentBy'];
+                      int reverseIndex = snapshot.data!.docs.length - 1 - index;
+                      String sentBy =
+                          snapshot.data!.docs[reverseIndex]['sentBy'];
                       String me = _auth.currentUser!.uid;
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -93,7 +98,7 @@ class _ChatConversationsState extends State<ChatConversations> {
                           children: [
                             ChatBubble(
                               backGroundColor:
-                              sentBy == me ? Colors.green : Colors.blue,
+                                  sentBy == me ? Colors.green : Colors.blue,
                               alignment: sentBy == me
                                   ? Alignment.centerRight
                                   : Alignment.centerLeft,
@@ -101,8 +106,8 @@ class _ChatConversationsState extends State<ChatConversations> {
                                   type: sentBy == me
                                       ? BubbleType.sendBubble
                                       : BubbleType.receiverBubble),
-                              child:
-                              Text(snapshot.data!.docs[reverseIndex]['message']),
+                              child: Text(
+                                  snapshot.data!.docs[reverseIndex]['message']),
                             ),
                           ],
                         ),
@@ -123,28 +128,29 @@ class _ChatConversationsState extends State<ChatConversations> {
                 children: [
                   Expanded(
                     child: TextField(
-                        controller: chatMessageController,
-                        style: TextStyle(color: Colors.blue),
-                        decoration: const InputDecoration(
-                            hintText: 'Type Message',
-                            hintStyle: TextStyle(color: Colors.black),
-                            border: InputBorder.none),
-                        onChanged: (value) {
-                          if (value.isNotEmpty) {
-                            setState(() {
-                              _send = true;
-                            });
-                          } else {
-                            setState(() {
-                              _send = false;
-                            });
-                          }
-                        },
-                        onSubmitted: (value) {
-                          if (value.length > 0) {
-                            sendMessage();
-                          }
-                        },),
+                      controller: chatMessageController,
+                      style: TextStyle(color: Colors.blue),
+                      decoration: const InputDecoration(
+                          hintText: 'Type Message',
+                          hintStyle: TextStyle(color: Colors.black),
+                          border: InputBorder.none),
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          setState(() {
+                            _send = true;
+                          });
+                        } else {
+                          setState(() {
+                            _send = false;
+                          });
+                        }
+                      },
+                      onSubmitted: (value) {
+                        if (value.length > 0) {
+                          sendMessage();
+                        }
+                      },
+                    ),
                   ),
                   Visibility(
                     visible: _send,

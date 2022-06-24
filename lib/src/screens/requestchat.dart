@@ -27,7 +27,7 @@ class _RequestChatScreenState extends State<RequestChatScreen> {
           icon: Icon(Icons.arrow_back_rounded),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => RequestScreen()));
+                MaterialPageRoute(builder: (context) => RequestScreen(type: 'Pending')));
           },
         ),
         backgroundColor: Colors.cyan.shade900,
