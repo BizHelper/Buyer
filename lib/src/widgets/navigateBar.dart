@@ -7,7 +7,6 @@ import '../screens/explore.dart';
 import '../screens/location.dart';
 
 class NavigateBar extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,10 +21,9 @@ class NavigateBar extends StatelessWidget {
                 width: 55,
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                           builder: (context) => ExploreScreen()));
-                        //    builder: (context) => PostScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => ExploreScreen()));
+                    //    builder: (context) => PostScreen()));
                   },
                   child: Column(
                     children: const [
@@ -39,9 +37,8 @@ class NavigateBar extends StatelessWidget {
                 width: 55,
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => RequestScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => RequestScreen()));
                   },
                   child: Column(
                     children: const [
@@ -56,8 +53,7 @@ class NavigateBar extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen()));
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
                   child: Column(
                     children: const [
@@ -71,10 +67,8 @@ class NavigateBar extends StatelessWidget {
                 width: 55,
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                LocationScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => LocationScreen()));
                   },
                   child: Column(
                     children: const [
@@ -88,10 +82,8 @@ class NavigateBar extends StatelessWidget {
                 width: 55,
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                AccountScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => AccountScreen()));
                   },
                   child: Column(
                     children: const [
@@ -104,95 +96,6 @@ class NavigateBar extends StatelessWidget {
             ],
           ),
         ),
-        /*Divider(height: 1, color: Colors.black),
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                width: 52.0,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => ListingScreen()));
-                  },
-                  child: Column(
-                    children: const [
-                      Icon(Icons.add_to_photos),
-                      Text('Listing'),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 52.0,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => RequestScreen()));
-                  },
-                  child: Column(
-                    children: const [
-                      Icon(Icons.sticky_note_2),
-                      Text('Request'),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 52.0,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen()));
-                  },
-                  child: Column(
-                    children: const [
-                      Icon(Icons.home),
-                      Text('Home'),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 52.0,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => PostScreen()));
-                  },
-                  child: Column(
-                    children: const [
-                      Icon(Icons.camera_alt),
-                      Text('Post'),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 52.0,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => AccountScreen()));
-                  },
-                  child: Column(
-                    children: const [
-                      Icon(Icons.account_box),
-                      Text('Account'),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),*/
       ],
     );
   }

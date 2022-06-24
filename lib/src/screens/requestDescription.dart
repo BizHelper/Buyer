@@ -1,11 +1,6 @@
-import 'dart:collection';
-
-import 'package:buyer_app/src/screens/acceptedrequest.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:buyer_app/src/screens/myRequests.dart';
-import 'package:buyer_app/src/screens/request.dart';
 
 class RequestDescriptionScreen extends StatefulWidget {
   var buyerName;
@@ -18,8 +13,6 @@ class RequestDescriptionScreen extends StatefulWidget {
   var requestID;
   var buyerID;
   var deleted;
- // var icons;
-  
 
   RequestDescriptionScreen({
     this.buyerName,
@@ -32,12 +25,11 @@ class RequestDescriptionScreen extends StatefulWidget {
     this.requestID,
     this.buyerID,
     this.deleted,
- //   this.icons,
   });
 
   @override
-  State<RequestDescriptionScreen> createState() => _RequestDescriptionScreenState();
-
+  State<RequestDescriptionScreen> createState() =>
+      _RequestDescriptionScreenState();
 }
 
 class AuthService {
@@ -47,9 +39,6 @@ class AuthService {
 
 class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  String _sellerName = '';
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,17 +47,6 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
-      /*  leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => AcceptedRequestScreen()));
-          },
-        ),
-
-       */
-
-
         title: const Text(
           'Request Description',
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
@@ -94,7 +72,7 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width:30),
+                    SizedBox(width: 30),
                     Text(
                       '\$' + widget.price,
                       style: const TextStyle(
@@ -106,17 +84,6 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                   ],
                 ),
               ),
-            /*  Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'by ' + widget.buyerName,
-                  style: const TextStyle(
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-
-             */
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -160,103 +127,53 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                   ],
                 ),
               ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child:
-          widget.deleted == 'true'?
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                  '[DELETED]',
-                  style: TextStyle(
-                    color: Colors.red,
-                  )),
-            ],
-          ):
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: () {
-                  DocumentReference dr = FirebaseFirestore.instance.collection('requests').doc(widget.requestID);
-               //   DocumentReference dr1 = FirebaseFirestore.instance.collection('requests').doc(widget.deleted);
-                 // dr1.update({'deleted':"true"});
-                  dr.update({'Deleted':'true'});
-                  //Map<String, Object> deleted = new HashMap();
-                 // deleted.update(widget.deleted, ()=> "false");
-                 // dr.delete();
-                //  Navigator.of(context).pushReplacement(
-                  //    MaterialPageRoute(builder: (context) => RequestScreen()));
-                  Navigator.of(context).pop(); 
-                },
-                child:
-                //widget.icons?
-
-                Column(
-                  children: [
-                     Icon(
-                      Icons.delete,
-                      size: 28.0,
-                      color: Colors.red[900],
-                    ),
-                    Text(
-                      'Delete Listing',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red[900],
-                      ),
-                    ),
-
-
-                  ],
-                ),
-              ),
-              ],
-              /*widget.sellerName == 'null' ?
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        final uid = AuthService().currentUser?.uid;
-                        DocumentSnapshot ds = await FirebaseFirestore.instance.collection('sellers').doc(uid).get();
-                        _sellerName = ds.get('Name');
-                        DocumentReference dr = FirebaseFirestore.instance.collection('requests').doc(widget.requestID);
-                        dr.update({'Seller Name' : _sellerName});
-                        print(_sellerName);
-                        print(widget.requestID);
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RequestScreen()));
-                      },
-                      child: Column(
-                        children: const [
-                          Icon(
-                            Icons.add_task,
-                            size: 28.0,
-                            color: Colors.green,
-                          ),
-                          Text(
-                            'Accept Request',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                child: widget.deleted == 'true'
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('[DELETED]',
+                              style: TextStyle(
+                                color: Colors.red,
+                              )),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              DocumentReference dr = FirebaseFirestore.instance
+                                  .collection('requests')
+                                  .doc(widget.requestID);
+                              dr.update({'Deleted': 'true'});
+                              Navigator.of(context).pop();
+                            },
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.delete,
+                                  size: 28.0,
+                                  color: Colors.red[900],
+                                ),
+                                Text(
+                                  'Delete Request',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red[900],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ) :
-              Container(),
-
-               */
-           // ],
+              ),
+            ],
           ),
         ),
-      ],),
-    ),),);
+      ),
+    );
   }
 }

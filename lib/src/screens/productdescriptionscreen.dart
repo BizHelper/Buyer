@@ -1,15 +1,10 @@
-
-import 'package:buyer_app/src/firebase_service.dart';
+import 'package:buyer_app/src/services/firebase_service.dart';
 import 'package:buyer_app/src/screens/chat_conversation_screen.dart';
-import 'package:buyer_app/src/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../AuthService.dart';
-import '../widgets/products.dart';
 
 class ProductDescriptionScreen extends StatefulWidget {
   var productDetailName;
@@ -24,58 +19,37 @@ class ProductDescriptionScreen extends StatefulWidget {
   var deleted;
   var iconsButtons;
 
-
-
-
-  ProductDescriptionScreen(
-      {this.productDetailName,
-        this.productDetailShopName,
-        this.productDetailPrice,
-        this.productDetailCategory,
-        this.productDetailDescription,
-        this.productDetailImages,
-        this.productDetailId,
-        this.sellerId,
-        this.listingId,
-        required this.iconsButtons,
-        required this.deleted,
-
-      });
+  ProductDescriptionScreen({
+    this.productDetailName,
+    this.productDetailShopName,
+    this.productDetailPrice,
+    this.productDetailCategory,
+    this.productDetailDescription,
+    this.productDetailImages,
+    this.productDetailId,
+    this.sellerId,
+    this.listingId,
+    required this.iconsButtons,
+    required this.deleted,
+  });
 
   @override
-  State<ProductDescriptionScreen> createState() => _ProductDescriptionScreenState();
+  State<ProductDescriptionScreen> createState() =>
+      _ProductDescriptionScreenState();
 }
 
 class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   final FirebaseService _service = FirebaseService();
-
   final FirebaseAuth auth = FirebaseAuth.instance;
-
   String _buyerName = '';
-
-  /*Future<String> getBuyerName() async {
-    final uid = auth.currentUser?.uid;
-    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
-    setState(() => _buyerName = ds.get('Name'));
-    return _buyerName;
-  }
-
-  String getName() {
-    getBuyerName();
-    return _buyerName;
-  }
-
-   */
 
   @override
   Widget build(BuildContext context) {
     createChatRoom() async {
       final uid = auth.currentUser?.uid;
-      DocumentSnapshot ds = await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
+      DocumentSnapshot ds =
+      await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
       setState(() => _buyerName = ds.get('Name'));
-
       Map<String, dynamic> product = {
         'productDetailId': widget.listingId,
         'productDetailImages': widget.productDetailImages,
@@ -86,16 +60,14 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
         'productDetailDescription': widget.productDetailDescription,
         'sellerId': widget.sellerId,
         'listingId': widget.listingId,
-        'buyerName':_buyerName
+        'buyerName': _buyerName
       };
-
       List<String> users = [
-        //provider.sellerId,
         widget.sellerId,
-        _auth.currentUser!.uid
+        auth.currentUser!.uid
       ];
-
-      String chatRoomId = '${widget.sellerId}.${_auth.currentUser!.uid}.${widget.listingId}';
+      String chatRoomId =
+          '${widget.sellerId}.${auth.currentUser!.uid}.${widget.listingId}';
       Map<String, dynamic> chatData = {
         'users': users,
         'chatRoomId': chatRoomId,
@@ -103,16 +75,13 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
         'lastChat': null,
         'lastChatTime': DateTime.now().microsecondsSinceEpoch,
       };
-
       _service.createChatRoom(
         chatData: chatData,
       );
-      Navigator.push(
-        context,
+      Navigator.push(context,
         MaterialPageRoute(
-          builder: (BuildContext context) => ChatConversations(
-              chatRoomId: chatRoomId,type: 'listings'
-          ),
+          builder: (BuildContext context) =>
+              ChatConversations(chatRoomId: chatRoomId, type: 'listings'),
         ),
       );
     }
@@ -131,7 +100,6 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            // 28.59 need change where seller cant press chat or sth
             children: [
               SizedBox(
                 height: 300,
@@ -191,7 +159,6 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                   ],
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -212,36 +179,38 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                   widget.iconsButtons?
-                   InkWell(
-                      //  borderRadius:,
-                      onTap: createChatRoom,
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.chat,
-                            size: 28.0,
-                            color: Colors.blue,
-                          ),
-                          Text(
-                            'Chat',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
+                    widget.iconsButtons
+                        ? InkWell(
+                            onTap: createChatRoom,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.chat,
+                                  size: 28.0,
+                                  color: Colors.blue,
+                                ),
+                                Text(
+                                  'Chat',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ): Container()
+                          )
+                        : Container()
                   ],
                 ),
               ),
-              widget.deleted == 'true'?
-                  Text(
-                    '[DELETED]',
-                    style: TextStyle(
-                      color: Colors.red,
-                    )): Container()
+              widget.deleted == 'true'
+                  ? Text(
+                      '[DELETED]',
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    )
+                  : Container()
             ],
           ),
         ),

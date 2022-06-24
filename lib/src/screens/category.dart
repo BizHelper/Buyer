@@ -4,17 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import 'package:buyer_app/src/widgets/categories.dart';
 import 'package:buyer_app/src/widgets/navigateBar.dart';
-
 import '../widgets/products.dart';
 import 'chatscreen.dart';
 
-
 class CategoryScreen extends StatefulWidget {
-
   var currentCategory;
-
   CategoryScreen({this.currentCategory});
-
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
 }
@@ -25,22 +20,7 @@ class AuthService {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-
   final FirebaseAuth auth = FirebaseAuth.instance;
-  //String _sellerName = '';
-
-  /*Future<String> getSellerName() async {
-    final uid = AuthService().currentUser?.uid;
-    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('sellers').doc(uid).get();
-    setState(() => _sellerName = ds.get('Name'));
-    return _sellerName;
-  }
-
-  String getName() {
-    getSellerName();
-    return _sellerName;
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +29,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         backgroundColor: Colors.cyan[900],
         centerTitle: true,
         actions: <Widget>[
+          IconButton(onPressed: () {
+          }, icon: Icon(Icons.search)),
           IconButton(onPressed: () {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => ChatScreen()));
@@ -85,15 +67,32 @@ class _CategoryScreenState extends State<CategoryScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 11.0, top: 12),
-                child: Text(
-                  'Categories',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                   const Padding(
+                    padding: EdgeInsets.only(left: 11.0, top: 12,right: 0.0, bottom: 0.0),
+                    child: Text(
+                      'Categories',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                   Padding(
+                    padding: EdgeInsets.only(right: 11.0, top: 12),
+                    child: TextButton(
+                      child: Text('Favourites',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),onPressed:(){},
+                      style: TextButton.styleFrom(padding: EdgeInsets.zero,minimumSize:
+                      Size.zero,tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                  ),)
+                ],
               ),
               Categories(
                 currentCategory: widget.currentCategory,

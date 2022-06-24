@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_2.dart';
-import 'package:buyer_app/src/firebase_service.dart';
+import 'package:buyer_app/src/services/firebase_service.dart';
 
 class ChatConversations extends StatefulWidget {
   final String chatRoomId;
   final String type;
   ChatConversations({required this.chatRoomId,required this.type});
-
   @override
   State<ChatConversations> createState() => _ChatConversationsState();
 }
@@ -22,19 +21,6 @@ class _ChatConversationsState extends State<ChatConversations> {
   var chatMessageController = TextEditingController();
   bool _send = false;
 
-  /*sendMessage() {
-    if (chatMessageController.text.isNotEmpty) {
-      Map<String, dynamic> message = {
-        'message': chatMessageController.text,
-        'sentBy': _auth.currentUser!.uid,
-        'time': DateTime.now().microsecondsSinceEpoch,
-      };
-      _service.createChat(widget.chatRoomId, message);
-      chatMessageController.clear();
-    }
-  }
-
-   */
   sendMessage() {
     if (chatMessageController.text.isNotEmpty) {
       Map<String, dynamic> message = {
@@ -53,22 +39,13 @@ class _ChatConversationsState extends State<ChatConversations> {
 
   Stream<QuerySnapshot>? chatMessageStream;
 
-  /*@override
-  void initState() {
-    _service.getChat(widget.chatRoomId).then((value) {
-      setState(() {
-        chatMessageStream = value;
-      });
-    });
-    super.initState();
-  }*/
   void initState() {
     if (widget.type == 'listings') {
       _service.getChat(widget.chatRoomId).then((value) {
         setState(() {
           chatMessageStream = value;
-        });
-      });
+        },);
+      },);
       super.initState();
     } else {
       _service.getRequestChat(widget.chatRoomId).then((value) {
@@ -124,7 +101,6 @@ class _ChatConversationsState extends State<ChatConversations> {
                                       ? BubbleType.sendBubble
                                       : BubbleType.receiverBubble),
                               child:
-                             // Text(snapshot.data!.docs[index]['message']),
                               Text(snapshot.data!.docs[reverseIndex]['message']),
                             ),
                           ],

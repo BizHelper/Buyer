@@ -6,13 +6,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
-
 import '../widgets/navigateBar.dart';
-class AcceptedRequestScreen extends StatefulWidget {
 
+class AcceptedRequestScreen extends StatefulWidget {
   @override
   State<AcceptedRequestScreen> createState() => _AcceptedRequestScreen();
 }
+
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? get currentUser => _auth.currentUser;
@@ -25,7 +25,8 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
 
   Future<String> getBuyerName() async {
     final uid = AuthService().currentUser?.uid;
-    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
+    DocumentSnapshot ds =
+        await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
     setState(() => _buyerName = ds.get('Name'));
     return _buyerName;
   }
@@ -37,15 +38,18 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return
-    Scaffold(
+    return Scaffold(
       backgroundColor: Colors.blueGrey.shade50,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
-          IconButton(onPressed: () {Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => RequestChatScreen()));}, icon: Icon(Icons.chat)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RequestChatScreen()));
+              },
+              icon: Icon(Icons.chat)),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
@@ -60,47 +64,13 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
         ),
       ),
-      body:
-      /*Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-
-     */
-      /* Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'My Requests',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.orange[600])),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => RequestFormScreen()));
-                },
-                child: const Text(
-                  'Add New Request',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ],
-          ),
-          */
-
-
-      StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('requests')
-        .where('Buyer Name', isEqualTo: getName()).where('Accepted', isEqualTo: 'true').
-        where('Deleted', isEqualTo: 'false').snapshots(),
-          //  .where('Seller Name', isNotEqualTo: 'null').where('Buyer Name', isEqualTo: getName()).
-          //snapshots(),
-          //.where('Seller Name', isNotEqualTo: 'null' ).where('Buyer Name', isEqualTo: getName())
-         //   .snapshots(),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('requests')
+            .where('Buyer Name', isEqualTo: getName())
+            .where('Accepted', isEqualTo: 'true')
+            .where('Deleted', isEqualTo: 'false')
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Container();
@@ -123,9 +93,11 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.orange[600])),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.orange[600])),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => RequestFormScreen()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RequestFormScreen()));
                       },
                       child: const Text(
                         'Add New Request',
@@ -147,8 +119,8 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
                                   builder: (context) => RequestScreen()));
                         },
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Colors.orange),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.orange),
                           shape: MaterialStateProperty.all(
                             const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
@@ -163,12 +135,10 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () {},
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Colors.amber),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.amber),
                           shape: MaterialStateProperty.all(
                             const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
@@ -184,12 +154,10 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
                   ],
                 ),
               ),
-
-
               Flexible(
                 child: ListView(
                   children: snapshot.data!.docs.map(
-                        (requests) {
+                    (requests) {
                       return SingleRequest(
                         buyerName: requests['Buyer Name'],
                         sellerName: requests['Seller Name'],
@@ -208,9 +176,9 @@ class _AcceptedRequestScreen extends State<AcceptedRequestScreen> {
               ),
               NavigateBar()
             ],
-
           );
-        },),);
-
+        },
+      ),
+    );
   }
 }

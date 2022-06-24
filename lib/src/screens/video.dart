@@ -9,7 +9,6 @@ class VideoScreen extends StatefulWidget {
   var postID;
 
   VideoScreen({this.videoURL, this.description, this.postID});
-
   @override
   State<VideoScreen> createState() => _VideoScreenState();
 }
@@ -23,15 +22,18 @@ class _VideoScreenState extends State<VideoScreen> {
     super.initState();
   }
 
-  loadVideoPlayer(){
+  loadVideoPlayer() {
     controller = VideoPlayerController.network(widget.videoURL);
-    controller.addListener(() {
-      setState(() {});
-    });
-    controller.initialize().then((value){
-      setState(() {});
-    });
-
+    controller.addListener(
+      () {
+        setState(() {});
+      },
+    );
+    controller.initialize().then(
+      (value) {
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -63,8 +65,7 @@ class _VideoScreenState extends State<VideoScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      controller.value.duration.toString().substring(2, 7)
-                  ),
+                      controller.value.duration.toString().substring(2, 7)),
                 ),
               ],
             ),
@@ -95,9 +96,9 @@ class _VideoScreenState extends State<VideoScreen> {
                       controller.play();
                     }
                   },
-                  icon: Icon(
-                      controller.value.isPlaying ? Icons.pause : Icons.play_arrow
-                  ),
+                  icon: Icon(controller.value.isPlaying
+                      ? Icons.pause
+                      : Icons.play_arrow),
                 ),
                 IconButton(
                   onPressed: () {
@@ -110,15 +111,19 @@ class _VideoScreenState extends State<VideoScreen> {
             const SizedBox(
               height: 20,
             ),
-            Divider(height:1.5, color: Colors.black,),
+            Divider(
+              height: 1.5,
+              color: Colors.black,
+            ),
             const SizedBox(
               height: 20,
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CommentsScreen(
-                  postID: widget.postID,
-                )));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CommentsScreen(
+                          postID: widget.postID,
+                        )));
               },
               child: const Text('View Comments'),
             ),

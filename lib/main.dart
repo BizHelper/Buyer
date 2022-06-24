@@ -8,7 +8,4 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(App());
-//runApp(MultiProvider(providers:
-  //  [ChangeNotifierProvider(create: (BuildContext context) { TestNotifier(); },)],
- // child: App()));
 }

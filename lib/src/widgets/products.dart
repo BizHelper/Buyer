@@ -1,9 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/productdescriptionscreen.dart';
-
-import '../AuthService.dart';
 
 class Product extends StatelessWidget {
   var prodName;
@@ -39,19 +35,23 @@ class Product extends StatelessWidget {
           child: Material(
             child: InkWell(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductDescriptionScreen(
-                  productDetailName: prodName,
-                  productDetailShopName: prodShopName,
-                  productDetailPrice:  prodPrice,
-                  productDetailCategory: prodCategory,
-                  productDetailDescription: prodDescription,
-                  productDetailImages: prodImage,
-                  productDetailId: prodId,
-                  sellerId: sellerId,
-                  listingId: listingId,
-                  iconsButtons: true,
-                  deleted: deleted,
-                )));
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProductDescriptionScreen(
+                      productDetailName: prodName,
+                      productDetailShopName: prodShopName,
+                      productDetailPrice: prodPrice,
+                      productDetailCategory: prodCategory,
+                      productDetailDescription: prodDescription,
+                      productDetailImages: prodImage,
+                      productDetailId: prodId,
+                      sellerId: sellerId,
+                      listingId: listingId,
+                      iconsButtons: true,
+                      deleted: deleted,
+                    ),
+                  ),
+                );
               },
               child: GridTile(
                 footer: Container(
@@ -60,26 +60,22 @@ class Product extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Flexible(child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 16,
-                                top: 4,
-                                bottom: 4),
-                            child: Text(
-                              prodName,
-                              style: const TextStyle(
-                                  fontWeight:
-                                  FontWeight.bold),
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16, top: 4, bottom: 4),
+                              child: Text(
+                                prodName,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),),
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                right: 16,
-                                top: 4,
-                                bottom: 4),
+                                right: 16, top: 4, bottom: 4),
                             child: Text(
                               prodPrice,
                               style: const TextStyle(
@@ -93,10 +89,7 @@ class Product extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 16,
-                            right: 16,
-                            top: 4,
-                            bottom: 4),
+                            left: 16, right: 16, top: 4, bottom: 4),
                         child: Text(
                           prodShopName,
                           style: const TextStyle(

@@ -1,6 +1,4 @@
-import 'package:buyer_app/src/screens/explore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_time_format/date_time_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +22,6 @@ class AuthService {
 
 class CommentsScreenState extends State<CommentsScreen> {
   bool _send = false;
-  // DateTime timestamp = new DateTime.now();
-  //String date = ('yyyy-MM-dd – hh:mm:a').format(timestamp);
 
   TextEditingController commentController = TextEditingController();
   buildComments() {
@@ -78,15 +74,6 @@ class CommentsScreenState extends State<CommentsScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
-     /*   leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => ExploreScreen()));
-          },
-        ),
-
-      */
         title: const Text(
           'Comment Section',
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),

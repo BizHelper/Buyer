@@ -30,16 +30,10 @@ class SingleRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        title: Text(
-            title
-        ),
+        title: Text(title),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           /* Text(
-              'By: ' + buyerName,
-            ),
-            */
             Text(
               'Price: \$' + price,
             ),
@@ -50,19 +44,23 @@ class SingleRequest extends StatelessWidget {
         ),
         trailing: InkWell(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => RequestDescriptionScreen(
-              buyerName: buyerName,
-              sellerName: sellerName,
-              category: category,
-              deadline: deadline,
-              description: description,
-              price: price,
-              title: title,
-              buyerID: buyerID,
-              requestID: requestID,
-              //icons: true,
-              deleted: deleted,
-            )));
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => RequestDescriptionScreen(
+                  buyerName: buyerName,
+                  sellerName: sellerName,
+                  category: category,
+                  deadline: deadline,
+                  description: description,
+                  price: price,
+                  title: title,
+                  buyerID: buyerID,
+                  requestID: requestID,
+                  //icons: true,
+                  deleted: deleted,
+                ),
+              ),
+            );
           },
           child: Column(
             children: [

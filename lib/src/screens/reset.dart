@@ -1,5 +1,3 @@
-import 'package:buyer_app/src/screens/home.dart';
-import 'package:buyer_app/src/screens/verify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +13,6 @@ class _ResetScreenState extends State<ResetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Colors.blueGrey.shade50,
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade900,
