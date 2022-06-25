@@ -94,7 +94,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     fit: BoxFit.fill,
                     image:
                         !(Uri.tryParse(getImage())?.hasAbsolutePath ?? false)
-                            ? Image.asset('images/noProfilePic.png').image
+                            ? Image.asset('images/noProfilePic.jpeg').image
                             : Image.network(_image).image,
                   ),
                 ),
