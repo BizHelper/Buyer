@@ -75,47 +75,47 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              children: [
-                const SizedBox(
-                  height: 20.0,
-                ),
-                Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image:
-                          !(Uri.tryParse(getImage())?.hasAbsolutePath ?? false)
-                              ? Image.asset('images/noProfilePic.png').image
-                              : Image.network(_image).image,
-                    ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            children: [
+              const SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image:
+                        !(Uri.tryParse(getImage())?.hasAbsolutePath ?? false)
+                            ? Image.asset('images/noProfilePic.png').image
+                            : Image.network(_image).image,
                   ),
                 ),
-                const SizedBox(
-                  height: 20.0,
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              Text(
+               // AuthService().getName()
+                getName(),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                 // AuthService().getName()
-                  getName(),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                Row(
+              ),
+              const SizedBox(
+                height: 30.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
@@ -152,11 +152,11 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ],
                 ),
-              ],
-            ),
-            NavigateBar(),
-          ],
-        ),
+              ),
+            ],
+          ),
+          NavigateBar(),
+        ],
       ),
     );
   }

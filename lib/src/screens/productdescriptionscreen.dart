@@ -111,11 +111,13 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '${widget.productDetailName}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    Flexible(
+                      child: Text(
+                        '${widget.productDetailName}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     Text(
