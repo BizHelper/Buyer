@@ -10,8 +10,8 @@ import 'package:buyer_app/src/services/authservice.dart';
 
 
 class RequestScreen extends StatefulWidget {
-  var type; 
-  RequestScreen({required this.type}); 
+  var type;
+  RequestScreen({required this.type});
   @override
   State<RequestScreen> createState() => _RequestScreenState();
 
@@ -20,7 +20,7 @@ class RequestScreen extends StatefulWidget {
 class _RequestScreenState extends State<RequestScreen> {
   final FirebaseAuth _auth = AuthService().auth;
   String _buyerName = '';
-  
+
   Future<String> getBuyerName() async {
     final uid = AuthService().currentUser?.uid;
     DocumentSnapshot ds =
@@ -63,7 +63,7 @@ class _RequestScreenState extends State<RequestScreen> {
         ),
       ),
 
-        body: StreamBuilder<QuerySnapshot>(
+      body: StreamBuilder<QuerySnapshot>(
         stream:
         widget.type == 'Pending'?
         FirebaseFirestore.instance
@@ -72,7 +72,7 @@ class _RequestScreenState extends State<RequestScreen> {
             .where('Seller Name', isEqualTo: 'null')
             .where('Deleted', isEqualTo: 'false')
             .snapshots()
-        : FirebaseFirestore.instance
+            : FirebaseFirestore.instance
             .collection('requests')
             .where('Buyer Name', isEqualTo: getName() )
             .where('Accepted', isEqualTo: 'true')
@@ -101,7 +101,7 @@ class _RequestScreenState extends State<RequestScreen> {
                     ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.orange[600])),
+                          MaterialStateProperty.all(Colors.orange[600])),
                       onPressed: () {
                         //  Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(
@@ -131,7 +131,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(widget.type == "Pending"? Colors.amber: Colors.orange),
+                          MaterialStateProperty.all(widget.type == "Pending"? Colors.amber: Colors.orange),
                           shape: MaterialStateProperty.all(
                             const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
@@ -156,7 +156,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         },
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(widget.type == "Accepted"? Colors.amber: Colors.orange),
+                          MaterialStateProperty.all(widget.type == "Accepted"? Colors.amber: Colors.orange),
                           shape: MaterialStateProperty.all(
                             const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
@@ -176,7 +176,7 @@ class _RequestScreenState extends State<RequestScreen> {
               Flexible(
                 child: ListView(
                   children: snapshot.data!.docs.map(
-                    (requests) {
+                        (requests) {
                       return SingleRequest(
                         buyerName: requests['Buyer Name'],
                         sellerName: requests['Seller Name'],

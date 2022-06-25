@@ -76,35 +76,37 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  posts['Title'],
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
+                                          Flexible(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    posts['Title'],
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8,
-                                                    right: 16,
-                                                    top: 4,
-                                                    bottom: 8),
-                                                child: Text(
-                                                  'by ' + posts['Seller Name'],
-                                                  style: const TextStyle(
-                                                    color: Colors.black54,
-                                                    fontWeight: FontWeight.w800,
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 8,
+                                                      right: 16,
+                                                      top: 4,
+                                                      bottom: 8),
+                                                  child: Text(
+                                                    'by ' + posts['Seller Name'],
+                                                    style: const TextStyle(
+                                                      color: Colors.black54,
+                                                      fontWeight: FontWeight.w800,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(

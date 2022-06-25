@@ -41,13 +41,13 @@ class ProductDescriptionScreen extends StatefulWidget {
 
 class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
   final FirebaseService _service = FirebaseService();
-  final FirebaseAuth _auth = AuthService().auth;
+  final FirebaseAuth auth = AuthService().auth;
   String _buyerName = '';
 
   @override
   Widget build(BuildContext context) {
     createChatRoom() async {
-      final uid = _auth.currentUser?.uid;
+      final uid = auth.currentUser?.uid;
       DocumentSnapshot ds =
       await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
       setState(() => _buyerName = ds.get('Name'));
@@ -65,10 +65,10 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
       };
       List<String> users = [
         widget.sellerId,
-        _auth.currentUser!.uid
+        auth.currentUser!.uid
       ];
       String chatRoomId =
-          '${widget.sellerId}.${_auth.currentUser!.uid}.${widget.listingId}';
+          '${widget.sellerId}.${auth.currentUser!.uid}.${widget.listingId}';
       Map<String, dynamic> chatData = {
         'users': users,
         'chatRoomId': chatRoomId,

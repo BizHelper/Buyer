@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               size: 120,
               color: Colors.black,
             ),
-            const Text(
+             Text(
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 'Buyer Login'),
             Padding(
