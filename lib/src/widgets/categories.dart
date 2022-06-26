@@ -8,10 +8,10 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Center(
+        child: Wrap(
           children: [
             CategoryButton(
               text: 'Popular',
@@ -29,11 +29,6 @@ class Categories extends StatelessWidget {
               text: 'Men\'s Clothes',
               currentCategory: currentCategory,
             ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
             CategoryButton(
               text: 'Food & Beverage',
               currentCategory: currentCategory,
@@ -52,7 +47,7 @@ class Categories extends StatelessWidget {
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -65,24 +60,27 @@ class CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (context) => HomeScreen(currentCategory: text)));
-        },
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.zero,
-      ),
-      child: Container(
-        color: text == currentCategory ? Colors.amber : Colors.orange,
-        child: Padding(
-          padding: EdgeInsets.all(6.0),
-          child: Text(
-            text == 'Others' ? '   Others   ' : '$text',
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 12.0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: TextButton(
+        onPressed: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (context) => HomeScreen(currentCategory: text)));
+          },
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+        ),
+        child: Container(
+          color: text == currentCategory ? Colors.amber : Colors.orange,
+          child: Padding(
+            padding: EdgeInsets.all(6.0),
+            child: Text(
+              text == 'Others' ? '   Others   ': text == 'Popular'? '  Popular  ': '$text',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 12.0,
+              ),
             ),
           ),
         ),
