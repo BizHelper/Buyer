@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:buyer_app/src/providers/LocationProvider.dart';
 import 'package:buyer_app/src/screens/account.dart';
 import 'package:buyer_app/src/screens/explore.dart';
@@ -26,9 +28,6 @@ class _LocationScreenState extends State<LocationScreen> {
 
    double _userLongitude= 0.0;
 
-  double _sellerLatitude = 0.0;
-
-   double _sellerLongitude = 0.0;
   var distanceInKm;
 
   void getDistanceHelper() async {
@@ -54,58 +53,6 @@ super.initState();
 }
   @override
   Widget build(BuildContext context) {
-
-
-
-
-  /* void getDistanceHelper2(String sellerID) async {
-      DocumentSnapshot ds1= await FirebaseFirestore
-          .instance
-          .collection('sellers')
-          .doc(sellerID)
-          .get(); // change to buyers
-     _sellerLatitude = ds1.get('Latitude');
-     // print(_sellerLongitude-1);
-     // print('hi');
-     _sellerLongitude = ds1.get('Longitude');
-    }
-
-
-   */
-
-
-
-
-
- /*    getDistance(String sellerID) async {
-     // getDistanceHelper();
-     // getDistanceHelper2(sellerID);
-      print(sellerID);
-      DocumentSnapshot ds1= await FirebaseFirestore
-          .instance
-          .collection('sellers')
-          .doc(sellerID)
-          .get(); // change to buyers
-      _sellerLatitude = await ds1.get('Latitude');
-      // print(_sellerLongitude-1);
-      // print('hi');
-      _sellerLongitude = await ds1.get('Longitude');
-       distanceInKm = await Geolocator.distanceBetween(_userLatitude, _userLongitude,
-       _sellerLatitude, _sellerLongitude)/1000;
-
-       // setState(()=> distanceInKm = distance/1000);
-       // return distanceInKm;
-      //return distanceInKm.toString();
-      // check if they alr upload their location... cannot search before setting their location...
-    }
-
-    String getDistance1(String sellerID){
-      getDistance(sellerID);
-      return distanceInKm.toString();
-    }
-
-
-  */
     final locationData = Provider.of<LocationProvider>(context, listen: false);
     return Scaffold(
         backgroundColor: Colors.blueGrey.shade50,
@@ -138,10 +85,10 @@ super.initState();
                 return Column(children: [
                   Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FlatButton(
-                            child: Text('Set my location'),
+                        TextButton(
+                            child: Text('My Location'),
                             onPressed: () async {
                               await locationData.getCurrentPosition();
                               // print(locationData.permissionALlowed);
@@ -152,19 +99,23 @@ super.initState();
                                 print('Permission not allowed');
                               }
                             }),
+                        TextButton(onPressed: () {  },
+                        child: Text('Choose Location'))
                       ]),
                   Flexible(
                     child: Container(
                       child: ListView(
                      //   crossAxisCount: 2,
                         // scrollDirection: Axis.vertical,
-                        children: snapShot.data!.docs.map(
+                      children: snapShot.data!.docs.map(
                           (DocumentSnapshot document) {
                         //   String dis =  getDistance1(document['Seller ID']);
                           // print(dis);
+                            // add the document check if got shop here as a field... under sellers.
                             double dis =  Geolocator.distanceBetween(_userLatitude, _userLongitude,
                                 document['Latitude'], document['Longitude']);
-                         if (dis<10) {
+                            double dis1 = dis/1000;
+                        if (dis1<10) {
                            return Container();
                          }
                           return  Padding(
@@ -173,19 +124,17 @@ super.initState();
                               // width: 80,
                                 child: Column(
                                     children: [
+                                      Image.network(document['Profile Pic']),
                                 Container
                                 (child: Text(document['Name'])),
                                     Text(
-                                    dis.toString())
-
-                                          // '${getDistance('wYrPfGpXuIRAjC3lgI6wRxv4jNX2')}Km')
-                                  //'${getDistance(document['Seller ID'])}Km')
+                                    dis1.toString()+' km')
                                   ],
                                 ),
                               ),
                           );
                           },
-                        ).toList(),
+                        ).toList()
                       ),
                     ),
                   ),
