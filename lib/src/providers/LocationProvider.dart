@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationProvider with ChangeNotifier {
   double latitude = 0.0;
   double longitude = 0.0;
   bool permissionALlowed = false;
+  var selectedAddress;
 
 
   Future<void> getCurrentPosition() async {
@@ -27,4 +30,20 @@ class LocationProvider with ChangeNotifier {
       print('Permission not allowed');
     }
   }
+
+  void onCameraMove(CameraPosition cameraPosition) async {
+    this.latitude = cameraPosition.target.latitude;
+    this.longitude = cameraPosition.target.longitude;
+    notifyListeners();
+  }
+
+  Future<void> getMoveCamera() async {
+    final coordinates = new Coordinates(this.latitude, this.longitude);
+    final addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    this.selectedAddress = addresses.first;
+    print('${selectedAddress.featureName} : ${selectedAddress.featureName}');
+}
+
+
+
 }

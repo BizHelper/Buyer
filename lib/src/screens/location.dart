@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:buyer_app/src/providers/LocationProvider.dart';
 import 'package:buyer_app/src/screens/account.dart';
 import 'package:buyer_app/src/screens/explore.dart';
