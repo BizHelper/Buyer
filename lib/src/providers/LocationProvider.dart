@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -8,7 +7,6 @@ class LocationProvider with ChangeNotifier {
   double longitude = 0.0;
   bool permissionALlowed = false;
   var selectedAddress;
-
 
   Future<void> getCurrentPosition() async {
     LocationPermission permission = await Geolocator.checkPermission();
@@ -19,7 +17,8 @@ class LocationProvider with ChangeNotifier {
       }
     }
 
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     print(position);
     if (position != null) {
       this.latitude = position.latitude;
@@ -37,13 +36,13 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getMoveCamera() async {
+  /* Future<void> getMoveCamera() async {
     final coordinates = new Coordinates(this.latitude, this.longitude);
     final addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     this.selectedAddress = addresses.first;
     print('${selectedAddress.featureName} : ${selectedAddress.featureName}');
-}
+  }
 
-
+  */
 
 }

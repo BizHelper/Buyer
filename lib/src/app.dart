@@ -7,7 +7,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login App',
-      routes: {MapScreen.id : (context)=> MapScreen()},
+     // routes: {MapScreen.id : (context)=> MapScreen()},
       home: LoginScreen(),
     );
   }
