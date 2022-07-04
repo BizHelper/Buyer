@@ -45,10 +45,13 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-   //Future<void> getMoveCamera() async {
-
-   // print('${selectedAddress.featureName} : ${selectedAddress.featureName}');
-  //}
+   Future<void> getMoveCamera() async {
+     GeoData data = await Geocoder2.getDataFromCoordinates(
+         latitude: this.latitude,
+         longitude: this.longitude,
+         googleMapApiKey: "AIzaSyDOJ2t5HwT4OHU10hT4Ing9OFtQGtwy150");
+    //print('${selectedAddress.featureName} : ${selectedAddress.featureName}');
+  }
 
 
 }

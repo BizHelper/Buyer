@@ -50,7 +50,6 @@ class _LocationScreenState extends State<LocationScreen> {
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
@@ -67,17 +66,19 @@ class _LocationScreenState extends State<LocationScreen> {
       ),
       body: Container(
         child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('sellers').snapshots(),
+          stream: FirebaseFirestore.instance.collection('sellers').
+          where('hasShop', isEqualTo: "true").snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
-            if (!snapShot.hasData) return CircularProgressIndicator();
+            if (!snapShot.hasData) return
+            Container();
             return Column(
               children: [
                 Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextButton(
-                          child: Text('Set Location'),
+                          child: Text('Set Your Location',style: TextStyle(fontSize: 16)),
                           onPressed: () async {
                             await locationData.getCurrentPosition();
                             // print(locationData.permissionALlowed);
@@ -119,7 +120,20 @@ class _LocationScreenState extends State<LocationScreen> {
                           profilePicUrl:document['Profile Pic'], name: document['Name'])));},
                               child: Column(
                                 children: [
-                                  Image.network(document['Profile Pic'],height: 100),
+                                  Container(
+                                    width: 200,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                     // shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: Image.network(document['Profile Pic']).image,
+                                      ),
+                                    ),
+                                  ),
+                                // SizedBox(child: Image.network(document['Profile Pic']),
+                                 //width: 200,height: 200,),
                                   Container(child: Text(document['Name'])),
                                   Text(double.parse(dis1.toString()).toStringAsFixed(2) + ' km')
                                 ],

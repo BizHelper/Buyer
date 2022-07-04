@@ -254,6 +254,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                 request.putIfAbsent('Accepted', () => 'false');
                                 request.putIfAbsent(
                                     'Buyer ID', () => _auth.currentUser!.uid);
+                                request.putIfAbsent('Price Double', () => double.parse(_currentPrice));
                                 request.putIfAbsent('Deleted', () => 'false');
                                 dr.set(request);
                                 Navigator.of(context).pushReplacement(

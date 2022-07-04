@@ -76,27 +76,38 @@ class _MapScreenState extends State<MapScreen> {
       SafeArea(
         child: Stack(
           children: [
-            GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: currentLocation,
-                zoom: 14.476,
-              ),
-              zoomControlsEnabled: false,
-              minMaxZoomPreference: MinMaxZoomPreference(1.5, 20.8),
-              myLocationButtonEnabled: true,
-              myLocationEnabled: true,
-              mapType: MapType.normal,
-              mapToolbarEnabled: true,
-              onCameraMove: (CameraPosition position) {
-                locationData.onCameraMove(position);
-              },
-              onMapCreated: onCreated,
-              onCameraIdle: () {
-              //  method();
-             //   method();
-               // locationData.getMoveCamera();
-              },
-            ),
+           // Column(
+             //children: [
+                GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: currentLocation,
+                    zoom: 14.476,
+                  ),
+                  zoomControlsEnabled: false,
+                  minMaxZoomPreference: MinMaxZoomPreference(1.5, 20.8),
+                  myLocationButtonEnabled: true,
+                  myLocationEnabled: true,
+                  mapType: MapType.normal,
+                  mapToolbarEnabled: true,
+                  onCameraMove: (CameraPosition position) {
+                    locationData.onCameraMove(position);
+                  },
+                  onMapCreated: onCreated,
+                  onCameraIdle: () {
+                  //  method();
+                 //   method();
+                    locationData.getMoveCamera();
+                  },
+                ),
+                Center(
+                  child: Container(height: 35,
+                  margin: EdgeInsets.only(bottom: 40),
+                  child: Image.asset('images/image l.png'))
+                ),
+
+
+         //     ],
+           // ),
             // later can add the profile image marker....
          /*   Positioned(
               bottom: 0.0,
