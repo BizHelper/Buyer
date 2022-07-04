@@ -1,7 +1,10 @@
 import 'package:buyer_app/src/providers/LocationProvider.dart';
+import 'package:buyer_app/src/screens/SellerDescriptionScreen.dart';
 import 'package:buyer_app/src/screens/account.dart';
+import 'package:buyer_app/src/screens/chatscreen.dart';
 import 'package:buyer_app/src/screens/explore.dart';
 import 'package:buyer_app/src/screens/home.dart';
+import 'package:buyer_app/src/screens/productdescriptionscreen.dart';
 import 'package:buyer_app/src/screens/request.dart';
 import 'package:buyer_app/src/services/authservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -109,12 +112,18 @@ class _LocationScreenState extends State<LocationScreen> {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            child: Column(
-                              children: [
-                                Image.network(document['Profile Pic']),
-                                Container(child: Text(document['Name'])),
-                                Text(dis1.toString() + ' km')
-                              ],
+                            child: InkWell(
+                              onTap: (){ Navigator.of(context).push(
+                        MaterialPageRoute(
+                        builder: (context) =>  SellerDescriptionScreen(
+                          profilePicUrl:document['Profile Pic'], name: document['Name'])));},
+                              child: Column(
+                                children: [
+                                  Image.network(document['Profile Pic'],height: 100),
+                                  Container(child: Text(document['Name'])),
+                                  Text(double.parse(dis1.toString()).toStringAsFixed(2) + ' km')
+                                ],
+                              ),
                             ),
                           ),
                         );

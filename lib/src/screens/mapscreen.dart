@@ -12,6 +12,7 @@ import 'package:google_maps_webservice/directions.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:provider/provider.dart';
 import '../providers/LocationProvider.dart';
+import 'package:geocoder2/geocoder2.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -25,14 +26,26 @@ class _MapScreenState extends State<MapScreen> {
   String googleApikey = "AIzaSyDOJ2t5HwT4OHU10hT4Ing9OFtQGtwy150";
   GoogleMapController? mapController; //contrller for Google map
   CameraPosition? cameraPosition;
- // LatLng startLocation = LatLng(27.6602292, 85.308027);
   String location = "Search Location";
   @override
   Widget build(BuildContext context) {
-    final locationData = Provider.of<LocationProvider>(context);
-    setState(() {
+
+
+   final locationData = Provider.of<LocationProvider>(context);
+   /*method() async {
+     GeoData data = await Geocoder2.getDataFromCoordinates(
+         latitude: locationData.latitude,
+         longitude: locationData.longitude,
+         googleMapApiKey: "AIzaSyDOJ2t5HwT4OHU10hT4Ing9OFtQGtwy150");
+     locationData.selectedAddress =data.address;
+   }
+
+    */
+    setState(()  {
+     // method();
       currentLocation = LatLng(locationData.latitude, locationData.longitude);
     });
+
     void onCreated(GoogleMapController controller) {
       setState(() {
         mapController = controller;
@@ -79,11 +92,13 @@ class _MapScreenState extends State<MapScreen> {
               },
               onMapCreated: onCreated,
               onCameraIdle: () {
-              //  locationData.getMoveCamera();
+              //  method();
+             //   method();
+               // locationData.getMoveCamera();
               },
             ),
             // later can add the profile image marker....
-            Positioned(
+         /*   Positioned(
               bottom: 0.0,
               child: Container(
                 height: 200,
@@ -91,16 +106,24 @@ class _MapScreenState extends State<MapScreen> {
                 color: Colors.white,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25.0),
+                      child: Text(locationData.selectedAddress),
+                    )
+                  //  Text(LocationProvider().selectedAddress)
+                    //Text(locationData.selectedAddress)
                   // Text(locationData.selectedAddress.featureName),
                     // Text(locationData.selectedAddress.addressLine),
                   ],
                 ),
               ),
             ),
+            */
             Positioned(  //search input bar
                 top:10,
                 child: InkWell(
                     onTap: () async {
+                     // method();
                       var place = await PlacesAutocomplete.show(
                           context: context,
                           apiKey: googleApikey,

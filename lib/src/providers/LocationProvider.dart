@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoder2/geocoder2.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -6,7 +7,7 @@ class LocationProvider with ChangeNotifier {
   double latitude = 0.0;
   double longitude = 0.0;
   bool permissionALlowed = false;
-  var selectedAddress;
+ // var selectedAddress = 'hi';
 
   Future<void> getCurrentPosition() async {
     LocationPermission permission = await Geolocator.checkPermission();
@@ -25,6 +26,7 @@ class LocationProvider with ChangeNotifier {
       this.longitude = position.longitude;
       permissionALlowed = true;
       notifyListeners();
+
     } else {
       print('Permission not allowed');
     }
@@ -33,16 +35,20 @@ class LocationProvider with ChangeNotifier {
   void onCameraMove(CameraPosition cameraPosition) async {
     this.latitude = cameraPosition.target.latitude;
     this.longitude = cameraPosition.target.longitude;
+   /*GeoData data = await Geocoder2.getDataFromCoordinates(
+        latitude: this.latitude,
+        longitude: this.longitude,
+        googleMapApiKey: "AIzaSyDOJ2t5HwT4OHU10hT4Ing9OFtQGtwy150");
+    this.selectedAddress =data.address;
+
+    */
     notifyListeners();
   }
 
-  /* Future<void> getMoveCamera() async {
-    final coordinates = new Coordinates(this.latitude, this.longitude);
-    final addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    this.selectedAddress = addresses.first;
-    print('${selectedAddress.featureName} : ${selectedAddress.featureName}');
-  }
+   //Future<void> getMoveCamera() async {
 
-  */
+   // print('${selectedAddress.featureName} : ${selectedAddress.featureName}');
+  //}
+
 
 }
