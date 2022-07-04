@@ -1,10 +1,8 @@
 import 'package:buyer_app/src/providers/LocationProvider.dart';
 import 'package:buyer_app/src/screens/SellerDescriptionScreen.dart';
 import 'package:buyer_app/src/screens/account.dart';
-import 'package:buyer_app/src/screens/chatscreen.dart';
 import 'package:buyer_app/src/screens/explore.dart';
 import 'package:buyer_app/src/screens/home.dart';
-import 'package:buyer_app/src/screens/productdescriptionscreen.dart';
 import 'package:buyer_app/src/screens/request.dart';
 import 'package:buyer_app/src/services/authservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -193,7 +191,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) => HomeScreen(
-                                            currentCategory: 'Popular')));
+                                            currentCategory: 'Popular',sort: 'Default')));
                               },
                               child: Column(
                                 children: const [

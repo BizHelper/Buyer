@@ -8,15 +8,106 @@ import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import '../widgets/products.dart';
 
-class HomeScreen extends StatelessWidget {
-  final FirebaseAuth _auth = AuthService().auth;
-  final db = FirebaseFirestore.instance;
+class HomeScreen extends StatefulWidget {
   var currentCategory;
-  HomeScreen({Key? key, required this.currentCategory}) : super(key: key);
+  var sort;
+ // HomeScreen({Key? key, required this.currentCategory, required this.sort}) : super(key: key);
 
+  HomeScreen({required this.currentCategory, required this.sort});
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final FirebaseAuth _auth = AuthService().auth;
+
+  final db = FirebaseFirestore.instance;
+  TextEditingController searchController = TextEditingController();
+  List allResults = [];
+  List filteredResults = [];
+  late Future resultsLoaded;
+  final List<String> sortCategories = [
+    'Default',
+    'Price: high to low',
+    'Price: low to high',
+  //  'Deadline: latest to earliest',
+    //'Deadline: earliest to latest',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(onSearchChanged);
+    searchController.dispose();
+    super.dispose();
+  }
+
+  getListingList() async {
+    var data = widget.currentCategory == 'Popular'?
+     FirebaseFirestore.instance
+        .collection('listings')
+        .where('Deleted', isEqualTo: 'false'):
+     FirebaseFirestore.instance
+        .collection('listings')
+        .where('Deleted', isEqualTo: 'false').where('Category', isEqualTo: widget.currentCategory);
+    var sortedData = widget.sort == 'Price: high to low'
+    ? await data.orderBy('Price Double', descending: true).get()
+    : widget.sort == 'Price: low to high'
+    ? await data.orderBy('Price Double').get()
+    : await data.get();
+    setState(()=> allResults = sortedData.docs);
+    searchResultList();
+    return sortedData.docs;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    resultsLoaded = getListingList();
+  }
+
+  onSearchChanged() {
+    searchResultList();
+  }
+
+  searchResultList() {
+    var showResults = [];
+    if (searchController.text != '') {
+      for (var listings in allResults) {
+        var title = listings['Name'].toString().toLowerCase();
+
+        if (title.contains(searchController.text.toLowerCase())) {
+          showResults.add(listings);
+        }
+      }
+    } else {
+      showResults = List.from(allResults);
+    }
+    setState(() => filteredResults = showResults);
+  }
+
+
+ /* stream:
+  currentCategory == 'Popular'?
+  FirebaseFirestore.instance
+      .collection('listings')
+      .where('Deleted', isEqualTo: 'false')
+      .snapshots():
+        FirebaseFirestore.instance
+      .collection('listings')
+      .where('Deleted', isEqualTo: 'false').where('Category', isEqualTo: currentCategory)
+      .snapshots(),
+
+  */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.blueGrey.shade50,
       appBar: AppBar(
         centerTitle: true,
@@ -44,23 +135,7 @@ class HomeScreen extends StatelessWidget {
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
         ),
       ),
-      body: StreamBuilder(
-        stream:
-        currentCategory == 'Popular'?
-        FirebaseFirestore.instance
-            .collection('listings')
-            .where('Deleted', isEqualTo: 'false')
-            .snapshots():
-        FirebaseFirestore.instance
-            .collection('listings')
-            .where('Deleted', isEqualTo: 'false').where('Category', isEqualTo: currentCategory)
-            .snapshots(),
-
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          return Column(
+      body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -94,10 +169,47 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Categories(currentCategory: currentCategory),
+              Categories(currentCategory: widget.currentCategory),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0,),
+                child: TextField(
+                  controller: searchController,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: 'Search Listings',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: DropdownButtonFormField(
+                    value: widget.sort,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.sort),
+                    ),
+                    items: sortCategories.map((category) {
+                      return DropdownMenuItem(
+                        value: category,
+                        child: Text('$category'),
+                      );
+                    }).toList(),
+                    onChanged: (val) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                            currentCategory: widget.currentCategory,
+                            sort: val,
+                          ),
+                        ),
+                      );
+                    }
+                ),
+              ),
               Flexible(
                 child: Container(
-                  child: GridView.count(
+                  child:
+                 /* GridView.count(
+
                     crossAxisCount: 2,
                     children: snapshot.data!.docs.map(
                       (listings) {
@@ -114,13 +226,26 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                     ).toList(),
-                  ),
+                  ),*/
+                  GridView.builder( gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                    itemCount: filteredResults.length,
+                    itemBuilder: (BuildContext context,int index)=>
+                        Product(
+                          prodName: filteredResults[index]['Name'],
+                          prodShopName: filteredResults[index]['Seller Name'],
+                          prodPrice: filteredResults[index]['Price'],
+                          prodCategory: filteredResults[index]['Category'],
+                          prodDescription: filteredResults[index]['Description'],
+                          prodImage: filteredResults[index]['Image URL'],
+                          sellerId: filteredResults[index]['Seller Id'],
+                          listingId: filteredResults[index]['Listing ID'],
+                          deleted: filteredResults[index]['Deleted'],
+                        ),
                 ),
+              ),
               ),
               NavigateBar(),
             ],
-          );
-        },
       ),
     );
   }

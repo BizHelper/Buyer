@@ -66,7 +66,7 @@ class CategoryButton extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (context) => HomeScreen(currentCategory: text)));
+                  builder: (context) => HomeScreen(currentCategory: text,sort: 'Default')));
           },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,

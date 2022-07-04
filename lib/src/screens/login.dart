@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         await Auth(auth: auth).signin(_email, _password);
                     if (result == 'Success') {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => HomeScreen(currentCategory: "Popular")));
+                          builder: (context) => HomeScreen(currentCategory: "Popular",sort: 'Default')));
                     } else {
                       Fluttertoast.showToast(
                           msg: result ?? '', gravity: ToastGravity.TOP);
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await auth.signInWithEmailAndPassword(email: _email, password: _password);
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen(currentCategory: "Popular")));
+          MaterialPageRoute(builder: (context) => HomeScreen(currentCategory: "Popular",sort: 'Default')));
       return "Success";
     } on FirebaseAuthException catch (error) {
       Fluttertoast.showToast(msg: error.message!, gravity: ToastGravity.TOP);

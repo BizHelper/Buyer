@@ -52,7 +52,7 @@ class NavigateBar extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => HomeScreen(currentCategory: 'Popular')));
+                        MaterialPageRoute(builder: (context) => HomeScreen(currentCategory: 'Popular',sort: 'Default')));
                   },
                   child: Column(
                     children: const [
