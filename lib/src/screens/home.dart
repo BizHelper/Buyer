@@ -52,14 +52,16 @@ class _HomeScreenState extends State<HomeScreen> {
      FirebaseFirestore.instance
         .collection('listings')
         .where('Deleted', isEqualTo: 'false'):
+     //orderBy('Time',descending: true):
      FirebaseFirestore.instance
         .collection('listings')
         .where('Deleted', isEqualTo: 'false').where('Category', isEqualTo: widget.currentCategory);
+         //.orderBy('Time', descending: true);
     var sortedData = widget.sort == 'Price: high to low'
     ? await data.orderBy('Price Double', descending: true).get()
     : widget.sort == 'Price: low to high'
     ? await data.orderBy('Price Double').get()
-    : await data.get();
+    : await data.orderBy('Time', descending:true).get();
     setState(()=> allResults = sortedData.docs);
     searchResultList();
     return sortedData.docs;
