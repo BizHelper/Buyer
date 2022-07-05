@@ -12,12 +12,12 @@ class SellerListingPageScreen extends StatefulWidget {
   var currentCategory;
   var sort;
   //var sellerId;
-  var sellerName;
+  String sellerName;
   // HomeScreen({Key? key, required this.currentCategory, required this.sort}) : super(key: key);
 
   SellerListingPageScreen({required this.currentCategory, required this.sort,
     //this.sellerId,
-  this.sellerName});
+  required this.sellerName});
   @override
   State<SellerListingPageScreen> createState() => _SellerListingPageScreenState();
 }
@@ -119,6 +119,7 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
+
         //  IconButton(onPressed: () {
           //}, icon: Icon(Icons.search)),
          /* IconButton(
@@ -139,7 +140,7 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
           ),
         ],
         title: const Text(
-          'Seller Listing Page',
+          'Seller Shop',
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
         ),
       ),
@@ -150,17 +151,19 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              /*const Padding(
+
+           /*   const Padding(
                 padding: EdgeInsets.only(left: 12, top: 11),
                 child:
-                Text(
-                  'Categories',
+                Text(widget.sellerName,
                   style:
                   TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
 
-               */
+            */
+
+
             /*  Padding(
                 padding: EdgeInsets.only(right: 11.0, top: 12),
                 child: TextButton(
@@ -206,7 +209,7 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
                   );
                 }).toList(),
                 onChanged: (val) {
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => SellerListingPageScreen(
                         currentCategory: widget.currentCategory,
@@ -258,7 +261,7 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
               ),
             ),
           ),
-          NavigateBar(),
+        //  NavigateBar(),
         ],
       ),
     );

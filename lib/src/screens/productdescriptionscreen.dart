@@ -161,7 +161,8 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                           SellerListingPageScreen(
                               currentCategory: 'Popular',
                               sort: 'Default',
-                              sellerName: widget.productDetailShopName)));}
+                              sellerName: widget.productDetailShopName,
+                          )));}
                               //sellerId: widget.sellerId)));}
                     ),
 
