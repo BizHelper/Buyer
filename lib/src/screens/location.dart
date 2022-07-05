@@ -91,8 +91,8 @@ class _LocationScreenState extends State<LocationScreen> {
                         double dis = Geolocator.distanceBetween(
                             _userLatitude,
                             _userLongitude,
-                            document['Latitude'],
-                            document['Longitude']);
+                            document['latitude'],
+                            document['longitude']);
                         double dis1 = dis / 1000;
                         if (dis1 > 100) {
                           return Container();

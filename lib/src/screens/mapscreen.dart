@@ -60,12 +60,13 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
           title: Text('Your Location'),
-          leading: BackButton(
-              color: Colors.white,
-              onPressed: () => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LocationScreen()))),
-          backgroundColor: Colors.teal),
+        //  leading: BackButton(
+             // color: Colors.white,
+            //  onPressed: () => Navigator.of(context).pushReplacement(
+              //    MaterialPageRoute(builder: (context) => LocationScreen()))),
+          backgroundColor: Colors.cyan[900]),
       body: SafeArea(
         child: Stack(
           children: [
@@ -96,23 +97,33 @@ class _MapScreenState extends State<MapScreen> {
                 child: Container(
                     height: 35,
                     margin: EdgeInsets.only(bottom: 40),
-                    child: Image.asset('images/image l.png'))),
+                    child:// Image.asset('images/image l.png')
+                  Icon(Icons.location_on,color: Colors.red,size: 50)
+                )),
 
             //     ],
             // ),
             // later can add the profile image marker....
-            /*   Positioned(
+               Positioned(
               bottom: 0.0,
               child: Container(
-                height: 200,
-                width: MediaQuery.of(context).size.width,
+                height: 50,
+                 width: MediaQuery.of(context).size.width,
                 color: Colors.white,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25.0),
-                      child: Text(locationData.selectedAddress),
-                    )
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.orange[600])),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => LocationScreen()));
+                      },
+                      child: const Text(
+                        'Set',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
                   //  Text(LocationProvider().selectedAddress)
                     //Text(locationData.selectedAddress)
                   // Text(locationData.selectedAddress.featureName),
@@ -121,7 +132,7 @@ class _MapScreenState extends State<MapScreen> {
                 ),
               ),
             ),
-            */
+
             Positioned(
               //search input bar
               top: 10,

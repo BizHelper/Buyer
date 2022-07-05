@@ -12,7 +12,6 @@ class HomeScreen extends StatefulWidget {
   var currentCategory;
   var sort;
  // HomeScreen({Key? key, required this.currentCategory, required this.sort}) : super(key: key);
-
   HomeScreen({required this.currentCategory, required this.sort});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
