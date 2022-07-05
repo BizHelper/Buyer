@@ -113,8 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
-          IconButton(onPressed: () {
-          }, icon: Icon(Icons.search)),
+          //IconButton(onPressed: () {
+        //  }, icon: Icon(Icons.search)),
           IconButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(

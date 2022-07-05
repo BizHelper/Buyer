@@ -7,7 +7,6 @@ class LocationProvider with ChangeNotifier {
   double latitude = 0.0;
   double longitude = 0.0;
   bool permissionALlowed = false;
- // var selectedAddress = 'hi';
 
   Future<void> getCurrentPosition() async {
     LocationPermission permission = await Geolocator.checkPermission();
@@ -17,7 +16,6 @@ class LocationProvider with ChangeNotifier {
         return Future.error('Location Not Available');
       }
     }
-
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     print(position);
@@ -26,7 +24,6 @@ class LocationProvider with ChangeNotifier {
       this.longitude = position.longitude;
       permissionALlowed = true;
       notifyListeners();
-
     } else {
       print('Permission not allowed');
     }
@@ -40,7 +37,6 @@ class LocationProvider with ChangeNotifier {
         longitude: this.longitude,
         googleMapApiKey: "AIzaSyDOJ2t5HwT4OHU10hT4Ing9OFtQGtwy150");
     this.selectedAddress =data.address;
-
     */
     notifyListeners();
   }
@@ -50,8 +46,5 @@ class LocationProvider with ChangeNotifier {
          latitude: this.latitude,
          longitude: this.longitude,
          googleMapApiKey: "AIzaSyDOJ2t5HwT4OHU10hT4Ing9OFtQGtwy150");
-    //print('${selectedAddress.featureName} : ${selectedAddress.featureName}');
   }
-
-
 }

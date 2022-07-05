@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/screens/sellerlistingpage.dart';
 import 'package:buyer_app/src/services/authservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -92,18 +93,35 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 8,
-                                                      right: 16,
-                                                      top: 4,
-                                                      bottom: 8),
-                                                  child: Text(
-                                                    'by ' + posts['Seller Name'],
-                                                    style: const TextStyle(
-                                                      color: Colors.black54,
-                                                      fontWeight: FontWeight.w800,
-                                                    ),
-                                                  ),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8,
+                                                          right: 16,
+                                                          top: 4,
+                                                          bottom: 8),
+                                                  child: InkWell(
+                                                      child: Text(
+                                                        'by ' +
+                                                            posts[
+                                                                'Seller Name'],
+                                                        style: const TextStyle(
+                                                          color: Colors.black54,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
+                                                      ),
+                                                      onTap: () {
+                                                        Navigator.of(context).push(MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                SellerListingPageScreen(
+                                                                    currentCategory:
+                                                                        'Popular',
+                                                                    sort:
+                                                                        'Default',
+                                                                    sellerName:
+                                                                        posts[
+                                                                            'Seller Name'])));
+                                                      }),
                                                 ),
                                               ],
                                             ),

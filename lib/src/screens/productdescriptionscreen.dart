@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/screens/sellerlistingpage.dart';
 import 'package:buyer_app/src/services/authservice.dart';
 import 'package:buyer_app/src/services/firebase_service.dart';
 import 'package:buyer_app/src/screens/chat_conversation_screen.dart';
@@ -136,11 +137,20 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      'by: ${widget.productDetailShopName}',
-                      style: const TextStyle(
-                        fontSize: 15,
+                    InkWell(
+                      child: Text(
+                        'by: ${widget.productDetailShopName}',
+                        style: const TextStyle(
+                          fontSize: 15,
+                        ),
                       ),
+                      onTap: (){ Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) =>
+                          SellerListingPageScreen(
+                              currentCategory: 'Popular',
+                              sort: 'Default',
+                              sellerName: widget.productDetailShopName)));}
+                              //sellerId: widget.sellerId)));}
                     ),
                   ],
                 ),

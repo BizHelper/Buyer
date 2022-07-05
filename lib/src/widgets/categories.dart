@@ -8,45 +8,42 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Center(
-        child: Wrap(
-          children: [
-            CategoryButton(
-              text: 'Popular',
-              currentCategory: currentCategory,
-            ),
-            CategoryButton(
-              text: 'Bags & Wallets',
-              currentCategory: currentCategory,
-            ),
-            CategoryButton(
-              text: 'Women\'s Clothes',
-              currentCategory: currentCategory,
-            ),
-            CategoryButton(
-              text: 'Men\'s Clothes',
-              currentCategory: currentCategory,
-            ),
-            CategoryButton(
-              text: 'Food & Beverage',
-              currentCategory: currentCategory,
-            ),
-            CategoryButton(
-              text: 'Accessories',
-              currentCategory: currentCategory,
-            ),
-            CategoryButton(
-              text: 'Toys & Games',
-              currentCategory: currentCategory,
-            ),
-            CategoryButton(
-              text: 'Others',
-              currentCategory: currentCategory,
-            ),
-          ],
-        ),
+    return Center(
+      child: Wrap(
+        children: [
+          CategoryButton(
+            text: 'Popular',
+            currentCategory: currentCategory,
+          ),
+          CategoryButton(
+            text: 'Bags & Wallets',
+            currentCategory: currentCategory,
+          ),
+          CategoryButton(
+            text: 'Women\'s Clothes',
+            currentCategory: currentCategory,
+          ),
+          CategoryButton(
+            text: 'Men\'s Clothes',
+            currentCategory: currentCategory,
+          ),
+          CategoryButton(
+            text: 'Food & Beverage',
+            currentCategory: currentCategory,
+          ),
+          CategoryButton(
+            text: 'Accessories',
+            currentCategory: currentCategory,
+          ),
+          CategoryButton(
+            text: 'Toys & Games',
+            currentCategory: currentCategory,
+          ),
+          CategoryButton(
+            text: 'Others',
+            currentCategory: currentCategory,
+          ),
+        ],
       ),
     );
   }
@@ -67,7 +64,7 @@ class CategoryButton extends StatelessWidget {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                   builder: (context) => HomeScreen(currentCategory: text,sort: 'Default')));
-          },
+        },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,
         ),

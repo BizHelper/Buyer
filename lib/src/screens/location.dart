@@ -1,16 +1,12 @@
 import 'package:buyer_app/src/providers/LocationProvider.dart';
 import 'package:buyer_app/src/screens/SellerDescriptionScreen.dart';
-import 'package:buyer_app/src/screens/account.dart';
-import 'package:buyer_app/src/screens/explore.dart';
-import 'package:buyer_app/src/screens/home.dart';
-import 'package:buyer_app/src/screens/request.dart';
 import 'package:buyer_app/src/services/authservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
-
+import '../widgets/navigateBar.dart';
 import 'mapscreen.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -28,7 +24,6 @@ class _LocationScreenState extends State<LocationScreen> {
     String _uid = _auth.currentUser!.uid;
     DocumentSnapshot ds =
         await FirebaseFirestore.instance.collection('buyers').doc(_uid).get();
-    // change to buyers
     setState(() => _userLatitude = ds.get('latitude'));
     setState(() => _userLongitude = ds.get('longitude'));
   }
@@ -79,10 +74,7 @@ class _LocationScreenState extends State<LocationScreen> {
                           child: Text('Set Your Location',style: TextStyle(fontSize: 16)),
                           onPressed: () async {
                             await locationData.getCurrentPosition();
-                            // print(locationData.permissionALlowed);
                             if (locationData.permissionALlowed == true) {
-                              //   Navigator.pushReplacementNamed(
-                              //      context, MapScreen.id);
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) => MapScreen()));
@@ -96,9 +88,6 @@ class _LocationScreenState extends State<LocationScreen> {
                     child: ListView(
                         children: snapShot.data!.docs.map(
                       (DocumentSnapshot document) {
-                        //   String dis =  getDistance1(document['Seller ID']);
-                        // print(dis);
-                        // add the document check if got shop here as a field... under sellers.
                         double dis = Geolocator.distanceBetween(
                             _userLatitude,
                             _userLongitude,
@@ -130,8 +119,6 @@ class _LocationScreenState extends State<LocationScreen> {
                                       ),
                                     ),
                                   ),
-                                // SizedBox(child: Image.network(document['Profile Pic']),
-                                 //width: 200,height: 200,),
                                   Container(child: Text(document['Name'])),
                                   Text(double.parse(dis1.toString()).toStringAsFixed(2) + ' km')
                                 ],
@@ -143,97 +130,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     ).toList()),
                   ),
                 ),
-                Column(
-                  children: [
-                    Divider(height: 1, color: Colors.black),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            width: 55,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => ExploreScreen()));
-                              },
-                              child: Column(
-                                children: const [
-                                  Icon(Icons.explore),
-                                  Text('Explore'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 55,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RequestScreen(type: 'Pending')));
-                              },
-                              child: Column(
-                                children: const [
-                                  const Icon(Icons.sticky_note_2),
-                                  Text('Request'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 55,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen(
-                                            currentCategory: 'Popular',sort: 'Default')));
-                              },
-                              child: Column(
-                                children: const [
-                                  Icon(Icons.home),
-                                  Text('Home'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 55,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Column(
-                                children: const [
-                                  Icon(Icons.location_on),
-                                  Text('location'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 55,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => AccountScreen()));
-                              },
-                              child: Column(
-                                children: const [
-                                  Icon(Icons.account_box),
-                                  Text('Account'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
+               NavigateBar()
               ],
             );
           },
