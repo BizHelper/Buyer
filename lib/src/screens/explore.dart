@@ -99,8 +99,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                           right: 16,
                                                           top: 4,
                                                           bottom: 8),
-                                                  child: InkWell(
-                                                      child: Text(
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
                                                         'by ' +
                                                             posts[
                                                                 'Seller Name'],
@@ -110,18 +111,26 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                               FontWeight.w800,
                                                         ),
                                                       ),
-                                                      onTap: () {
-                                                        Navigator.of(context).push(MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                SellerListingPageScreen(
-                                                                    currentCategory:
-                                                                        'Popular',
-                                                                    sort:
-                                                                        'Default',
-                                                                    sellerName:
-                                                                        posts[
-                                                                            'Seller Name'])));
-                                                      }),
+                                                      InkWell(
+                                                          child: const Text(
+                                                            //'by: ${widget.productDetailShopName}',
+                                                            '     Visit Shop',
+                                                            style: TextStyle(
+                                                              //  fontSize: 15,
+                                                                color: Colors.blue
+                                                            ),
+                                                          ),
+                                                          onTap: (){ Navigator.of(context).push(
+                                                              MaterialPageRoute(builder: (context) =>
+                                                                  SellerListingPageScreen(
+                                                                      currentCategory: 'Popular',
+                                                                      sort: 'Default',
+                                                                      sellerName: posts['Seller Name'])));}
+                                                        //sellerId: widget.sellerId)));}
+                                                      ),
+                                                    ],
+                                                  ),
+
                                                 ),
                                               ],
                                             ),

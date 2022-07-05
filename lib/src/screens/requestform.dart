@@ -40,6 +40,28 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   late String _currentDescription;
   bool dateSelected = false;
 
+  showAlertDialog(BuildContext context) {
+    AlertDialog dialog = AlertDialog(
+      title: const Text(
+        'Deadline not selected',
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('OK'),
+        ),
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return dialog;
+        }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -272,7 +294,9 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.amber[600])),
-                            onPressed: () {},
+                            onPressed: () {
+                              showAlertDialog(context);
+                            },
                             child: const Text(
                               'Add',
                               style: TextStyle(color: Colors.black),

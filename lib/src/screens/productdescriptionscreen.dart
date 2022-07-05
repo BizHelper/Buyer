@@ -137,11 +137,23 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    InkWell(
-                      child: Text(
-                        'by: ${widget.productDetailShopName}',
-                        style: const TextStyle(
+                    Text(
+                      'by: ${widget.productDetailShopName}',
+                      style: const TextStyle(
                           fontSize: 15,
+                          color: Colors.black
+                      ),
+                    ),
+                   InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: const Text(
+                          //'by: ${widget.productDetailShopName}',
+                          'Visit Shop',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.blue
+                          ),
                         ),
                       ),
                       onTap: (){ Navigator.of(context).push(
@@ -152,6 +164,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                               sellerName: widget.productDetailShopName)));}
                               //sellerId: widget.sellerId)));}
                     ),
+
                   ],
                 ),
               ),
