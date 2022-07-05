@@ -278,6 +278,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                     'Buyer ID', () => _auth.currentUser!.uid);
                                 request.putIfAbsent('Price Double', () => double.parse(_currentPrice));
                                 request.putIfAbsent('Deleted', () => 'false');
+                                request.putIfAbsent('Time', () => DateTime.now().microsecondsSinceEpoch);
                                 dr.set(request);
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(

@@ -150,15 +150,18 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
+              /*const Padding(
                 padding: EdgeInsets.only(left: 12, top: 11),
-                child: Text(
+                child:
+                Text(
                   'Categories',
                   style:
                   TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              Padding(
+
+               */
+            /*  Padding(
                 padding: EdgeInsets.only(right: 11.0, top: 12),
                 child: TextButton(
                   onPressed: () {},
@@ -175,6 +178,7 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
                   ),
                 ),
               ),
+             */
             ],
           ),
         // Categories(currentCategory: widget.currentCategory),

@@ -20,6 +20,10 @@ class RequestScreen extends StatefulWidget {
 class _RequestScreenState extends State<RequestScreen> {
   final FirebaseAuth _auth = AuthService().auth;
   String _buyerName = '';
+  List allResults = [];
+  late Future resultsLoaded;
+  TextEditingController searchController = TextEditingController();
+  List filteredResults = [];
 
   Future<String> getBuyerName() async {
     final uid = AuthService().currentUser?.uid;
@@ -29,11 +33,40 @@ class _RequestScreenState extends State<RequestScreen> {
     return _buyerName;
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    resultsLoaded = getRequestList();
+  }
+
+
   String getName() {
     getBuyerName();
     return _buyerName;
   }
 
+  getRequestList() async {
+   await getBuyerName();
+ var data =  widget.type == 'Pending'?
+ FirebaseFirestore.instance
+     .collection('requests')
+     .where('Buyer Name', isEqualTo: _buyerName)
+     .where('Seller Name', isEqualTo: 'null')
+     .where('Deleted', isEqualTo: 'false')
+     : FirebaseFirestore.instance
+     .collection('requests')
+     .where('Buyer Name', isEqualTo: _buyerName)
+     .where('Accepted', isEqualTo: 'true')
+     .where('Deleted', isEqualTo: 'false');
+
+    var sortedData = await data.orderBy('Time', descending: true).get();
+    setState(() => allResults = sortedData.docs);
+    //searchResultList();
+    return sortedData.docs;
+
+
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,26 +96,64 @@ class _RequestScreenState extends State<RequestScreen> {
         ),
       ),
 
-      body: StreamBuilder<QuerySnapshot>(
-        stream:
+       /* getRequestList() async {
+    await getSellerName();
+    var data = widget.type == 'Available Requests' &&
+    widget.currentCategory == 'All Requests'
+    ? FirebaseFirestore.instance
+        .collection('requests')
+        .where('Seller Name', isEqualTo: 'null')
+        .where('Deleted', isEqualTo: 'false')
+        : widget.type == 'My Requests' &&
+    widget.currentCategory == 'All Requests'
+    ? FirebaseFirestore.instance
+        .collection('requests')
+        .where('Seller Name', isEqualTo: _sellerName)
+        .where('Accepted', isEqualTo: 'true')
+        .where('Deleted', isEqualTo: 'false')
+        : widget.type == 'Available Requests'
+    ? FirebaseFirestore.instance
+        .collection('requests')
+        .where('Category', isEqualTo: widget.currentCategory)
+        .where('Seller Name', isEqualTo: 'null')
+        .where('Deleted', isEqualTo: 'false')
+        : FirebaseFirestore.instance
+        .collection('requests')
+        .where('Category', isEqualTo: widget.currentCategory)
+        .where('Seller Name', isEqualTo: _sellerName)
+        .where('Accepted', isEqualTo: 'true')
+        .where('Deleted', isEqualTo: 'false');
+    var sortedData = widget.sort == 'Price: high to low'
+    ? await data.orderBy('Price Double', descending: true).get()
+        : widget.sort == 'Price: low to high'
+    ? await data.orderBy('Price Double').get()
+        : await data.orderBy('Time', descending: true).get();
+    setState(() => allResults = sortedData.docs);
+    searchResultList();
+    return sortedData.docs;
+    }
+    
+        */
+     /*   stream:
         widget.type == 'Pending'?
         FirebaseFirestore.instance
-            .collection('requests')
-            .where('Buyer Name', isEqualTo: getName())
-            .where('Seller Name', isEqualTo: 'null')
-            .where('Deleted', isEqualTo: 'false')
-            .snapshots()
-            : FirebaseFirestore.instance
-            .collection('requests')
-            .where('Buyer Name', isEqualTo: getName() )
-            .where('Accepted', isEqualTo: 'true')
-            .where('Deleted', isEqualTo: 'false')
-            .snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          return Column(
+        .collection('requests')
+        .where('Buyer Name', isEqualTo: getName())
+        .where('Seller Name', isEqualTo: 'null')
+        .where('Deleted', isEqualTo: 'false')
+    //.orderBy('Time')
+        .snapshots()
+        : FirebaseFirestore.instance
+        .collection('requests')
+        .where('Buyer Name', isEqualTo: getName())
+        .where('Accepted', isEqualTo: 'true')
+        .where('Deleted', isEqualTo: 'false')
+    //.orderBy('Time')
+        .snapshots(),
+        
+      */
+      body:
+           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -174,7 +245,7 @@ class _RequestScreenState extends State<RequestScreen> {
               ),
 
               Flexible(
-                child: ListView(
+                /*child: ListView(
                   children: snapshot.data!.docs.map(
                         (requests) {
                       return SingleRequest(
@@ -191,13 +262,26 @@ class _RequestScreenState extends State<RequestScreen> {
                       );
                     },
                   ).toList(),
-                ),
+                ),*/
+                child: ListView.builder(itemCount: allResults.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                SingleRequest(
+                  buyerName: allResults[index]['Buyer Name'],
+                  sellerName: allResults[index]['Seller Name'],
+                  category: allResults[index]['Category'],
+                  deadline: allResults[index]['Deadline'],
+                  description: allResults[index]['Description'],
+                  price: allResults[index]['Price'],
+                  title: allResults[index]['Title'],
+                  requestID: allResults[index]['Request ID'],
+                  buyerID: allResults[index]['Buyer ID'],
+                  deleted: allResults[index]['Deleted'],
+                ))
               ),
               NavigateBar()
             ],
-          );
-        },
-      ),
-    );
+          ),
+      );
+    //);
   }
 }
