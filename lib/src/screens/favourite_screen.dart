@@ -45,17 +45,19 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             .collection('Favourites')
             .doc(_auth.currentUser!.uid)
             .collection('items')
+         //   .where('liked', isEqualTo: true)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Container();
+          } else {
+              List<Favourites> favourites = [];
+              snapshot.data!.docs.forEach((doc) {
+                favourites.add(Favourites.fromDocument(doc));
+              });
+              return ListView(children: favourites);
           }
-          List<Favourites> favourites = [];
-          snapshot.data!.docs.forEach((doc) {
-            favourites.add(Favourites.fromDocument(doc));
-          });
-          return ListView(children: favourites);
-        },
+        }
       ),
     );
   }
@@ -73,7 +75,6 @@ class Favourites extends StatelessWidget {
   final bool iconsButton;
   final String deleted;
 
-
   Favourites({
     required this.sellerName,
     required this.price,
@@ -85,8 +86,6 @@ class Favourites extends StatelessWidget {
     required this.sellerId,
     required this.iconsButton,
     required this.deleted,
-
-
   });
 
   factory Favourites.fromDocument(DocumentSnapshot doc) {
@@ -103,6 +102,16 @@ class Favourites extends StatelessWidget {
       deleted: doc['deleted'],
     );
   }
+  Future removeFromFavourite() async {
+    var currentUser = AuthService().currentUser;
+    CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('Favourites');
+    return _collectionRef
+        .doc(currentUser!.uid)
+        .collection('items').doc(productDetailId)
+        .delete();
+    //.update({'liked': false});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,34 +119,36 @@ class Favourites extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-          onTap: () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => ProductDescriptionScreen(
-    productDetailName: itemName,
-    productDetailShopName: sellerName,
-    productDetailPrice: price,
-    productDetailCategory: category,
-    productDetailDescription: description,
-    productDetailImages: itemImage,
-    productDetailId: productDetailId,
-    sellerId: sellerId,
-    listingId: productDetailId,
-    iconsButtons: iconsButton, deleted: deleted))),
+          onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => ProductDescriptionScreen(
+                  productDetailName: itemName,
+                  productDetailShopName: sellerName,
+                  productDetailPrice: price,
+                  productDetailCategory: category,
+                  productDetailDescription: description,
+                  productDetailImages: itemImage,
+                  productDetailId: productDetailId,
+                  sellerId: sellerId,
+                  listingId: productDetailId,
+                  iconsButtons: iconsButton,
+                  deleted: deleted))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(itemImage),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(itemName),
-                    Text(sellerName),
-                    Text(price)
-                  ],
-                ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [Text(itemName), Text(sellerName), Text(price)],
+                    ),
+                  ),
+                  IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.delete))
+                ],
               ),
-              Divider(height:5.0,color: Colors.black)
+              Divider(height: 5.0, color: Colors.black)
             ],
           ),
         ),

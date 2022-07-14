@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:buyer_app/src/screens/sellerlistingpage.dart';
 import 'package:buyer_app/src/services/authservice.dart';
 import 'package:buyer_app/src/services/firebase_service.dart';
@@ -6,7 +8,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 
 class ProductDescriptionScreen extends StatefulWidget {
   var productDetailName;
@@ -44,11 +45,65 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
   final FirebaseService _service = FirebaseService();
   final FirebaseAuth auth = AuthService().auth;
   String _buyerName = '';
+  String uid = '';
 
+/*  Future addToFavourite() async {
+    var currentUser = AuthService().currentUser;
+    CollectionReference _collectionRef =
+        FirebaseFirestore.instance.collection('Favourites');
+    DocumentReference dr = _collectionRef.doc(currentUser!.uid).collection('items').doc();
+    uid = dr.id;
+   DocumentSnapshot ds = await _collectionRef.doc(currentUser!.uid).collection('items').doc(uid).get();
+
+   if(ds!=null) {
+   /*  if (ds.get("name") == "5") {
+       return _collectionRef
+           .doc(currentUser!.uid)
+           .collection('items')
+           .doc(uid)
+           .update({'liked': true});
+     } else
+
+    */
+  //   {
+       return _collectionRef
+           .doc(currentUser!.uid)
+           .collection('items')
+           .doc(uid)
+           .update({'liked': false});
+  //   }
+
+
+  //  }
+  /*  uid = dr.id;
+    print(uid);
+    return
+      dr.set({
+      "name": widget.productDetailName,
+      "price": widget.productDetailPrice,
+      "images": widget.productDetailImages,
+      "seller name": widget.productDetailShopName,
+      "product detail id": widget.listingId,
+      "category": widget.productDetailCategory,
+      "description": widget.productDetailDescription,
+      "seller id": widget.sellerId,
+      "icon button": widget.iconsButtons,
+      "deleted": widget.deleted,
+      "liked": true,
+   //   "uid": dr.id,
+    }).then((value) => print("add to favourites"));
+
+   */
+  }
+
+ */
   Future addToFavourite() async {
     var currentUser = AuthService().currentUser;
     CollectionReference _collectionRef = FirebaseFirestore.instance.collection('Favourites');
-    return _collectionRef.doc(currentUser!.uid).collection('items').doc().set(
+    DocumentReference dr = _collectionRef.doc(currentUser!.uid).collection('items').doc(widget.listingId);
+    uid = dr.id;
+    //return
+     /* dr.set(
         {
           "name": widget.productDetailName,
           "price": widget.productDetailPrice,
@@ -60,15 +115,44 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
           "seller id": widget.sellerId,
           "icon button": widget.iconsButtons,
           "deleted": widget.deleted,
+          "liked": true,
         }
     ).then((value) => print("add to favourites"));
+      */
+      Map<String, Object> fav = new HashMap();
+      fav.putIfAbsent("name", () =>widget.productDetailName);
+      fav.putIfAbsent("price", () => widget.productDetailPrice );
+    fav.putIfAbsent("images", ()=> widget.productDetailImages );
+    fav.putIfAbsent( "seller name", ()=>  widget.productDetailShopName,);
+    fav.putIfAbsent("product detail id", ()=>  widget.listingId,);
+    fav.putIfAbsent( "category", ()=> widget.productDetailCategory);
+    fav.putIfAbsent( "description", ()=>widget.productDetailDescription, );
+    fav.putIfAbsent("seller id",()=>  widget.sellerId );
+    fav.putIfAbsent( "icon button",()=>  widget.iconsButtons,);
+    fav.putIfAbsent("deleted",()=>  widget.deleted);
+    dr.set(fav);
   }
+
+  Future removeFromFavourite() async {
+    var currentUser = AuthService().currentUser;
+    CollectionReference _collectionRef =
+       FirebaseFirestore.instance.collection('Favourites');
+    print(uid);
+    return _collectionRef
+        .doc(currentUser!.uid)
+        .collection('items').doc(widget.listingId)
+        .delete();
+      //.update({'liked': false});
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     createChatRoom() async {
       final uid = auth.currentUser?.uid;
       DocumentSnapshot ds =
-      await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
+          await FirebaseFirestore.instance.collection('buyers').doc(uid).get();
       setState(() => _buyerName = ds.get('Name'));
       Map<String, dynamic> product = {
         'productDetailId': widget.listingId,
@@ -82,10 +166,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
         'listingId': widget.listingId,
         'buyerName': _buyerName
       };
-      List<String> users = [
-        widget.sellerId,
-        auth.currentUser!.uid
-      ];
+      List<String> users = [widget.sellerId, auth.currentUser!.uid];
       String chatRoomId =
           '${widget.sellerId}.${auth.currentUser!.uid}.${widget.listingId}';
       Map<String, dynamic> chatData = {
@@ -98,7 +179,8 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
       _service.createChatRoom(
         chatData: chatData,
       );
-      Navigator.push(context,
+      Navigator.push(
+        context,
         MaterialPageRoute(
           builder: (BuildContext context) =>
               ChatConversations(chatRoomId: chatRoomId, type: 'listings'),
@@ -157,33 +239,30 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                   children: [
                     Text(
                       'by: ${widget.productDetailShopName}',
-                      style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.black
-                      ),
+                      style: const TextStyle(fontSize: 15, color: Colors.black),
                     ),
-                   InkWell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: const Text(
-                          //'by: ${widget.productDetailShopName}',
-                          'Visit Shop',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.blue
+                    InkWell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: const Text(
+                            //'by: ${widget.productDetailShopName}',
+                            'Visit Shop',
+                            style: TextStyle(fontSize: 15, color: Colors.blue),
                           ),
                         ),
-                      ),
-                      onTap: (){ Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) =>
-                          SellerListingPageScreen(
-                              currentCategory: 'Popular',
-                              sort: 'Default',
-                              sellerName: widget.productDetailShopName,
-                          )));}
-                              //sellerId: widget.sellerId)));}
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SellerListingPageScreen(
+                                currentCategory: 'Popular',
+                                sort: 'Default',
+                                sellerName: widget.productDetailShopName,
+                              ),
+                            ),
+                          );
+                        }
+                        //sellerId: widget.sellerId)));}
                     ),
-
                   ],
                 ),
               ),
@@ -244,10 +323,12 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                               ],
                             ),
                           )
-                        : Container()
-                    ,
-                    IconButton(icon: Icon(Icons.favorite), color: Colors.red,
-                      onPressed: addToFavourite)
+                        : Container(),
+                    IconButton(
+                        icon: Icon(Icons.favorite),
+                        color: Colors.red,
+                        onPressed: addToFavourite),
+                    IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.cancel))
                   ],
                 ),
               ),
