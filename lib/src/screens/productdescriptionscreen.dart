@@ -22,15 +22,15 @@ class ProductDescriptionScreen extends StatefulWidget {
   var iconsButtons;
 
   ProductDescriptionScreen({
-    this.productDetailName,
-    this.productDetailShopName,
-    this.productDetailPrice,
-    this.productDetailCategory,
-    this.productDetailDescription,
-    this.productDetailImages,
-    this.productDetailId,
-    this.sellerId,
-    this.listingId,
+    required this.productDetailName,
+    required this.productDetailShopName,
+    required this.productDetailPrice,
+    required this.productDetailCategory,
+    required this.productDetailDescription,
+    required this.productDetailImages,
+    required this.productDetailId,
+    required this.sellerId,
+    required this.listingId,
     required this.iconsButtons,
     required this.deleted,
   });
@@ -45,6 +45,24 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
   final FirebaseAuth auth = AuthService().auth;
   String _buyerName = '';
 
+  Future addToFavourite() async {
+    var currentUser = AuthService().currentUser;
+    CollectionReference _collectionRef = FirebaseFirestore.instance.collection('Favourites');
+    return _collectionRef.doc(currentUser!.uid).collection('items').doc().set(
+        {
+          "name": widget.productDetailName,
+          "price": widget.productDetailPrice,
+          "images": widget.productDetailImages,
+          "seller name": widget.productDetailShopName,
+          "product detail id": widget.listingId,
+          "category": widget.productDetailCategory,
+          "description": widget.productDetailDescription,
+          "seller id": widget.sellerId,
+          "icon button": widget.iconsButtons,
+          "deleted": widget.deleted,
+        }
+    ).then((value) => print("add to favourites"));
+  }
   @override
   Widget build(BuildContext context) {
     createChatRoom() async {
@@ -227,6 +245,9 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                             ),
                           )
                         : Container()
+                    ,
+                    IconButton(icon: Icon(Icons.favorite), color: Colors.red,
+                      onPressed: addToFavourite)
                   ],
                 ),
               ),

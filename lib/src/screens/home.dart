@@ -1,4 +1,5 @@
 import 'package:buyer_app/src/screens/chatscreen.dart';
+import 'package:buyer_app/src/screens/favourite_screen.dart';
 import 'package:buyer_app/src/services/authservice.dart';
 import 'package:buyer_app/src/widgets/categories.dart';
 import 'package:buyer_app/src/widgets/navigateBar.dart';
@@ -29,8 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     'Default',
     'Price: high to low',
     'Price: low to high',
-  //  'Deadline: latest to earliest',
-    //'Deadline: earliest to latest',
   ];
 
   @override
@@ -92,19 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => filteredResults = showResults);
   }
 
-
- /* stream:
-  currentCategory == 'Popular'?
-  FirebaseFirestore.instance
-      .collection('listings')
-      .where('Deleted', isEqualTo: 'false')
-      .snapshots():
-        FirebaseFirestore.instance
-      .collection('listings')
-      .where('Deleted', isEqualTo: 'false').where('Category', isEqualTo: currentCategory)
-      .snapshots(),
-
-  */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,7 +140,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: EdgeInsets.only(right: 11.0, top: 12),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) =>
+                              FavouriteScreen()));},
                       style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           minimumSize: Size.zero,

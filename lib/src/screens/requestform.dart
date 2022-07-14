@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:buyer_app/src/screens/request.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,11 +10,9 @@ import '../services/authservice.dart';
 
 class RequestFormScreen extends StatefulWidget {
   const RequestFormScreen({Key? key}) : super(key: key);
-
   @override
   State<RequestFormScreen> createState() => _RequestFormScreenState();
 }
-
 
 class _RequestFormScreenState extends State<RequestFormScreen> {
   final FirebaseAuth _auth = AuthService().auth;
@@ -39,6 +38,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   late String _currentCategory;
   late String _currentDescription;
   bool dateSelected = false;
+  late int _intDeadline;
 
   showAlertDialog(BuildContext context) {
     AlertDialog dialog = AlertDialog(
@@ -228,8 +228,8 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                         );
                         if (date != null) {
                           setState(() {
-                            _currentDeadline =
-                                '${date?.day.toString()}/${date?.month.toString()}/${date?.year.toString()}';
+                            _intDeadline = date!.microsecondsSinceEpoch;
+                            _currentDeadline ='${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
                             dateSelected = true;
                           });
                         }
@@ -279,11 +279,13 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                 request.putIfAbsent('Price Double', () => double.parse(_currentPrice));
                                 request.putIfAbsent('Deleted', () => 'false');
                                 request.putIfAbsent('Time', () => DateTime.now().microsecondsSinceEpoch);
+                                request.putIfAbsent('Integer Deadline', () => _intDeadline);
                                 dr.set(request);
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RequestFormScreen()));
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => RequestScreen(type: 'Pending')),
+                                      (Route<dynamic> route) => false,
+                                );
                               }
                             },
                             child: const Text(

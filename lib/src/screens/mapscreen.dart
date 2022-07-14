@@ -61,7 +61,10 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-          title: Text('Your Location'),
+          title: Text('Your Location',
+        style: TextStyle(
+        fontSize: 23.0,
+        fontWeight: FontWeight.bold,)),
         //  leading: BackButton(
              // color: Colors.white,
             //  onPressed: () => Navigator.of(context).pushReplacement(
