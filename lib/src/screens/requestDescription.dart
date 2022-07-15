@@ -81,7 +81,7 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                 child: Text(
                   'Deadline: ' + widget.deadline,
                   style: const TextStyle(
-                    fontSize: 15,
+                    fontSize: 16,
                   ),
                 ),
               ),

@@ -137,15 +137,52 @@ class Favourites extends StatelessWidget {
             children: [
               Image.network(itemImage),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text(itemName), Text(sellerName), Text(price)],
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Text(itemName),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Text(sellerName),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Text("\$"+ price),
+                        )],
                     ),
                   ),
-                  IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.delete))
+                 // IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.delete))
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: InkWell(
+                      onTap: () {
+                    removeFromFavourite();
+                      },
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.delete,
+                            size: 28.0,
+                            color: Colors.red[900],
+                          ),
+                          Text(
+                            'Delete',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red[900],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Divider(height: 5.0, color: Colors.black)

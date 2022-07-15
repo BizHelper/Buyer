@@ -77,7 +77,7 @@ class Product extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 right: 16, top: 4, bottom: 4),
                             child: Text(
-                              prodPrice,
+                             "\$" + prodPrice,
                               style: const TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.w800,

@@ -46,7 +46,28 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
   final FirebaseAuth auth = AuthService().auth;
   String _buyerName = '';
   String uid = '';
+  showAlertDialog(BuildContext context) {
+    AlertDialog dialog = AlertDialog(
+      title: const Text(
+        'Added listing to favourites successfully',
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('OK'),
+        ),
+      ],
+    );
 
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return dialog;
+        }
+    );
+  }
 /*  Future addToFavourite() async {
     var currentUser = AuthService().currentUser;
     CollectionReference _collectionRef =
@@ -99,11 +120,15 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
  */
   Future addToFavourite() async {
     var currentUser = AuthService().currentUser;
-    CollectionReference _collectionRef = FirebaseFirestore.instance.collection('Favourites');
-    DocumentReference dr = _collectionRef.doc(currentUser!.uid).collection('items').doc(widget.listingId);
+    CollectionReference _collectionRef =
+        FirebaseFirestore.instance.collection('Favourites');
+    DocumentReference dr = _collectionRef
+        .doc(currentUser!.uid)
+        .collection('items')
+        .doc(widget.listingId);
     uid = dr.id;
     //return
-     /* dr.set(
+    /* dr.set(
         {
           "name": widget.productDetailName,
           "price": widget.productDetailPrice,
@@ -119,33 +144,44 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
         }
     ).then((value) => print("add to favourites"));
       */
-      Map<String, Object> fav = new HashMap();
-      fav.putIfAbsent("name", () =>widget.productDetailName);
-      fav.putIfAbsent("price", () => widget.productDetailPrice );
-    fav.putIfAbsent("images", ()=> widget.productDetailImages );
-    fav.putIfAbsent( "seller name", ()=>  widget.productDetailShopName,);
-    fav.putIfAbsent("product detail id", ()=>  widget.listingId,);
-    fav.putIfAbsent( "category", ()=> widget.productDetailCategory);
-    fav.putIfAbsent( "description", ()=>widget.productDetailDescription, );
-    fav.putIfAbsent("seller id",()=>  widget.sellerId );
-    fav.putIfAbsent( "icon button",()=>  widget.iconsButtons,);
-    fav.putIfAbsent("deleted",()=>  widget.deleted);
+    Map<String, Object> fav = new HashMap();
+    fav.putIfAbsent("name", () => widget.productDetailName);
+    fav.putIfAbsent("price", () => widget.productDetailPrice);
+    fav.putIfAbsent("images", () => widget.productDetailImages);
+    fav.putIfAbsent(
+      "seller name",
+      () => widget.productDetailShopName,
+    );
+    fav.putIfAbsent(
+      "product detail id",
+      () => widget.listingId,
+    );
+    fav.putIfAbsent("category", () => widget.productDetailCategory);
+    fav.putIfAbsent(
+      "description",
+      () => widget.productDetailDescription,
+    );
+    fav.putIfAbsent("seller id", () => widget.sellerId);
+    fav.putIfAbsent(
+      "icon button",
+      () => widget.iconsButtons,
+    );
+    fav.putIfAbsent("deleted", () => widget.deleted);
     dr.set(fav);
   }
 
   Future removeFromFavourite() async {
     var currentUser = AuthService().currentUser;
     CollectionReference _collectionRef =
-       FirebaseFirestore.instance.collection('Favourites');
+        FirebaseFirestore.instance.collection('Favourites');
     print(uid);
     return _collectionRef
         .doc(currentUser!.uid)
-        .collection('items').doc(widget.listingId)
+        .collection('items')
+        .doc(widget.listingId)
         .delete();
-      //.update({'liked': false});
+    //.update({'liked': false});
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +275,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                   children: [
                     Text(
                       'by: ${widget.productDetailShopName}',
-                      style: const TextStyle(fontSize: 15, color: Colors.black),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                     InkWell(
                         child: Padding(
@@ -247,7 +283,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                           child: const Text(
                             //'by: ${widget.productDetailShopName}',
                             'Visit Shop',
-                            style: TextStyle(fontSize: 15, color: Colors.blue),
+                            style: TextStyle(fontSize: 16, color: Colors.blue),
                           ),
                         ),
                         onTap: () {
@@ -262,7 +298,7 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                           );
                         }
                         //sellerId: widget.sellerId)));}
-                    ),
+                        ),
                   ],
                 ),
               ),
@@ -303,32 +339,57 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: InkWell(
+                        onTap: (){
+                          addToFavourite();
+                        showAlertDialog(context);
+                        },
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.add_circle,
+                              size: 28.0,
+                              color: Colors.red,
+                            ),
+                            Text(
+                              'Favourites',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     widget.iconsButtons
-                        ? InkWell(
-                            onTap: createChatRoom,
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.chat,
-                                  size: 28.0,
-                                  color: Colors.blue,
-                                ),
-                                Text(
-                                  'Chat',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                        ? Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: InkWell(
+                              onTap: createChatRoom,
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.chat,
+                                    size: 28.0,
                                     color: Colors.blue,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    'Chat',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          )
+                        )
                         : Container(),
-                    IconButton(
-                        icon: Icon(Icons.favorite),
-                        color: Colors.red,
-                        onPressed: addToFavourite),
-                    IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.cancel))
+
+                    // IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.cancel))
                   ],
                 ),
               ),
