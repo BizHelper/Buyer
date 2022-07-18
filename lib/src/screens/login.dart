@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   var _email;
   var _password;
-  final auth = AuthService().auth;
+  //final auth = AuthService().auth;
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +37,18 @@ class _LoginScreenState extends State<LoginScreen> {
               size: 120,
               color: Colors.black,
             ),
-             Text(
+            Text(
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 'Buyer Login'),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                key: Key('enterEmail'),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(hintText: 'Email'),
                 onChanged: (value) {
                   setState(
-                    () {
+                        () {
                       _email = value.trim();
                     },
                   );
@@ -57,11 +58,12 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                key: Key('enterPassword'),
                 obscureText: true,
                 decoration: InputDecoration(hintText: 'Password'),
                 onChanged: (value) {
                   setState(
-                    () {
+                        () {
                       _password = value.trim();
                     },
                   );
@@ -72,19 +74,21 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
+                  key: Key("signin"),
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(Colors.orange.shade600)),
+                      MaterialStateProperty.all(Colors.orange.shade600)),
                   child: const Text(
                     'Sign in',
                     style: TextStyle(color: Colors.black),
                   ),
                   onPressed: () async {
-                    String? result =
-                        await Auth(auth: auth).signin(_email, _password);
+                    String? result = await Auth(auth: AuthService().auth).signin(_email, _password);
                     if (result == 'Success') {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => HomeScreen(currentCategory: "Popular",sort: 'Default')));
+                          builder: (context) =>
+                              HomeScreen(currentCategory: "Popular",
+                                  sort: 'Default')));
                     } else {
                       Fluttertoast.showToast(
                           msg: result ?? '', gravity: ToastGravity.TOP);
@@ -94,10 +98,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.orange.shade600)),
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => SignupScreen())),
+                        MaterialStateProperty.all(Colors.orange.shade600)),
+                    onPressed: () =>
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => SignupScreen())),
                     child: const Text(
                       'Sign up',
                       style: TextStyle(color: Colors.black),
@@ -109,8 +114,10 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 TextButton(
                   child: Text('Forgot Password?'),
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => ResetScreen())),
+                  onPressed: () =>
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => ResetScreen())),
                 ),
               ],
             ),
@@ -119,8 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
 
-  signin(String _email, String _password) async {
+ /* signin(String _email, String _password) async {
     try {
       await auth.signInWithEmailAndPassword(email: _email, password: _password);
       Navigator.of(context).pushReplacement(
@@ -131,3 +139,50 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 }
+
+  */
+
+
+/*
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+    Widget build(BuildContext context) {
+      return Scaffold(
+        backgroundColor: Colors.blueGrey.shade50,
+        appBar: AppBar(
+          backgroundColor: Colors.cyan.shade900,
+          centerTitle: true,
+          title: const Text(
+            'BizHelper',
+            style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Icon(
+                Icons.store_rounded,
+                size: 120,
+                color: Colors.black,
+              ),
+              Text(
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                  'Buyer Login'),
+
+            ],),),);
+    }
+}
+
+ */
+
+
+
+
+  //final auth = AuthService().auth;
+

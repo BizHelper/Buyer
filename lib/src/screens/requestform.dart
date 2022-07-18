@@ -99,6 +99,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  key: Key("addTitle"),
                   decoration: InputDecoration(
                     hintText: 'Title',
                     fillColor: Colors.white,
@@ -124,6 +125,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  key: Key("addPrice"),
                   decoration: InputDecoration(
                     hintText: 'Price',
                     fillColor: Colors.white,
@@ -154,6 +156,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                   height: 20.0,
                 ),
                 DropdownButtonFormField(
+                  key: Key("addCategory"),
                   decoration: InputDecoration(
                     hintText: 'Category',
                     fillColor: Colors.white,
@@ -186,6 +189,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                   height: 20.0,
                 ),
                 TextFormField(
+                  key: Key("addDescription"),
                   decoration: InputDecoration(
                     hintText: 'Description',
                     fillColor: Colors.white,
@@ -214,6 +218,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
+                      key: Key("addDeadline"),
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.orange[600])),
@@ -241,6 +246,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                     ),
                     dateSelected
                         ? ElevatedButton(
+                      key: Key("addButton"),
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.orange[600])),

@@ -56,10 +56,8 @@ dependencies:
   flutter_google_places_hoc081098: ^1.0.0-nullsafety.5
   google_api_headers: ^1.1.1
   google_maps_webservice: ^0.0.20-nullsafety.5
-
-
-
-
+  firebase_core_platform_interface: 4.4.0
+  network_image_mock: ^2.1.1
 
 
 
@@ -70,7 +68,9 @@ dev_dependencies:
   mockito: ^5.2.0
   build_runner: ^2.1.11
   mocktail: ^0.3.0
-
+  flutter_driver:
+    sdk: flutter
+  test:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -18,6 +18,7 @@ class NavigateBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
+                key: Key("explorePage"),
                 width: 55,
                 child: InkWell(
                   onTap: () {
@@ -33,6 +34,7 @@ class NavigateBar extends StatelessWidget {
                 ),
               ),
               SizedBox(
+                key: Key("requestPage"),
                 width: 55,
                 child: InkWell(
                   onTap: () {

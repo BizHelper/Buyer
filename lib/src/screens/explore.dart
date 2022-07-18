@@ -166,6 +166,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                   ),
                                                   Text(
                                                     'Find out more!',
+                                                    key: Key("findOutMoreButton"),
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,

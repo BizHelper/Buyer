@@ -14,7 +14,6 @@ class RequestScreen extends StatefulWidget {
   RequestScreen({required this.type});
   @override
   State<RequestScreen> createState() => _RequestScreenState();
-
 }
 
 class _RequestScreenState extends State<RequestScreen> {
@@ -170,6 +169,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       ),
                     ),
                     ElevatedButton(
+                      key: Key("addNewRequest"),
                       style: ButtonStyle(
                           backgroundColor:
                           MaterialStateProperty.all(Colors.orange[600])),

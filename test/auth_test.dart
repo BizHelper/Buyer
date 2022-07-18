@@ -1,5 +1,9 @@
+import 'package:buyer_app/src/screens/login.dart';
 import 'package:buyer_app/src/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -138,5 +142,23 @@ void main() {
           await Auth(auth: mockFirebaseAuth).signup("111@gmail.com", "abcdef"),
           "Email is not registered");
     });
+    /*Firebase.initializeApp();
+    WidgetsFlutterBinding.ensureInitialized();
+    Widget makeTestableWidget({required Widget child}){
+      return MaterialApp(
+        home: child,
+      );
+    }
+    testWidgets('testing', (WidgetTester tester) async{
+      MockFirebaseAuth mockFirebaseAuth = MockFirebaseAuth();
+      when(mockFirebaseAuth.signInWithEmailAndPassword(email: "hioksurebye@gmail.com",
+          password: "bizhelper00")).thenAnswer( (_) async => throw FirebaseAuthException(
+          message: "Please enter your email address", code: "No email"));
+      LoginScreen loginScreen = LoginScreen();
+      await tester.pumpWidget(makeTestableWidget(child:loginScreen));
+      expect(find.text("Buyer Login"), findsOneWidget);
+    });
+
+     */
   });
 }
