@@ -119,7 +119,7 @@ class Favourites extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-          onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ProductDescriptionScreen(
                   productDetailName: itemName,
                   productDetailShopName: sellerName,

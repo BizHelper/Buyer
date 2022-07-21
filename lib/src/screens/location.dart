@@ -57,7 +57,8 @@ class _LocationScreenState extends State<LocationScreen> {
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Container(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('sellers').
           where('hasShop', isEqualTo: "true").snapshots(),
@@ -70,7 +71,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextButton(
+                     /* TextButton(
                           child: Text('Set Your Location',style: TextStyle(fontSize: 16)),
                           onPressed: () async {
                             await locationData.getCurrentPosition();
@@ -83,8 +84,33 @@ class _LocationScreenState extends State<LocationScreen> {
                             }
                           }),
                     ]),
+
+                      */
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Shops Near Me",style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold)),
+                ElevatedButton(
+                    style: ButtonStyle(
+                    backgroundColor:
+                    MaterialStateProperty.all(Colors.orange[600])),
+                    onPressed: () async{
+                      await locationData.getCurrentPosition();
+                      if (locationData.permissionALlowed == true) {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (context) => MapScreen()));
+                      } else {
+                        print('Permission not allowed');
+                      }
+                    }, child:Text('Set Your Location',style: TextStyle(color: Colors.black,
+                ))),
+              ],
+            )]),
                 Flexible(
-                  child: Container(
                     child: ListView(
                         children: snapShot.data!.docs.map(
                       (DocumentSnapshot document) {
@@ -97,39 +123,64 @@ class _LocationScreenState extends State<LocationScreen> {
                         if (dis1 > 100) {
                           return Container();
                         }
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            child: InkWell(
-                              onTap: (){ Navigator.of(context).push(
-                        MaterialPageRoute(
-                        builder: (context) =>  SellerDescriptionScreen(
-                          profilePicUrl:document['Profile Pic'], name: document['Name'])));},
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                     // shape: BoxShape.circle,
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: Image.network(document['Profile Pic']).image,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(child: Text(document['Name'])),
-                                  Text(double.parse(dis1.toString()).toStringAsFixed(2) + ' km')
-                                ],
-                              ),
+                        return Container(
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.grey),
                             ),
                           ),
+                          child: ListTile(
+                          onTap: () {
+
+                        },
+                        leading: SizedBox(
+                        child: Image.network(
+                        document['Profile Pic']),
+                        height: 50,
+                        width: 50),
+                        title:Text(document['Name'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                        subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(double.parse(dis1.toString()).toStringAsFixed(2) + ' km away',
+                            style: TextStyle(fontSize: 16))
+                        ],
+                        ), trailing: InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>  SellerDescriptionScreen(
+                                            profilePicUrl:document['Profile Pic'], name: document['Name'],
+                                            description:document['Description'],address: document['Address'])));
+
+                        },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.visibility,
+                                  size: 24.0,
+                                  color: Colors.red[900],
+                                ),
+                                Text(
+                                  'View Shop',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red[900],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ),
                         );
                       },
                     ).toList()),
                   ),
-                ),
+
                NavigateBar()
               ],
             );
