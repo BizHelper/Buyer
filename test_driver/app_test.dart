@@ -8,7 +8,6 @@ void main() {
     final signInButton = find.byValueKey("signin");
     final requestPage = find.byValueKey("requestPage");
     final addNewRequestButton = find.byValueKey("addNewRequest");
-    //final addNewRequestButton = find.byKey(ValueKey("addNewRequest"));
     final addTitle = find.byValueKey("addTitle");
     final addPrice = find.byValueKey("addPrice");
     final addCategory = find.byValueKey("addCategory");
@@ -29,7 +28,6 @@ void main() {
       await driver.waitFor(find.text("Home"));
     });
 
-
    test("Request", () async{
       await driver.tap(requestPage);
       await driver.tap(addNewRequestButton);
@@ -46,7 +44,6 @@ void main() {
       await driver.tap(find.text("27"));
       await driver.tap(find.text("OK"));
       await driver.tap(addButton);
-      //await driver.tap(find.pageBack());
     });
     tearDownAll(() async {
       if(driver!=null){

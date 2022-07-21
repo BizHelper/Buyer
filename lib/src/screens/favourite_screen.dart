@@ -44,7 +44,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         stream: FirebaseFirestore.instance
             .collection('Favourites')
             .doc(_auth.currentUser!.uid)
-            .collection('items')
+            .collection('items').where("deleted", isEqualTo: "false")
          //   .where('liked', isEqualTo: true)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -63,7 +63,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   }
 }
 
-class Favourites extends StatelessWidget {
+class Favourites extends StatefulWidget {
   final String sellerName;
   final String itemName;
   final String itemImage;
@@ -88,6 +88,7 @@ class Favourites extends StatelessWidget {
     required this.deleted,
   });
 
+
   factory Favourites.fromDocument(DocumentSnapshot doc) {
     return Favourites(
       sellerName: doc['seller name'],
@@ -102,16 +103,38 @@ class Favourites extends StatelessWidget {
       deleted: doc['deleted'],
     );
   }
+
+  @override
+  State<Favourites> createState() => _FavouritesState();
+}
+
+class _FavouritesState extends State<Favourites> {
+
+
   Future removeFromFavourite() async {
     var currentUser = AuthService().currentUser;
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection('Favourites');
     return _collectionRef
         .doc(currentUser!.uid)
-        .collection('items').doc(productDetailId)
+        .collection('items').doc(widget.productDetailId)
         .delete();
     //.update({'liked': false});
   }
+
+  String delete = '';
+
+  Future<String> del() async {
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('listings').doc(widget.productDetailId).get();
+    setState(()=> delete = ds.get('Deleted'));
+    return delete;
+  }
+
+  String getDeleted() {
+    del();
+    return delete;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,24 +144,26 @@ class Favourites extends StatelessWidget {
         child: InkWell(
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ProductDescriptionScreen(
-                  productDetailName: itemName,
-                  productDetailShopName: sellerName,
-                  productDetailPrice: price,
-                  productDetailCategory: category,
-                  productDetailDescription: description,
-                  productDetailImages: itemImage,
-                  productDetailId: productDetailId,
-                  sellerId: sellerId,
-                  listingId: productDetailId,
-                  iconsButtons: iconsButton,
-                  deleted: deleted))),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+                  productDetailName: widget.itemName,
+                  productDetailShopName: widget.sellerName,
+                  productDetailPrice: widget.price,
+                  productDetailCategory: widget.category,
+                  productDetailDescription: widget.description,
+                  productDetailImages: widget.itemImage,
+                  productDetailId: widget.productDetailId,
+                  sellerId: widget.sellerId,
+                  listingId: widget.productDetailId,
+                  iconsButtons: widget.iconsButton,
+                  deleted: widget.deleted))),
+          child:
+          Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(itemImage),
+          Image.network(widget.itemImage),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Image.network(widget.itemImage),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -146,16 +171,25 @@ class Favourites extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(3.0),
-                          child: Text(itemName),
+                          child: Text(widget.itemName),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(3.0),
-                          child: Text(sellerName),
+                          child: Text(widget.sellerName),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(3.0),
-                          child: Text("\$"+ price),
-                        )],
+                          child: Text("\$"+ widget.price),
+                        ),
+                        getDeleted() == 'true' ?
+                        const Text(
+                          '[DELETED LISTING]',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ) :
+                        Container(),
+                      ],
                     ),
                   ),
                  // IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.delete))

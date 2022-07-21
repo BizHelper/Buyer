@@ -209,7 +209,7 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
                   );
                 }).toList(),
                 onChanged: (val) {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => SellerListingPageScreen(
                         currentCategory: widget.currentCategory,

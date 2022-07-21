@@ -36,7 +36,7 @@ class _RequestChatScreenState extends State<RequestChatScreen> {
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _service.requestMessages
-            .where('users', arrayContains: _auth.currentUser!.uid)
+            .where('users', arrayContains: _auth.currentUser!.uid).orderBy('lastChatTime',descending: true)
             .snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot> snapshot) {

@@ -1,3 +1,4 @@
+import 'package:buyer_app/src/screens/request.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -141,6 +142,8 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                                   .doc(widget.requestID);
                               dr.update({'Deleted': 'true'});
                               Navigator.of(context).pop();
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context)=> RequestScreen(type: "Pending",)));
                             },
                             child: Column(
                               children: [
