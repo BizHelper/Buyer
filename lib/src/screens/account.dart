@@ -19,7 +19,7 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   final FirebaseAuth auth = AuthService().auth;
   String _buyerName = '';
-  var _image = '';
+  var _image = 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
 
   Future<String> getBuyerName() async {
     final uid = AuthService().currentUser?.uid;
@@ -83,78 +83,82 @@ class _AccountScreenState extends State<AccountScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Column(
-            children: [
-              const SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: Image.network(getImage()).image,
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20.0,
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              Text(
-               // AuthService().getName()
-                getName(),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 30.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.orange[600])),
-                      onPressed: () async {
-                        final uid = AuthService().currentUser?.uid;
-                        String sellerName = getName();
-                        DocumentReference dr = FirebaseFirestore.instance
-                            .collection('buyers')
-                            .doc(uid);
-                        final XFile? pickedFile = await ImagePicker()
-                            .pickImage(source: ImageSource.gallery);
-                        if (pickedFile == null) {
-                          print('null');
-                          return;
-                        }
-                        final File image = (File(pickedFile.path));
-
-                        FirebaseStorage storage = FirebaseStorage.instance;
-                        Reference ref = storage
-                            .ref()
-                            .child(pickedFile.path + DateTime.now().toString());
-                        await ref.putFile(image);
-                        String imageURL = await ref.getDownloadURL();
-                        dr.set({'Name': sellerName, 'Profile Pic': imageURL});
-                        setState(() => _image = imageURL);
-                      },
-                         child: const Text(
-                        'Change Profile Picture',
-                        style: TextStyle(color: Colors.black),
+                  Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: Image.network(getImage()).image,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  Text(
+                   // AuthService().getName()
+                    getName(),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.orange[600])),
+                          onPressed: () async {
+                            final uid = AuthService().currentUser?.uid;
+                            String sellerName = getName();
+                            DocumentReference dr = FirebaseFirestore.instance
+                                .collection('buyers')
+                                .doc(uid);
+                            final XFile? pickedFile = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            if (pickedFile == null) {
+                              print('null');
+                              return;
+                            }
+                            final File image = (File(pickedFile.path));
+
+                            FirebaseStorage storage = FirebaseStorage.instance;
+                            Reference ref = storage
+                                .ref()
+                                .child(pickedFile.path + DateTime.now().toString());
+                            await ref.putFile(image);
+                            String imageURL = await ref.getDownloadURL();
+                            dr.set({'Name': sellerName, 'Profile Pic': imageURL});
+                            setState(() => _image = imageURL);
+                          },
+                             child: const Text(
+                            'Change Profile Picture',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
           NavigateBar(),
         ],

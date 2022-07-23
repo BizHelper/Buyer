@@ -141,9 +141,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: EdgeInsets.only(right: 11.0, top: 12),
                     child: TextButton(
-                      onPressed: () {Navigator.of(context).push(
+                      onPressed: () {
+                        Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) =>
-                              FavouriteScreen()));},
+                              FavouriteScreen()));
+                        },
                       style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           minimumSize: Size.zero,
