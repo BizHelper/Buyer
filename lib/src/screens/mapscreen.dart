@@ -28,16 +28,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     final locationData = Provider.of<LocationProvider>(context);
-    /*method() async {
-     GeoData data = await Geocoder2.getDataFromCoordinates(
-         latitude: locationData.latitude,
-         longitude: locationData.longitude,
-         googleMapApiKey: "AIzaSyDOJ2t5HwT4OHU10hT4Ing9OFtQGtwy150");
-     locationData.selectedAddress =data.address;
-   }
-    */
     setState(() {
-      // method();
       currentLocation = LatLng(locationData.latitude, locationData.longitude);
     });
 
@@ -60,21 +51,16 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+          centerTitle: true,
           title: Text('Your Location',
-        style: TextStyle(
-        fontSize: 23.0,
-        fontWeight: FontWeight.bold,)),
-        //  leading: BackButton(
-             // color: Colors.white,
-            //  onPressed: () => Navigator.of(context).pushReplacement(
-              //    MaterialPageRoute(builder: (context) => LocationScreen()))),
+              style: TextStyle(
+                fontSize: 23.0,
+                fontWeight: FontWeight.bold,
+              )),
           backgroundColor: Colors.cyan[900]),
       body: SafeArea(
         child: Stack(
           children: [
-            // Column(
-            //children: [
             GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: currentLocation,
@@ -91,8 +77,6 @@ class _MapScreenState extends State<MapScreen> {
               },
               onMapCreated: onCreated,
               onCameraIdle: () {
-                //  method();
-                //   method();
                 locationData.getMoveCamera();
               },
             ),
@@ -100,42 +84,33 @@ class _MapScreenState extends State<MapScreen> {
                 child: Container(
                     height: 35,
                     margin: EdgeInsets.only(bottom: 40),
-                    child:// Image.asset('images/image l.png')
-                  Icon(Icons.location_on,color: Colors.red,size: 50)
-                )),
-
-            //     ],
-            // ),
-            // later can add the profile image marker....
-               Positioned(
+                    child: // Image.asset('images/image l.png')
+                        Icon(Icons.location_on, color: Colors.red, size: 50))),
+            Positioned(
               bottom: 0.0,
               child: Container(
                 height: 50,
-                 width: MediaQuery.of(context).size.width,
+                width: MediaQuery.of(context).size.width,
                 color: Colors.white,
                 child: Column(
                   children: [
                     ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.orange[600])),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.orange[600])),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => LocationScreen()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => LocationScreen()));
                       },
                       child: const Text(
                         'Set',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
-                  //  Text(LocationProvider().selectedAddress)
-                    //Text(locationData.selectedAddress)
-                  // Text(locationData.selectedAddress.featureName),
-                    // Text(locationData.selectedAddress.addressLine),
                   ],
                 ),
               ),
             ),
-
             Positioned(
               //search input bar
               top: 10,

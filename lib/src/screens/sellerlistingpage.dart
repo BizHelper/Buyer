@@ -97,19 +97,6 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
     setState(() => filteredResults = showResults);
   }
 
-
-  /* stream:
-  currentCategory == 'Popular'?
-  FirebaseFirestore.instance
-      .collection('listings')
-      .where('Deleted', isEqualTo: 'false')
-      .snapshots():
-        FirebaseFirestore.instance
-      .collection('listings')
-      .where('Deleted', isEqualTo: 'false').where('Category', isEqualTo: currentCategory)
-      .snapshots(),
-
-  */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,17 +106,6 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
-
-        //  IconButton(onPressed: () {
-          //}, icon: Icon(Icons.search)),
-         /* IconButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => ChatScreen()));
-              },
-              icon: Icon(Icons.chat)),
-
-          */
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
@@ -151,40 +127,8 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
-           /*   const Padding(
-                padding: EdgeInsets.only(left: 12, top: 11),
-                child:
-                Text(widget.sellerName,
-                  style:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-              ),
-
-            */
-
-
-            /*  Padding(
-                padding: EdgeInsets.only(right: 11.0, top: 12),
-                child: TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      minimumSize: Size.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-                  child: const Text(
-                    'Favourites',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-             */
             ],
           ),
-        // Categories(currentCategory: widget.currentCategory),
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0,),
             child: TextField(
@@ -225,25 +169,6 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
           Flexible(
             child: Container(
               child:
-              /* GridView.count(
-
-                    crossAxisCount: 2,
-                    children: snapshot.data!.docs.map(
-                      (listings) {
-                        return Product(
-                          prodName: listings['Name'],
-                          prodShopName: listings['Seller Name'],
-                          prodPrice: listings['Price'],
-                          prodCategory: listings['Category'],
-                          prodDescription: listings['Description'],
-                          prodImage: listings['Image URL'],
-                          sellerId: listings['Seller Id'],
-                          listingId: listings['Listing ID'],
-                          deleted: listings['Deleted'],
-                        );
-                      },
-                    ).toList(),
-                  ),*/
               GridView.builder( gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                 itemCount: filteredResults.length,
                 itemBuilder: (BuildContext context,int index)=>

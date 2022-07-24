@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import 'package:buyer_app/src/widgets/navigateBar.dart';
-import 'package:provider/provider.dart';
 
-import '../providers/LocationProvider.dart';
 
 class AccountScreen extends StatefulWidget {
   @override
@@ -145,7 +143,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 .child(pickedFile.path + DateTime.now().toString());
                             await ref.putFile(image);
                             String imageURL = await ref.getDownloadURL();
-                            dr.set({'Name': sellerName, 'Profile Pic': imageURL});
+                            dr.update({ 'Profile Pic': imageURL});
                             setState(() => _image = imageURL);
                           },
                              child: const Text(

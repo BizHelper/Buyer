@@ -57,103 +57,95 @@ class _LocationScreenState extends State<LocationScreen> {
           style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('sellers').
-          where('hasShop', isEqualTo: "true").snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
-            if (!snapShot.hasData) return
-            Container();
-            return Column(
-              children: [
-                Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('sellers')
+            .where('hasShop', isEqualTo: "true")
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
+          if (!snapShot.hasData) return Container();
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                     /* TextButton(
-                          child: Text('Set Your Location',style: TextStyle(fontSize: 16)),
-                          onPressed: () async {
-                            await locationData.getCurrentPosition();
-                            if (locationData.permissionALlowed == true) {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => MapScreen()));
-                            } else {
-                              print('Permission not allowed');
-                            }
-                          }),
-                    ]),
-
-                      */
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Shops Near Me",style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold)),
-                ElevatedButton(
-                    style: ButtonStyle(
-                    backgroundColor:
-                    MaterialStateProperty.all(Colors.orange[600])),
-                    onPressed: () async{
-                      await locationData.getCurrentPosition();
-                      if (locationData.permissionALlowed == true) {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (context) => MapScreen()));
-                      } else {
-                        print('Permission not allowed');
-                      }
-                    }, child:Text('Set Your Location',style: TextStyle(color: Colors.black,
-                ))),
-              ],
-            )]),
-                Flexible(
-                    child: ListView(
-                        children: snapShot.data!.docs.map(
-                      (DocumentSnapshot document) {
-                        double dis = Geolocator.distanceBetween(
-                            _userLatitude,
-                            _userLongitude,
-                            document['latitude'],
-                            document['longitude']);
-                        double dis1 = dis / 1000;
-                        if (dis1 > 100) {
-                          return Container();
-                        }
-                        return Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.grey),
-                            ),
-                          ),
-                          child: ListTile(
-                          onTap: () {
-
-                        },
-                        leading: SizedBox(
-                        child: Image.network(
-                        document['Profile Pic']),
-                        height: 50,
-                        width: 50),
-                        title:Text(document['Name'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                        subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(double.parse(dis1.toString()).toStringAsFixed(2) + ' km away',
-                            style: TextStyle(fontSize: 16))
+                          Text("Shops Near Me",
+                              style: TextStyle(
+                                  fontSize: 18.0, fontWeight: FontWeight.bold)),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.orange[600])),
+                              onPressed: () async {
+                                await locationData.getCurrentPosition();
+                                if (locationData.permissionALlowed == true) {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => MapScreen()));
+                                } else {
+                                  print('Permission not allowed');
+                                }
+                              },
+                              child: Text('Set Your Location',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ))),
                         ],
-                        ), trailing: InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) =>  SellerDescriptionScreen(
-                                            profilePicUrl:document['Profile Pic'], name: document['Name'],
-                                            description:document['Description'],address: document['Address'])));
-
-                        },
+                      )
+                    ]),
+              ),
+              Flexible(
+                child: ListView(
+                    children: snapShot.data!.docs.map(
+                  (DocumentSnapshot document) {
+                    double dis = Geolocator.distanceBetween(
+                        _userLatitude,
+                        _userLongitude,
+                        document['latitude'],
+                        document['longitude']);
+                    double dis1 = dis / 1000;
+                    if (dis1 > 100) {
+                      return Container();
+                    }
+                    return Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                      child: ListTile(
+                        onTap: () {},
+                        leading: SizedBox(
+                            child: Image.network(document['Profile Pic']),
+                            height: 50,
+                            width: 50),
+                        title: Text(document['Name'],
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                double.parse(dis1.toString())
+                                        .toStringAsFixed(2) +
+                                    ' km away',
+                                style: TextStyle(fontSize: 16))
+                          ],
+                        ),
+                        trailing: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => SellerDescriptionScreen(
+                                    profilePicUrl: document['Profile Pic'],
+                                    name: document['Name'],
+                                    description: document['Description'],
+                                    address: document['Address'])));
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -175,17 +167,15 @@ class _LocationScreenState extends State<LocationScreen> {
                             ),
                           ),
                         ),
-                        ),
-                        );
-                      },
-                    ).toList()),
-                  ),
-
-               NavigateBar()
-              ],
-            );
-          },
-        ),
+                      ),
+                    );
+                  },
+                ).toList()),
+              ),
+              NavigateBar()
+            ],
+          );
+        },
       ),
     );
   }

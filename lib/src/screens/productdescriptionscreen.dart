@@ -65,59 +65,9 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
         context: context,
         builder: (BuildContext context) {
           return dialog;
-        }
-    );
-  }
-/*  Future addToFavourite() async {
-    var currentUser = AuthService().currentUser;
-    CollectionReference _collectionRef =
-        FirebaseFirestore.instance.collection('Favourites');
-    DocumentReference dr = _collectionRef.doc(currentUser!.uid).collection('items').doc();
-    uid = dr.id;
-   DocumentSnapshot ds = await _collectionRef.doc(currentUser!.uid).collection('items').doc(uid).get();
-
-   if(ds!=null) {
-   /*  if (ds.get("name") == "5") {
-       return _collectionRef
-           .doc(currentUser!.uid)
-           .collection('items')
-           .doc(uid)
-           .update({'liked': true});
-     } else
-
-    */
-  //   {
-       return _collectionRef
-           .doc(currentUser!.uid)
-           .collection('items')
-           .doc(uid)
-           .update({'liked': false});
-  //   }
-
-
-  //  }
-  /*  uid = dr.id;
-    print(uid);
-    return
-      dr.set({
-      "name": widget.productDetailName,
-      "price": widget.productDetailPrice,
-      "images": widget.productDetailImages,
-      "seller name": widget.productDetailShopName,
-      "product detail id": widget.listingId,
-      "category": widget.productDetailCategory,
-      "description": widget.productDetailDescription,
-      "seller id": widget.sellerId,
-      "icon button": widget.iconsButtons,
-      "deleted": widget.deleted,
-      "liked": true,
-   //   "uid": dr.id,
-    }).then((value) => print("add to favourites"));
-
-   */
+        });
   }
 
- */
   Future addToFavourite() async {
     var currentUser = AuthService().currentUser;
     CollectionReference _collectionRef =
@@ -127,23 +77,6 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
         .collection('items')
         .doc(widget.listingId);
     uid = dr.id;
-    //return
-    /* dr.set(
-        {
-          "name": widget.productDetailName,
-          "price": widget.productDetailPrice,
-          "images": widget.productDetailImages,
-          "seller name": widget.productDetailShopName,
-          "product detail id": widget.listingId,
-          "category": widget.productDetailCategory,
-          "description": widget.productDetailDescription,
-          "seller id": widget.sellerId,
-          "icon button": widget.iconsButtons,
-          "deleted": widget.deleted,
-          "liked": true,
-        }
-    ).then((value) => print("add to favourites"));
-      */
     Map<String, Object> fav = new HashMap();
     fav.putIfAbsent("name", () => widget.productDetailName);
     fav.putIfAbsent("price", () => widget.productDetailPrice);
@@ -342,9 +275,9 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                     Padding(
                       padding: const EdgeInsets.only(right: 8.0),
                       child: InkWell(
-                        onTap: (){
+                        onTap: () {
                           addToFavourite();
-                        showAlertDialog(context);
+                          showAlertDialog(context);
                         },
                         child: Column(
                           children: [
@@ -366,8 +299,8 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                     ),
                     widget.iconsButtons
                         ? Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: InkWell(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: InkWell(
                               onTap: createChatRoom,
                               child: Column(
                                 children: [
@@ -386,10 +319,8 @@ class _ProductDescriptionScreenState extends State<ProductDescriptionScreen> {
                                 ],
                               ),
                             ),
-                        )
+                          )
                         : Container(),
-
-                    // IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.cancel))
                   ],
                 ),
               ),
