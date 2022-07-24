@@ -30,35 +30,33 @@ class _SellerDescriptionScreenState extends State<SellerDescriptionScreen> {
             style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(widget.profilePicUrl),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(widget.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18)),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Text("Address: " + widget.address,
-                          style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 20.0),
-                      Text("Description: " + widget.description,
-                          style: TextStyle(fontSize: 16)),
-                    ],
-                  ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(widget.profilePicUrl),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Text("Address: " + widget.address,
+                        style: TextStyle(fontSize: 16)),
+                    SizedBox(height: 20.0),
+                    Text("Description: " + widget.description,
+                        style: TextStyle(fontSize: 16)),
+                  ],
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ));
   }
 }
