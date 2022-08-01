@@ -41,7 +41,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('posts').orderBy('Time',descending: true).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .orderBy('Time', descending: true)
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Container();
@@ -112,27 +115,25 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                         ),
                                                       ),
                                                       InkWell(
-                                                          child: const Text(
-                                                            //'by: ${widget.productDetailShopName}',
-                                                            '     Visit Shop',
-                                                            style: TextStyle(
-                                                                //  fontSize: 15,
-                                                                color: Colors
-                                                                    .blue),
-                                                          ),
-                                                          onTap: () {
-                                                            Navigator.of(context).push(MaterialPageRoute(
-                                                                builder: (context) => SellerListingPageScreen(
-                                                                    currentCategory:
-                                                                        'Popular',
-                                                                    sort:
-                                                                        'Default',
-                                                                    sellerName:
-                                                                        posts[
-                                                                            'Seller Name'])));
-                                                          }
-                                                          //sellerId: widget.sellerId)));}
-                                                          ),
+                                                        child: const Text(
+                                                          //'by: ${widget.productDetailShopName}',
+                                                          '     Visit Shop',
+                                                          style: TextStyle(
+                                                              //  fontSize: 15,
+                                                              color:
+                                                                  Colors.blue),
+                                                        ),
+                                                        onTap: () {
+                                                          Navigator.of(context).push(MaterialPageRoute(
+                                                              builder: (context) => SellerListingPageScreen(
+                                                                  currentCategory:
+                                                                      'Popular',
+                                                                  sort:
+                                                                      'Default',
+                                                                  sellerName: posts[
+                                                                      'Seller Name'])));
+                                                        },
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -162,16 +163,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                   Icon(
                                                     Icons.info,
                                                     size: 28,
-                                                    color: Colors.red.shade800,
+                                                    color: Colors.brown.shade500,
                                                   ),
                                                   Text(
                                                     'Find out more!',
-                                                    key: Key("findOutMoreButton"),
+                                                    key: Key(
+                                                        "findOutMoreButton"),
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        color: Colors
-                                                            .red.shade800),
+                                                        color: Colors.brown.shade800),
                                                   ),
                                                 ],
                                               ),

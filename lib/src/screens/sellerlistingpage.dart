@@ -11,15 +11,15 @@ import '../widgets/products.dart';
 class SellerListingPageScreen extends StatefulWidget {
   var currentCategory;
   var sort;
-  //var sellerId;
   String sellerName;
-  // HomeScreen({Key? key, required this.currentCategory, required this.sort}) : super(key: key);
 
-  SellerListingPageScreen({required this.currentCategory, required this.sort,
-    //this.sellerId,
-  required this.sellerName});
+  SellerListingPageScreen(
+      {required this.currentCategory,
+      required this.sort,
+      required this.sellerName});
   @override
-  State<SellerListingPageScreen> createState() => _SellerListingPageScreenState();
+  State<SellerListingPageScreen> createState() =>
+      _SellerListingPageScreenState();
 }
 
 class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
@@ -50,23 +50,26 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
   }
 
   getListingList() async {
-    var data = widget.currentCategory == 'Popular'?
-    FirebaseFirestore.instance
-        .collection('listings').
-    //where('Seller Id', isEqualTo: widget.sellerName)
-    where('Seller Name', isEqualTo: widget.sellerName)
-        .where('Deleted', isEqualTo: 'false'):
-    FirebaseFirestore.instance
-        .collection('listings').
-    //where('Seller Id', isEqualTo: widget.sellerName)
-    where('Seller Name', isEqualTo: widget.sellerName)
-        .where('Deleted', isEqualTo: 'false').where('Category', isEqualTo: widget.currentCategory);
+    var data = widget.currentCategory == 'Popular'
+        ? FirebaseFirestore.instance
+            .collection('listings')
+            .
+            //where('Seller Id', isEqualTo: widget.sellerName)
+            where('Seller Name', isEqualTo: widget.sellerName)
+            .where('Deleted', isEqualTo: 'false')
+        : FirebaseFirestore.instance
+            .collection('listings')
+            .
+            //where('Seller Id', isEqualTo: widget.sellerName)
+            where('Seller Name', isEqualTo: widget.sellerName)
+            .where('Deleted', isEqualTo: 'false')
+            .where('Category', isEqualTo: widget.currentCategory);
     var sortedData = widget.sort == 'Price: high to low'
         ? await data.orderBy('Price Double', descending: true).get()
         : widget.sort == 'Price: low to high'
-        ? await data.orderBy('Price Double').get()
-        : await data.get();
-    setState(()=> allResults = sortedData.docs);
+            ? await data.orderBy('Price Double').get()
+            : await data.get();
+    setState(() => allResults = sortedData.docs);
     searchResultList();
     return sortedData.docs;
   }
@@ -126,11 +129,13 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            ],
+            children: [],
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0,),
+            padding: const EdgeInsets.only(
+              left: 8.0,
+              right: 8.0,
+            ),
             child: TextField(
               controller: searchController,
               decoration: const InputDecoration(
@@ -163,30 +168,28 @@ class _SellerListingPageScreenState extends State<SellerListingPageScreen> {
                       ),
                     ),
                   );
-                }
-            ),
+                }),
           ),
           Flexible(
             child: Container(
-              child:
-              GridView.builder( gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
                 itemCount: filteredResults.length,
-                itemBuilder: (BuildContext context,int index)=>
-                    Product(
-                      prodName: filteredResults[index]['Name'],
-                      prodShopName: filteredResults[index]['Seller Name'],
-                      prodPrice: filteredResults[index]['Price'],
-                      prodCategory: filteredResults[index]['Category'],
-                      prodDescription: filteredResults[index]['Description'],
-                      prodImage: filteredResults[index]['Image URL'],
-                      sellerId: filteredResults[index]['Seller Id'],
-                      listingId: filteredResults[index]['Listing ID'],
-                      deleted: filteredResults[index]['Deleted'],
-                    ),
+                itemBuilder: (BuildContext context, int index) => Product(
+                  prodName: filteredResults[index]['Name'],
+                  prodShopName: filteredResults[index]['Seller Name'],
+                  prodPrice: filteredResults[index]['Price'],
+                  prodCategory: filteredResults[index]['Category'],
+                  prodDescription: filteredResults[index]['Description'],
+                  prodImage: filteredResults[index]['Image URL'],
+                  sellerId: filteredResults[index]['Seller Id'],
+                  listingId: filteredResults[index]['Listing ID'],
+                  deleted: filteredResults[index]['Deleted'],
+                ),
               ),
             ),
           ),
-        //  NavigateBar(),
         ],
       ),
     );

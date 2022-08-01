@@ -5,7 +5,6 @@ import 'package:buyer_app/src/widgets/categories.dart';
 import 'package:buyer_app/src/widgets/navigateBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/login.dart';
 import '../widgets/products.dart';
@@ -102,8 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         backgroundColor: Colors.cyan.shade900,
         actions: <Widget>[
-          //IconButton(onPressed: () {
-          //  }, icon: Icon(Icons.search)),
           IconButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(

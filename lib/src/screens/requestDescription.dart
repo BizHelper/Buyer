@@ -142,8 +142,11 @@ class _RequestDescriptionScreenState extends State<RequestDescriptionScreen> {
                                   .doc(widget.requestID);
                               dr.update({'Deleted': 'true'});
                               Navigator.of(context).pop();
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context)=> RequestScreen(type: "Pending",)));
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (context) => RequestScreen(
+                                            type: "Pending",
+                                          )));
                             },
                             child: Column(
                               children: [

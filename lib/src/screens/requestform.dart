@@ -59,9 +59,9 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
         context: context,
         builder: (BuildContext context) {
           return dialog;
-        }
-    );
+        });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -234,7 +234,8 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                         if (date != null) {
                           setState(() {
                             _intDeadline = date!.microsecondsSinceEpoch;
-                            _currentDeadline ='${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
+                            _currentDeadline =
+                                '${date.day.toString()}/${date.month.toString()}/${date.year.toString()}';
                             dateSelected = true;
                           });
                         }
@@ -246,7 +247,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                     ),
                     dateSelected
                         ? ElevatedButton(
-                      key: Key("addButton"),
+                            key: Key("addButton"),
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.orange[600])),
@@ -282,15 +283,22 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
                                 request.putIfAbsent('Accepted', () => 'false');
                                 request.putIfAbsent(
                                     'Buyer ID', () => _auth.currentUser!.uid);
-                                request.putIfAbsent('Price Double', () => double.parse(_currentPrice));
+                                request.putIfAbsent('Price Double',
+                                    () => double.parse(_currentPrice));
                                 request.putIfAbsent('Deleted', () => 'false');
-                                request.putIfAbsent('Time', () => DateTime.now().microsecondsSinceEpoch);
-                                request.putIfAbsent('Integer Deadline', () => _intDeadline);
+                                request.putIfAbsent(
+                                    'Time',
+                                    () =>
+                                        DateTime.now().microsecondsSinceEpoch);
+                                request.putIfAbsent(
+                                    'Integer Deadline', () => _intDeadline);
                                 dr.set(request);
                                 Navigator.pushAndRemoveUntil(
                                   context,
-                                  MaterialPageRoute(builder: (context) => RequestScreen(type: 'Pending')),
-                                      (Route<dynamic> route) => false,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          RequestScreen(type: 'Pending')),
+                                  (Route<dynamic> route) => false,
                                 );
                               }
                             },

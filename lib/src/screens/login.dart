@@ -2,7 +2,6 @@ import 'package:buyer_app/src/screens/home.dart';
 import 'package:buyer_app/src/screens/reset.dart';
 import 'package:buyer_app/src/screens/signup.dart';
 import 'package:buyer_app/src/services/authservice.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../services/auth.dart';
@@ -15,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   var _email;
   var _password;
-  //final auth = AuthService().auth;
 
   @override
   Widget build(BuildContext context) {
@@ -128,61 +126,4 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
- /* signin(String _email, String _password) async {
-    try {
-      await auth.signInWithEmailAndPassword(email: _email, password: _password);
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomeScreen(currentCategory: "Popular",sort: 'Default')));
-      return "Success";
-    } on FirebaseAuthException catch (error) {
-      Fluttertoast.showToast(msg: error.message!, gravity: ToastGravity.TOP);
-    }
-  }
-}
-
-  */
-
-
-/*
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-    Widget build(BuildContext context) {
-      return Scaffold(
-        backgroundColor: Colors.blueGrey.shade50,
-        appBar: AppBar(
-          backgroundColor: Colors.cyan.shade900,
-          centerTitle: true,
-          title: const Text(
-            'BizHelper',
-            style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold),
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const Icon(
-                Icons.store_rounded,
-                size: 120,
-                color: Colors.black,
-              ),
-              Text(
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  'Buyer Login'),
-
-            ],),),);
-    }
-}
-
- */
-
-
-
-
-  //final auth = AuthService().auth;
 

@@ -32,12 +32,6 @@ class LocationProvider with ChangeNotifier {
   void onCameraMove(CameraPosition cameraPosition) async {
     this.latitude = cameraPosition.target.latitude;
     this.longitude = cameraPosition.target.longitude;
-   /*GeoData data = await Geocoder2.getDataFromCoordinates(
-        latitude: this.latitude,
-        longitude: this.longitude,
-        googleMapApiKey: "AIzaSyDOJ2t5HwT4OHU10hT4Ing9OFtQGtwy150");
-    this.selectedAddress =data.address;
-    */
     notifyListeners();
   }
 

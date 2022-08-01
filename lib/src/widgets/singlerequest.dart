@@ -56,7 +56,6 @@ class SingleRequest extends StatelessWidget {
                   title: title,
                   buyerID: buyerID,
                   requestID: requestID,
-                  //icons: true,
                   deleted: deleted,
                 ),
               ),
@@ -67,13 +66,13 @@ class SingleRequest extends StatelessWidget {
               Icon(
                 Icons.info,
                 size: 28.0,
-                color: Colors.red[900],
+                color: Colors.brown.shade500
               ),
               Text(
                 'Find out more!',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.red[900],
+                  color: Colors.brown.shade800
                 ),
               ),
             ],

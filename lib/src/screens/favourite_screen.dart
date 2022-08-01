@@ -162,7 +162,6 @@ class _FavouritesState extends State<Favourites> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  //   Image.network(widget.itemImage),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -191,7 +190,6 @@ class _FavouritesState extends State<Favourites> {
                       ],
                     ),
                   ),
-                  // IconButton(onPressed: removeFromFavourite, icon: Icon(Icons.delete))
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: InkWell(

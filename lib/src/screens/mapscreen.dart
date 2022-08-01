@@ -38,16 +38,17 @@ class _MapScreenState extends State<MapScreen> {
       });
     }
 
-    FirebaseFirestore.instance
-        .collection('buyers')
-        .get()
-        .then((value) => value.docs.forEach((element) {
+    FirebaseFirestore.instance.collection('buyers').get().then(
+          (value) => value.docs.forEach(
+            (element) {
               var docRef = FirebaseFirestore.instance
                   .collection('buyers')
                   .doc(AuthService().currentUser!.uid);
               docRef.update({'longitude': locationData.longitude});
               docRef.update({'latitude': locationData.latitude});
-            }));
+            },
+          ),
+        );
 
     return Scaffold(
       appBar: AppBar(
@@ -84,8 +85,7 @@ class _MapScreenState extends State<MapScreen> {
                 child: Container(
                     height: 35,
                     margin: EdgeInsets.only(bottom: 40),
-                    child: // Image.asset('images/image l.png')
-                        Icon(Icons.location_on, color: Colors.red, size: 50))),
+                    child: Icon(Icons.location_on, color: Colors.red, size: 50))),
             Positioned(
               bottom: 0.0,
               child: Container(
@@ -123,7 +123,6 @@ class _MapScreenState extends State<MapScreen> {
                       types: [],
                       strictbounds: false,
                       components: [Component(Component.country, 'sg')],
-                      //google_map_webservice package
                       onError: (err) {
                         print(err);
                       });
@@ -131,11 +130,9 @@ class _MapScreenState extends State<MapScreen> {
                     setState(() {
                       location = place.description.toString();
                     });
-                    //form google_maps_webservice package
                     final plist = GoogleMapsPlaces(
                       apiKey: googleApikey,
                       apiHeaders: await GoogleApiHeaders().getHeaders(),
-                      //from google_api_headers package
                     );
                     String placeid = place.placeId ?? "0";
                     final detail = await plist.getDetailsByPlaceId(placeid);
@@ -143,7 +140,6 @@ class _MapScreenState extends State<MapScreen> {
                     final lat = geometry.location.lat;
                     final lang = geometry.location.lng;
                     var newlatlang = LatLng(lat, lang);
-                    //move map camera to selected place with animation
                     mapController?.animateCamera(CameraUpdate.newCameraPosition(
                         CameraPosition(target: newlatlang, zoom: 17)));
                   }

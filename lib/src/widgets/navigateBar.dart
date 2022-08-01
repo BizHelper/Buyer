@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:buyer_app/src/screens/account.dart';
 import 'package:buyer_app/src/screens/home.dart';
 import 'package:buyer_app/src/screens/request.dart';
-
 import '../screens/explore.dart';
 import '../screens/location.dart';
 

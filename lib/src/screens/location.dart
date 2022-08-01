@@ -68,8 +68,9 @@ class _LocationScreenState extends State<LocationScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,7 +97,8 @@ class _LocationScreenState extends State<LocationScreen> {
                                     color: Colors.black,
                                   ))),
                         ],
-                      )
+                      ),
+                      Text("(within 10 km)")
                     ]),
               ),
               Flexible(
@@ -109,7 +111,7 @@ class _LocationScreenState extends State<LocationScreen> {
                         document['latitude'],
                         document['longitude']);
                     double dis1 = dis / 1000;
-                    if (dis1 > 100) {
+                    if (dis1 > 10) {
                       return Container();
                     }
                     return Container(
